@@ -28,5 +28,6 @@ supervisor_service 'tomcat' do
   action :enable
   autostart true
   user 'tomcat'
+  environment "HOME=\"/opt/tomcat\",JAVA_OPTS=\"#{node['spiral']['tomcat']['java_opts']\"",
   command "#{tomcat_path}/bin/catalina.sh run"
 end
