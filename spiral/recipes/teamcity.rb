@@ -2,7 +2,7 @@ include_recipe 'spiral::tomcat'
 
 log_folder = '/opt/logs'
 
-remote_file '/opt/tomcat/webapps/TeamCity.war'
+remote_file '/opt/tomcat/webapps/TeamCity.war' do
   source 'http://download.jetbrains.com/teamcity/TeamCity-9.0.3.war'
 end
 
