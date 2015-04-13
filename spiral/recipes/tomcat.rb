@@ -10,7 +10,7 @@ remote_file dl_location do
 end
 
 execute 'tomcat_extract' do
-  command 'tar xzf #{dl_location} -C /opt'
+  command "tar xzf #{dl_location} -C /opt"
   not_if { ::File.exists?("/opt/apache-tomcat-#{node['spiral']['tomcat']['version']}") }
 end
 
@@ -19,9 +19,14 @@ link tomcat_path do
   not_if { ::File.exists?(tomcat_path) }
 end
 
-directory "/opt/tomcat" do
-  owner 'tomcat'
-  group node['spiral']['users']['group']
-  mode '0755'
-  recursive true
+execute 'tomcat_chown' do
+  command "chown -R tomcat:#{node['spiral']['users']['group']} #{tomcat_path}/"
+  action :run
+end
+
+supervisor_service 'tomcat' do
+  action :enable
+  autostart true
+  user 'tomcat'
+  command "#{tomcat_path}/bin/catalina.sh run"
 end
