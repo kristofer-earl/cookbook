@@ -1,4 +1,3 @@
-include_recipe 'memcached'
 include_recipe 'spiral::tomcat'
 
 directory '/var/log/wallet' do
