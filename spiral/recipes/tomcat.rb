@@ -1,4 +1,7 @@
 include_recipe 'apt'
+include_recipe 'build-essential'
+include_recipe 'python'
+include_recipe 'supervisor'
 include_recipe 'spiral::default'
 
 dl_location = "/opt/tomcat-#{node['spiral']['tomcat']['version']}.tar.gz"
@@ -28,6 +31,6 @@ supervisor_service 'tomcat' do
   action :enable
   autostart true
   user 'tomcat'
-  environment "HOME" => "/opt/tomcat", "JAVA_OPTS" => "#{node['spiral']['tomcat']['java_opts']}"
+  environment 'HOME' => '/opt/tomcat', 'JAVA_OPTS' => "#{node['spiral']['tomcat']['java_opts']}"
   command "#{tomcat_path}/bin/catalina.sh run"
 end
