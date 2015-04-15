@@ -16,3 +16,15 @@ end
 package 'oracle-java7-installer'
 package 'oracle-java7-unlimited-jce-policy'
 package 'oracle-java7-set-default'
+
+# get RDS instance for MySQL connection
+rds_instance_ip = Resolv.getaddress(node[:opsworks][:stack][:rds_instances].first[:address])
+rds_name = 'rds1.localdomain'
+
+bash "insert_line" do
+  user "root"
+  code <<-EOS
+  echo "#{rds_instance_ip} #{rds_name}" >> /etc/hosts
+  EOS
+  not_if "grep -q #{rds_name} /etc/hosts"
+end
