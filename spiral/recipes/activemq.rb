@@ -30,8 +30,8 @@ end
 template "#{activemq_path}/conf/activemq.xml" do
   source 'activemq.xml.erb'
   action :create
-  owner 'root'
-  group 'root'
+  owner 'activemq'
+  group 'spiral'
   mode '0755'
 end
 
