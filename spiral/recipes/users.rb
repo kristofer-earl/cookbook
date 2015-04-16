@@ -10,3 +10,11 @@ user 'tomcat' do
   shell '/bin/false'
   action :create
 end
+
+user 'activemq' do
+  comment 'activemq'
+  system true
+  gid node['spiral']['users']['group'] 
+  shell '/bin/false'
+  action :create
+end
