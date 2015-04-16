@@ -32,5 +32,5 @@ supervisor_service 'activemq' do
   autostart true
   user 'activemq'
   environment 'HOME' => activemq_path, 'JAVA_OPTS' => "#{node['spiral']['activemq']['java_opts']}"
-  command "#{activemq_path}/bin/activemq"
+  command "#{activemq_path}/bin/activemq console"
 end
