@@ -27,6 +27,14 @@ execute 'activemq_chown' do
   action :run
 end
 
+template "#{activemq_path}/conf/activemq.xml" do
+  source 'activemq.xml.erb'
+  action :create
+  owner 'root'
+  group 'root'
+  mode '0755'
+end
+
 supervisor_service 'activemq' do
   action :enable
   autostart true
