@@ -27,10 +27,18 @@ execute 'activemq_chown' do
   action :run
 end
 
+template "#{activemq_path}/conf/activemq.xml" do
+  source 'activemq.xml.erb'
+  action :create
+  owner 'activemq'
+  group 'spiral'
+  mode '0755'
+end
+
 supervisor_service 'activemq' do
   action :enable
   autostart true
   user 'activemq'
-  environment 'HOME' => activemq_path, 'JAVA_OPTS' => "#{node['spiral']['activemq']['java_opts']}"
+  environment 'HOME' => activemq_path, 'ACTIVEMQ_OPTS' => "#{node['spiral']['activemq']['java_opts']}"
   command "#{activemq_path}/bin/activemq console"
 end
