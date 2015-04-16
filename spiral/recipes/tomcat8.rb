@@ -17,13 +17,13 @@ execute 'tomcat8_extract' do
   not_if { ::File.exists?("/opt/apache-tomcat-#{node['spiral']['tomcat8']['version']}") }
 end
 
-link tomcat8_path do
+link tomcat_path do
   to "/opt/apache-tomcat-#{node['spiral']['tomcat8']['version']}"
-  not_if { ::File.exists?(tomcat8_path) }
+  not_if { ::File.exists?(tomcat_path) }
 end
 
 execute 'tomcat8_chown' do
-  command "chown -R tomcat:#{node['spiral']['users']['group']} #{tomcat8_path}/"
+  command "chown -R tomcat:#{node['spiral']['users']['group']} #{tomcat_path}/"
   action :run
 end
 
