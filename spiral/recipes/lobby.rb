@@ -1,4 +1,5 @@
-include_recipe 'spiral::supervisor'
+include_recipe 'spiral::default'
+include_recipe 'supervisor'
 
 log_path = '/var/log/lobby'
 
