@@ -3,11 +3,27 @@ include_recipe 'supervisor'
 
 log_path = '/var/log/lobby'
 
+
+directory '/opt/lobby' do
+  owner  'root'
+  group  'root'
+  mode   '0755'
+  action :create
+end
+
 directory log_path do
-  owner 'root'
-  group 'root'
-  mode '0755'
+  owner  'root'
+  group  'root'
+  mode   '0755'
   action :create  
+end
+
+template "#{log_path}/logback.properties" do
+  source 'logback.properties.erb'
+  action :create
+  owner  'root'
+  group  'root'
+  mode   '0755'
 end
 
 supervisor_service 'lobby' do
