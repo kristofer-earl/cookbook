@@ -1,9 +1,13 @@
-include_recipe 'spiral::gameserver'
+include_recipe 'spiral::default'
+include_recipe 'supervisor'
 
 package 'maven'
 package 'ant'
 
 src_path = '/opt/src'
+log_path = '/var/log/gs'
+
+
 
 directory src_path do
   owner 'root'
@@ -50,7 +54,38 @@ execute 'compile_gameserver' do
   command 'mvn package -Dmaven.test.skip=true -Pfacebook_staging'
 end
 
+directory '/opt/gs' do
+  owner  'root'
+  group  'root'
+  mode   '0755'
+  action :create
+end
+
 execute 'install_gameserver' do
   cwd     "#{src_path}/gameserver/GameServer/target"
   command 'install -m755 GameServer-1.0-SNAPSHOT-jar-with-dependencies.jar /opt/gs/gameserver.jar'
+end
+
+directory log_path do
+  owner  'root'
+  group  'root'
+  mode   '0755'
+  action :create
+end
+
+template "#{log_path}/logback.properties" do
+  source 'logback.properties.erb'
+  action :create
+  owner  'root'
+  group  'root'
+  mode   '0755'
+end
+
+supervisor_service 'gameserver' do
+  action :enable
+  autostart true
+  user 'root'
+  directory log_path
+  environment 'HOME' => log_path
+  command "java #{node['spiral']['gameserver']['java_opts']} -jar /opt/gs/gameserver.jar"
 end
