@@ -42,5 +42,5 @@ end
 
 execute 'compile_gameserver' do
   cwd     "#{src_path}/gameserver/GameServer"
-  command 'mvn clean package -Dmaven.test.skip=true -Pfacebook_staging'
+  command 'mvn package -Dmaven.test.skip=true -Pfacebook_staging'
 end
