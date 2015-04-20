@@ -1,0 +1,13 @@
+wallet.fundTransfer_credit=http://wallet1.localdomain/api/credit
+wallet.fundTransfer_debit=http://wallet1.localdomain/api/debit
+
+facebook.merch_id=MJSNS_FACEBOOK
+facebook.merch_pwd=9F64B0B7-3417-411F-85F8-ACE65DCC449F
+
+
+iah.cashCheckHost=http://wallet1.localdomain/api
+iah.debitContext=/api/ms/debit
+iah.creditContext=/api/ms/credit
+iah.cashCheckContext=/api/ms/getbalance
+iah.cash.merch_id=mahjong_sns
+iah.cash.merch_pwd=0D3CD138-46FB-4DCC-84F5-7E3EF4DE5D93
