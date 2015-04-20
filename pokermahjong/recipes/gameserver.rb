@@ -1,5 +1,4 @@
 include_recipe 'spiral::gameserver'
-include_attribute 'pokermahjong::wallet'
 
 package 'maven'
 package 'ant'
