@@ -1,4 +1,5 @@
 include_recipe 'spiral::default'
+include_recipe 'pokermahjong::default'
 include_recipe 'supervisor'
 
 package 'maven'
