@@ -1,4 +1,4 @@
-serverConfigInfo=<%= my_ip %>_25523
+serverConfigInfo=<%= node[:network][:interfaces][:eth0][:addresses].detect{|k,v| v[:family] == "inet" }.first %>_25523
 
 playMoneyInitial=10000
 playMoneyMinimum=2000
