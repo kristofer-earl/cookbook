@@ -37,7 +37,7 @@ end
 
 execute 'setup_server_core' do
   cwd     "#{src_path}/gameserver/ServerCore"
-  command 'mvn -f pom_base.xml'
+  command 'mvn -f pom_base.xml install'
 end
 
 execute 'compile_server_core' do
