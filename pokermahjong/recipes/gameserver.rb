@@ -3,7 +3,7 @@ include_recipe 'spiral::gameserver'
 package 'maven'
 package 'ant'
 
-src_path = '/opt/deploy/gameserver'
+src_path = '/opt/src'
 
 directory src_path do
   owner 'root'
@@ -12,7 +12,7 @@ directory src_path do
   action :create
 end
 
-git src_path do
+git "#{src_path}/gameserver" do
   repository node[:gameserver][:git_repository]
   revision node[:gameserver][:revision]
   action :sync
