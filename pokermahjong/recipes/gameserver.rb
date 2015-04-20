@@ -35,6 +35,11 @@ template "#{src_path}/gameserver/ServerCore/src/main/config/facebook_staging/app
   action :create
 end
 
+execute 'setup_server_core' do
+  cwd     "#{src_path}/gameserver/ServerCore"
+  command 'mvn -f pom_base.xml'
+end
+
 execute 'compile_server_core' do
   cwd     "#{src_path}/gameserver/ServerCore"
   command 'mvn install -DskipTests=true -Pfacebook_staging'
