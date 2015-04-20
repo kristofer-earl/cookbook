@@ -37,10 +37,10 @@ end
 
 execute 'compile_server_core' do
   cwd     "#{src_path}/gameserver/ServerCore"
-  comnand 'mvn install -DskipTests=true -Pfacebook_staging'
+  command 'mvn install -DskipTests=true -Pfacebook_staging'
 end
 
 execute 'compile_gameserver' do
   cwd     "#{src_path}/gameserver/GameServer"
-  comnand 'mvn clean package -Dmaven.test.skip=true -Pfacebook_staging'
+  command 'mvn clean package -Dmaven.test.skip=true -Pfacebook_staging'
 end
