@@ -49,3 +49,8 @@ execute 'compile_gameserver' do
   cwd     "#{src_path}/gameserver/GameServer"
   command 'mvn package -Dmaven.test.skip=true -Pfacebook_staging'
 end
+
+execute 'install_gameserver' do
+  cwd     "#{src_path}/gameserver/GameServer/target"
+  command 'install -m755 GameServer-1.0-SNAPSHOT-jar-with-dependencies.jar /opt/gs/gameserver.jar'
+end
