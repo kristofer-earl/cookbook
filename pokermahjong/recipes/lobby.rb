@@ -8,8 +8,6 @@ package 'ant'
 src_path = '/opt/src'
 log_path = '/var/log/gs'
 
-
-
 directory src_path do
   owner 'root'
   group node['spiral']['users']['group']
