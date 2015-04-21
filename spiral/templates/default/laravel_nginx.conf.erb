@@ -1,0 +1,16 @@
+server {
+        listen 80 default_server;
+        listen [::]:80 default_server ipv6only=on;
+
+        server_name <%= node['laravel']['site_name'] %>;
+
+        location / {
+		root /laravel;
+		fastcgi_pass   127.0.0.1:9000;
+		# or if you used a unix socket 
+		# fastcgi_pass   unix:/var/run/hhvm/sock;
+		fastcgi_index  index.php;
+		fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
+		include        fastcgi_params;
+        }
+}
