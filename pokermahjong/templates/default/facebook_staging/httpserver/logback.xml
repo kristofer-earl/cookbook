@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<property name="LOG_HOME" value="/var/log/httpsrv" />
+	<property name="ROOT_LEVEL" value="ERROR" />
+	<property name="HS_LEVEL" value="ERROR" />
+
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} %-5level %logger{5} - %msg%n</pattern>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<maxHistory>45</maxHistory>
+			<FileNamePattern>${LOG_HOME}/HttpServer.%d{yyyy-MM-dd}.log.zip</FileNamePattern>
+		</rollingPolicy>
+	</appender>
+
+	<appender name="OTHER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} %-5level %logger{5} - %msg%n</pattern>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<maxHistory>45</maxHistory>
+			<FileNamePattern>${LOG_HOME}/other-HttpServer.%d{yyyy-MM-dd}.log.zip</FileNamePattern>
+		</rollingPolicy>
+	</appender>
+
+	<logger name="com.pkmj" level="${HS_LEVEL}" additivity="false">
+		<appender-ref ref="FILE" />
+	</logger>
+
+	<root level="${ROOT_LEVEL}">
+		<appender-ref ref="OTHER" />
+	</root>
+
+</configuration>
