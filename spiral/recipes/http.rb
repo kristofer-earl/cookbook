@@ -18,6 +18,10 @@ cookbook_file 'nginx_httpsrv_reverse_proxy.conf' do
   notifies :restart, "service[nginx]" 
 end
 
+link '/etc/nginx/sites-enabled/httpsrv' do
+  to '/etc/nginx/sites-available/httpsrv' 
+end
+
 directory '/var/log/httpsrv' do
   owner 'tomcat'
   group node['spiral']['users']['group']
