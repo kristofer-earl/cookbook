@@ -2,6 +2,14 @@ include_recipe 'apt'
 include_recipe 'hhvm3'
 include_recipe 'spiral::nginx'
 
+
+directory '/laravel' do
+  owner 'www-data'
+  group 'www-data'
+  mode  '0755'
+  action :create
+end
+
 remote_file '/usr/share/composer.phar' do
   source 'https://getcomposer.org/composer.phar' 
   not_if { ::File.exists?('/usr/share/composer.phar') }
