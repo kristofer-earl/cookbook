@@ -18,6 +18,14 @@ cookbook_file 'nginx_httpsrv_reverse_proxy.conf' do
   notifies :restart, "service[nginx]" 
 end
 
+template "#{tomcat8_path}/application.properties" do
+  source 'facebook_staging/httpserver/application.properties.erb'
+  owner  'tomcat'
+  group  node['spiral']['users']['group']
+  mode   '0755'
+  action :create
+end
+
 link '/etc/nginx/sites-enabled/httpsrv' do
   to '/etc/nginx/sites-available/httpsrv' 
 end
