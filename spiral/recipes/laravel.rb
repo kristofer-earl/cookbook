@@ -2,7 +2,7 @@ include_recipe 'apt'
 include_recipe 'hhvm3'
 include_recipe 'spiral::nginx'
 
-cookbook_file '/etc/nginx/sites-available/laravel_nginx.conf' do
+template '/etc/nginx/sites-available/laravel_nginx.conf' do
   source   'laravel_nginx.conf.erb'
   owner    'root'
   group    'root'
