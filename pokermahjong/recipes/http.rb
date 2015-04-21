@@ -1,6 +1,8 @@
 include_recipe 'spiral::nginx'
 include_recipe 'spiral::tomcat8'
 
+tomcat8_path = '/opt/tomcat8'
+
 cookbook_file 'crossdomain.xml' do
   path '/usr/share/nginx/html/crossdomain.xml'
   owner 'www-data'
