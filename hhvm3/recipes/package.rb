@@ -20,6 +20,9 @@ case node['platform_version'].to_f
   when 13.1
     release = 'saucy'
 
+  when 14.04
+    release = 'trusty'
+
   when 16
     release = 'petra'
 

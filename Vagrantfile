@@ -15,14 +15,15 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.provision "chef_solo" do |chef|
-    chef.add_recipe "spiral_java::tomcat"
+    chef.add_recipe "apt"
+    chef.add_recipe "hhvm"
     chef.cookbooks_path = "./"
 
-    chef.json = {
-      'tomcat' => {
-        'java_opts' => "-Xmx1024m -Xms512m -XX:MaxPermSize=128m"
-      }
-    }
+    #chef.json = {
+    #  'hhvm3' => {
+    #    '' => "-Xmx1024m -Xms512m -XX:MaxPermSize=128m"
+    #  }
+    #}
   end
 end
 
