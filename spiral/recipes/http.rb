@@ -15,7 +15,6 @@ cookbook_file 'nginx_httpsrv_reverse_proxy.conf' do
   group 'root'
   mode  '0755'
   action :create_if_missing
-  #verify "nginx -t -c %{path}"
   notifies :restart, "service[nginx]" 
 end
 
