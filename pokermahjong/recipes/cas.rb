@@ -49,7 +49,7 @@ end
 
 execute 'install_casbo' do
   cwd     "#{node['pokermahjong']['src_path']}/cas/userbo/target"
-  command "install -m755 userbo.war #{tomcat8_path}/webapps/userbo.war"
+  command "install -m755 userbo.war #{tomcat_path}/webapps/userbo.war"
 end
 
 execute 'compile_casfo' do
@@ -59,7 +59,7 @@ end
 
 execute 'install_casfo' do
   cwd     "#{node['pokermahjong']['src_path']}/cas/userfo/target"
-  command "install -m755 userfo.war #{tomcat8_path}/webapps/userfo.war"
+  command "install -m755 userfo.war #{tomcat_path}/webapps/userfo.war"
 end
 
 directory node['pokermahjong']['cas']['log_path'] do
