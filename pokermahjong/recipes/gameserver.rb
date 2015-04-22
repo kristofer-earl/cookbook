@@ -5,26 +5,26 @@ include_recipe 'supervisor'
 package 'maven'
 package 'ant'
 
-src_path = '/opt/src'
+node['pokermahjong']['src_path'] = '/opt/src'
 log_path = '/var/log/gs'
 
 
 
-directory src_path do
+directory node['pokermahjong']['src_path'] do
   owner 'root'
   group node['spiral']['users']['group']
   mode '0755'
   action :create
 end
 
-git "#{src_path}/gameserver" do
+git "#{node['pokermahjong']['src_path']}/gameserver" do
   repository node[:git][:repository]
   revision node[:git][:revision]
   action :sync
   #notifies :run, "bash[compile_gameserver]"
 end
 
-template "#{src_path}/gameserver/GameServer/src/main/config/facebook_staging/game_server.properties" do
+template "#{node['pokermahjong']['src_path']}/gameserver/GameServer/src/main/config/facebook_staging/game_server.properties" do
   source 'facebook_staging/gameserver/game_server.properties.erb'
   owner  'root'
   group  'root'
@@ -32,7 +32,7 @@ template "#{src_path}/gameserver/GameServer/src/main/config/facebook_staging/gam
   action :create 
 end
 
-template "#{src_path}/gameserver/ServerCore/src/main/config/facebook_staging/application.properties" do
+template "#{node['pokermahjong']['src_path']}/gameserver/ServerCore/src/main/config/facebook_staging/application.properties" do
   source 'facebook_staging/servercore/application.properties.erb'
   owner  'root'
   group  'root'
@@ -41,17 +41,17 @@ template "#{src_path}/gameserver/ServerCore/src/main/config/facebook_staging/app
 end
 
 execute 'setup_server_core' do
-  cwd     "#{src_path}/gameserver/ServerCore"
+  cwd     "#{node['pokermahjong']['src_path']}/gameserver/ServerCore"
   command 'mvn -f pom_base.xml install'
 end
 
 execute 'compile_server_core' do
-  cwd     "#{src_path}/gameserver/ServerCore"
+  cwd     "#{node['pokermahjong']['src_path']}/gameserver/ServerCore"
   command 'mvn install -DskipTests=true -Pfacebook_staging'
 end
 
 execute 'compile_gameserver' do
-  cwd     "#{src_path}/gameserver/GameServer"
+  cwd     "#{node['pokermahjong']['src_path']}/gameserver/GameServer"
   command 'mvn package -Dmaven.test.skip=true -Pfacebook_staging'
 end
 
@@ -63,7 +63,7 @@ directory '/opt/gs' do
 end
 
 execute 'install_gameserver' do
-  cwd     "#{src_path}/gameserver/GameServer/target"
+  cwd     "#{node['pokermahjong']['src_path']}/gameserver/GameServer/target"
   command 'install -m755 GameServer-1.0-SNAPSHOT-jar-with-dependencies.jar /opt/gs/gameserver.jar'
 end
 
