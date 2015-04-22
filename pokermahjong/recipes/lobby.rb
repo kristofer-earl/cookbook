@@ -5,15 +5,7 @@ include_recipe 'supervisor'
 package 'maven'
 package 'ant'
 
-src_path = '/opt/src'
 log_path = '/var/log/gs'
-
-directory src_path do
-  owner 'root'
-  group node['spiral']['users']['group']
-  mode '0755'
-  action :create
-end
 
 git "#{src_path}/lobby" do
   repository node[:git][:repository]
