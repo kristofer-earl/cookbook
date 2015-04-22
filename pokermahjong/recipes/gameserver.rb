@@ -2,9 +2,6 @@ include_recipe 'spiral::default'
 include_recipe 'pokermahjong::default'
 include_recipe 'supervisor'
 
-package 'maven'
-package 'ant'
-
 node['pokermahjong']['src_path'] = '/opt/src'
 log_path = '/var/log/gs'
 

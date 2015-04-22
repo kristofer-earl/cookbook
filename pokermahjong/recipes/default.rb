@@ -1,3 +1,6 @@
+package 'ant'
+package 'maven'
+
 cookbook_file '/root/.ssh/id_rsa' do
   source 'swcore-git.key'
   owner  'root'
