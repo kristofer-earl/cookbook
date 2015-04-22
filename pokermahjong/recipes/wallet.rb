@@ -19,7 +19,7 @@ template "#{node['pokermahjong']['src_path']}/wallet/common/src/main/resources/j
 end
 
 template "#{node['pokermahjong']['src_path']}/wallet/api/src/main/resources/log4j.properties" do
-  source 'wallet/log4j.api.properties.erb'
+  source 'wallet/log4j.properties.api.erb'
   owner  'root'
   group  'root'
   mode   '0755'
@@ -35,7 +35,7 @@ template "#{node['pokermahjong']['src_path']}/wallet/backend/src/main/resources/
 end
 
 template "#{node['pokermahjong']['src_path']}/wallet/backend/src/main/resources/log4j.properties" do
-  source 'wallet/log4j.backend.properties.erb'
+  source 'wallet/log4j.properties.backend.erb'
   owner  'root'
   group  'root'
   mode   '0755'
