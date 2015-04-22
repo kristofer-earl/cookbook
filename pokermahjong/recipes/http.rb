@@ -6,8 +6,8 @@ include_recipe 'spiral::default'
 tomcat8_path = '/opt/tomcat8'
 
 git "#{node['pokermahjong']['src_path']}/httpsrv" do
-  repository node[:git][:repository]
-  revision node[:git][:revision]
+  repository node[:git][:pokermahjong][:repository]
+  revision node[:git][:pokermahjong][:revision]
   action :sync
   #notifies :run, "bash[compile_httpsrv]"
 end
