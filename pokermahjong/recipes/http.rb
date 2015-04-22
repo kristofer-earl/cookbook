@@ -67,6 +67,7 @@ end
 execute 'install_lobby' do
   cwd     "#{src_path}/httpsrv/HttpServer/target"
   command "install -m755 HttpServer.war #{tomcat8_path}/webapps/HttpServer.war" 
+  notifies :restart, "service[tomcat8]"
 end
 
 cookbook_file 'crossdomain.xml' do
