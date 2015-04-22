@@ -38,7 +38,7 @@ template "#{node['pokermahjong']['src_path']}/httpsrv/HttpServer/src/main/config
 end
 
 template "#{node['pokermahjong']['src_path']}/httpsrv/HttpServer/src/main/config/facebook_staging/logback.xml" do
-  source 'facebook_staging/httpserver/logback.xml'
+  source 'facebook_staging/httpserver/logback.xml.erb'
   owner  'root'
   group  'root'
   mode   '0755'
