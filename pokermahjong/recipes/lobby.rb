@@ -72,6 +72,20 @@ template "#{log_path}/logback.properties" do
   mode   '0755'
 end
 
+template "#{node['pokermahjong']['src_path']}/insert_me.sql" do
+  source 'lobby_server_insert.sql.erb'
+  owner  'root'
+  group  'root'
+  mode   '0755'
+  action :create
+end
+
+rds_ip = Resolv.getaddress(node[:opsworks][:stack][:rds_instances].first[:address])
+
+execute 'db_add_lobby_server' do
+  command "mysql -u apmahjong -h #{rds_ip} --password='aza6osli' < #{node['pokermahjong']['src_path']}/insert_me.sql"
+end
+
 supervisor_service 'lobby' do
   action :enable
   autostart true
