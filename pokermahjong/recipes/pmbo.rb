@@ -18,6 +18,18 @@ template "#{node['pokermahjong']['src_path']}/pmbo/src/main/config/facebook_stag
   action :create
 end
 
+# mvn clean package -Dmaven.test.skip=true -Pfacebook_
+
+execute 'compile_pmbo' do
+  cwd     "#{node['pokermahjong']['src_path']}/pmbo"
+  command 'mvn clean package -Dmaven.test.skip=true -Pfacebook_staging'
+end
+
+execute 'install_pmbo' do
+  cwd     "#{node['pokermahjong']['src_path']}/pmbo/target"
+  command "install -m755 ROOT.war #{tomcat_path}/webapps/ROOT.war"
+end
+
 directory node['pokermahjong']['pmbo']['log_path'] do
   owner 'tomcat'
   group node['spiral']['users']['group']
