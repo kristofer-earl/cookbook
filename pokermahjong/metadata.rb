@@ -7,6 +7,5 @@ version           '0.0.1'
 
 depends 'spiral'
 
-%{ ubuntu debian }.each do |os|
-  supports os
-end
+supports 'ubuntu' 
+

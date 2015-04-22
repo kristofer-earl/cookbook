@@ -9,6 +9,4 @@ depends 'apt'
 depends 'supervisor'
 depends 'build-essential'
 
-%{ ubuntu debian }.each do |os|
-  supports os
-end
+supports 'ubuntu' 
