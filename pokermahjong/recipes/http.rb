@@ -1,7 +1,9 @@
 include_recipe 'spiral::nginx'
 include_recipe 'spiral::tomcat8'
 
+src_path = '/opt/src'
 tomcat8_path = '/opt/tomcat8'
+log_path = '/var/log/httpsrv'
 
 git "#{src_path}/httpsrv" do
   repository node[:git][:repository]
