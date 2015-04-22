@@ -1,5 +1,4 @@
 include_recipe 'pokermahjong::default'
-include_recipe 'spiral::nginx'
 include_recipe 'spiral::tomcat'
 include_recipe 'spiral::default'
 
