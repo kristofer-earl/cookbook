@@ -1,5 +1,6 @@
 include_recipe 'spiral::nginx'
 include_recipe 'spiral::tomcat8'
+include_recipe 'spiral::default'
 
 src_path = '/opt/src'
 tomcat8_path = '/opt/tomcat8'
