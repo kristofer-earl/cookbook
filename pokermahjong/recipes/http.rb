@@ -59,12 +59,12 @@ execute 'setup_server_core' do
   command 'mvn -f pom_base.xml install'
 end
 
-execute 'compile_lobby' do
+execute 'compile_httpsrv' do
   cwd     "#{node['pokermahjong']['src_path']}/httpsrv/HttpServer"
   command 'mvn package -Dmaven.test.skip=true -Pfacebook_staging'
 end
 
-execute 'install_lobby' do
+execute 'install_httpsrv' do
   cwd     "#{node['pokermahjong']['src_path']}/httpsrv/HttpServer/target"
   command "install -m755 HttpServer.war #{tomcat8_path}/webapps/HttpServer.war" 
 end
