@@ -11,7 +11,10 @@ git "#{node['pokermahjong']['src_path']}/lobby" do
   repository node[:git][:repository]
   revision node[:git][:revision]
   action :sync
-  #notifies :run, "bash[compile_lobby]"
+end
+
+cookbook_file "#{node['pokermahjong']['src_path']}/lobby/LobbyServer/src/main/config/facebook_staging/lobby_server.properties" do
+  action :delete
 end
 
 template "#{node['pokermahjong']['src_path']}/lobby/LobbyServer/src/main/config/facebook_staging/lobby_server.properties" do
@@ -20,6 +23,10 @@ template "#{node['pokermahjong']['src_path']}/lobby/LobbyServer/src/main/config/
   group  'root'
   mode   '0755'
   action :create 
+end
+
+cookbook_file "#{node['pokermahjong']['src_path']}/lobby/ServerCore/src/main/config/facebook_staging/application.properties" do
+  action :delete
 end
 
 template "#{node['pokermahjong']['src_path']}/lobby/ServerCore/src/main/config/facebook_staging/application.properties" do
@@ -64,12 +71,20 @@ directory log_path do
   action :create
 end
 
+cookbook_file "#{log_path}/logback.properties" do
+  action :delete
+end
+
 template "#{log_path}/logback.properties" do
   source 'logback.properties.erb'
   action :create
   owner  'root'
   group  'root'
   mode   '0755'
+end
+
+cookbook_file "#{node['pokermahjong']['src_path']}/insert_me.sql" do
+  action :delete
 end
 
 template "#{node['pokermahjong']['src_path']}/insert_me.sql" do
