@@ -8,8 +8,8 @@ package 'ant'
 log_path = '/var/log/gs'
 
 git "#{node['pokermahjong']['src_path']}/lobby" do
-  repository node[:git][:repository]
-  revision node[:git][:revision]
+  repository node[:git][:pokermahjong][:repository]
+  revision node[:git][[:pokermahjong]:revision]
   action :sync
 end
 
