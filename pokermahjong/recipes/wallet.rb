@@ -10,12 +10,20 @@ git "#{node['pokermahjong']['src_path']}/wallet" do
   action :sync
 end
 
+cookbook_file "#{node['pokermahjong']['src_path']}/wallet/common/src/main/resources/jdbc.properties" do
+  action :delete
+end
+
 template "#{node['pokermahjong']['src_path']}/wallet/common/src/main/resources/jdbc.properties" do
   source 'wallet/jdbc.properties.erb'
   owner  'root'
   group  'root'
   mode   '0755'
   action :create
+end
+
+cookbook_file "#{node['pokermahjong']['src_path']}/wallet/api/src/main/resources/log4j.properties" do
+  action :delete
 end
 
 template "#{node['pokermahjong']['src_path']}/wallet/api/src/main/resources/log4j.properties" do
@@ -26,12 +34,20 @@ template "#{node['pokermahjong']['src_path']}/wallet/api/src/main/resources/log4
   action :create
 end
 
+cookbook_file "#{node['pokermahjong']['src_path']}/wallet/backend/src/main/resources/cas.properties" do
+  action :delete
+end
+
 template "#{node['pokermahjong']['src_path']}/wallet/backend/src/main/resources/cas.properties" do
   source 'wallet/cas.properties.erb'
   owner  'root'
   group  'root'
   mode   '0755'
   action :create
+end
+
+cookbook_file "#{node['pokermahjong']['src_path']}/wallet/backend/src/main/resources/log4j.properties" do
+  action :delete
 end
 
 template "#{node['pokermahjong']['src_path']}/wallet/backend/src/main/resources/log4j.properties" do
