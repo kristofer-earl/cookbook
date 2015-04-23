@@ -5,7 +5,7 @@ include_recipe 'supervisor'
 package 'maven'
 package 'ant'
 
-log_path = '/var/log/gs'
+log_path = '/var/log/lobby'
 
 git "#{node['pokermahjong']['src_path']}/lobby" do
   repository node[:git][:pokermahjong][:repository]
@@ -61,7 +61,7 @@ end
 
 execute 'install_lobby' do
   cwd     "#{node['pokermahjong']['src_path']}/lobby/LobbyServer/target"
-  command 'install -m755 LobbyServer-1.0-SNAPSHOT-jar-with-dependencies.jar /opt/gs/lobby.jar'
+  command 'install -m755 LobbyServer-1.0-SNAPSHOT-jar-with-dependencies.jar /opt/lobby/lobby.jar'
 end
 
 directory log_path do
