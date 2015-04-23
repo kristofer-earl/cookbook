@@ -5,8 +5,6 @@ include_recipe 'supervisor'
 node['pokermahjong']['src_path'] = '/opt/src'
 log_path = '/var/log/gs'
 
-
-
 directory node['pokermahjong']['src_path'] do
   owner 'root'
   group node['spiral']['users']['group']
@@ -18,7 +16,10 @@ git "#{node['pokermahjong']['src_path']}/gameserver" do
   repository node[:git][:repository]
   revision node[:git][:revision]
   action :sync
-  #notifies :run, "bash[compile_gameserver]"
+end
+
+cookbook_file "#{node['pokermahjong']['src_path']}/gameserver/GameServer/src/main/config/facebook_staging/game_server.properties" do
+  action :delete
 end
 
 template "#{node['pokermahjong']['src_path']}/gameserver/GameServer/src/main/config/facebook_staging/game_server.properties" do
@@ -27,6 +28,10 @@ template "#{node['pokermahjong']['src_path']}/gameserver/GameServer/src/main/con
   group  'root'
   mode   '0755'
   action :create 
+end
+
+cookbook_file "#{node['pokermahjong']['src_path']}/gameserver/ServerCore/src/main/config/facebook_staging/application.properties" do
+  action :delete
 end
 
 template "#{node['pokermahjong']['src_path']}/gameserver/ServerCore/src/main/config/facebook_staging/application.properties" do
@@ -69,6 +74,10 @@ directory log_path do
   group  'root'
   mode   '0755'
   action :create
+end
+
+cookbook_file "#{log_path}/logback.properties" do
+  action :delete
 end
 
 template "#{log_path}/logback.properties" do

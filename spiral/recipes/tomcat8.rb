@@ -22,6 +22,11 @@ link tomcat8_path do
   not_if { ::File.exists?(tomcat8_path) }
 end
 
+execute 'tomcat8_clean' do
+  command "rm -rf #{tomcat8_path}/webapps/*"
+  action :run
+end
+
 execute 'tomcat8_chown' do
   command "chown -R tomcat:#{node['spiral']['users']['group']} #{tomcat8_path}/"
   action :run

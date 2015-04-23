@@ -1,0 +1,22 @@
+log4j.rootLogger=INFO,stdout,rolling
+
+log4j.category.catalia=ERROR
+
+log4j.appender.stdout=org.apache.log4j.ConsoleAppender
+log4j.appender.stdout.Target= System.out
+log4j.appender.stdout.layout= org.apache.log4j.PatternLayout
+log4j.appender.stdout.layout.ConversionPattern= %d{ISO8601} %-5p [%F:%L] : %m%n
+
+log4j.appender.rolling= org.apache.log4j.DailyRollingFileAppender
+log4j.appender.rolling.file= <%= node['pokermahjong']['wallet']['log_path'] %>/api.log
+log4j.appender.rolling.layout= org.apache.log4j.PatternLayout
+log4j.appender.rolling.layout.ConversionPattern=%d{yyyy-MM-dd HH:mm:ss} %p %C.%M(%L) | %m%n
+
+log4j.logger.org.springframework.jdbc=INFO
+log4j.logger.org.springframework.transaction=INFO
+log4j.logger.org.apache.commons.pool=INFO
+log4j.logger.org.apache.commons.dbcp=INFO
+log4j.logger.org.apache.commons=ERROR
+log4j.logger.org.springframework=ERROR
+log4j.logger.net.rubyeye.xmemcached=ERROR
+log4j.logger.com.google.code=ERROR
