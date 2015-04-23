@@ -8,3 +8,15 @@ apt_repository 'newrelic' do
 end
 
 package 'newrelic-sysmond'
+
+cookbook_file '/etc/newrelic/nrsysmond.cfg' do
+  action :delete
+end
+
+template '/etc/newrelic/nrsysmond.cfg' do
+  source 'nrsysmond.cfg.erb'
+  owner  'root'
+  group  'root'
+  mode   '0744'
+  action :create
+end
