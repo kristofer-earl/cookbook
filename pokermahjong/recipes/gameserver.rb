@@ -2,7 +2,6 @@ include_recipe 'spiral::default'
 include_recipe 'pokermahjong::default'
 include_recipe 'supervisor'
 
-node['pokermahjong']['src_path'] = '/opt/src'
 log_path = '/var/log/gs'
 
 directory node['pokermahjong']['src_path'] do
