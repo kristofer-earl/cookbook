@@ -5,13 +5,15 @@ package 'memcached' do
         action :install
 end
 
-template '~/cms/test.php' do
+template '/opt/cms/test.php' do
 	source 'test.php.erb'
 	mode '644'
 	owner 'www-data'
 	group 'www-data'
 end
 
-link "~/cms" do
+link "/opt/cms" do
   to "/var/www/html/cms"
 end
+
+
