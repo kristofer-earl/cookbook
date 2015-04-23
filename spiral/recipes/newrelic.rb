@@ -7,4 +7,4 @@ apt_repository 'newrelic' do
   key 'https://download.newrelic.com/548C16BF.gpg'
 end
 
-
+package 'newrelic-sysmond'
