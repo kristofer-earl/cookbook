@@ -42,9 +42,14 @@ template "#{node['pokermahjong']['src_path']}/wallet/backend/src/main/resources/
   action :create
 end
 
+execute 'remove_db_interactions' do
+  cwd     "#{node['pokermahjong']['src_path']}/wallet"
+  command 'sed -i "/build.xml/d" common/pom.xml'
+end
+
 execute 'compile_wallet' do
   cwd     "#{node['pokermahjong']['src_path']}/wallet"
-  command 'mvn clean install -DskipTests=true -Djetty.skip=true -P dev'
+  command 'mvn clean install -DskipTests=true -Djetty.skip=true'
 end
 
 execute 'install_walletapi' do
