@@ -12,3 +12,15 @@ execute 'extract_newrelic_java' do
   command 'unzip /opt/nr-java.zip' 
   not_if { ::File.exists?('/opt/newrelic/newrelic.jar') }
 end
+
+cookbook_file '/opt/newrelic/newrelic.yml' do
+  action :delete
+end
+
+template '/opt/newrelic/newrelic.yml' do
+  source 'newrelic.yml.erb'
+  owner  'root'
+  group  'root'
+  mode   '0744'
+  action :create
+end
