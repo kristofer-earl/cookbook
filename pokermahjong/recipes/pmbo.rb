@@ -10,6 +10,10 @@ git "#{node['pokermahjong']['src_path']}/pmbo" do
   action :sync
 end
 
+cookbook_file "#{node['pokermahjong']['src_path']}/pmbo/src/main/config/facebook_staging/application.properties" do
+  action :delete
+end
+
 template "#{node['pokermahjong']['src_path']}/pmbo/src/main/config/facebook_staging/application.properties" do
   source 'facebook_staging/pmbo/application.properties.erb'
   owner  'root'
