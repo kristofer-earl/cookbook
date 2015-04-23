@@ -58,6 +58,18 @@ template "#{node['pokermahjong']['src_path']}/wallet/backend/src/main/resources/
   action :create
 end
 
+cookbook_file "#{node['pokermahjong']['src_path']}/wallet/api/src/main/resources/spring-memcached.xml" do
+  action :delete
+end
+
+template "#{node['pokermahjong']['src_path']}/wallet/api/src/main/resources/spring-memcached.xml" do
+  source 'wallet/spring-memcached.xml.erb'
+  owner  'root'
+  group  'root'
+  mode   '0755'
+  action :create
+end
+
 execute 'remove_db_interactions' do
   cwd     "#{node['pokermahjong']['src_path']}/wallet"
   command 'sed -i "/build.xml/d" common/pom.xml'
