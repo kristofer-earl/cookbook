@@ -44,22 +44,12 @@ end
 
 execute 'compile_wallet' do
   cwd     "#{node['pokermahjong']['src_path']}/wallet"
-  command 'mvn clean install -DskipTests=true'
-end
-
-execute 'compile_walletapi' do
-  cwd     "#{node['pokermahjong']['src_path']}/wallet/api"
-  command 'mvn clean install -DskipTests=true'
+  command 'mvn clean install -DskipTests=true -Djetty.skip=true -P dev'
 end
 
 execute 'install_walletapi' do
   cwd     "#{node['pokermahjong']['src_path']}/wallet/api/target"
   command "install -m755 api.war #{tomcat_path}/webapps/api.war"
-end
-
-execute 'compile_walletbo' do
-  cwd     "#{node['pokermahjong']['src_path']}/wallet/backend"
-  command 'mvn clean install -DskipTests=true'
 end
 
 execute 'install_walletbo' do
