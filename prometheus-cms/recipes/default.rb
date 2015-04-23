@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: PrometheusAPI
+# Cookbook Name:: prometheus-cms
 # Recipe:: default
 #
 # Copyright 2015, YOUR_COMPANY_NAME
@@ -34,4 +34,3 @@ end
 execute 'applymcrypt' do
         command 'php5enmod mcrypt'
 end
-
