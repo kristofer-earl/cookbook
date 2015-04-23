@@ -2,11 +2,11 @@ bo.jdbc.url=jdbc:mysql://<%= Resolv.getaddress(node[:opsworks][:stack][:rds_inst
 bo.jdbc.username=apmahjong
 bo.jdbc.password=aza6osli
 
-report.jdbc.url=jdbc:mysql://<%= Resolv.getaddress(node[:opsworks][:stack][:rds_instances].first[:address]) %>.localdomain:3306/alex_pmahjong?zeroDateTimeBehavior=convertToNull&noAccessToProcedureBodies=true&autoReconnect=true
+report.jdbc.url=jdbc:mysql://<%= Resolv.getaddress(node[:opsworks][:stack][:rds_instances].first[:address]) %>:3306/alex_pmahjong?zeroDateTimeBehavior=convertToNull&noAccessToProcedureBodies=true&autoReconnect=true
 report.jdbc.username=apmahjong
 report.jdbc.password=aza6osli
 
-geoip.jdbc.url=jdbc:mysql://<%= Resolv.getaddress(node[:opsworks][:stack][:rds_instances].first[:address]) %>.localdomain:3306/geoipdb?zeroDateTimeBehavior=convertToNull
+geoip.jdbc.url=jdbc:mysql://<%= Resolv.getaddress(node[:opsworks][:stack][:rds_instances].first[:address]) %>:3306/geoipdb?zeroDateTimeBehavior=convertToNull
 geoip.jdbc.username=apmahjong
 geoip.jdbc.password=aza6osli
 
