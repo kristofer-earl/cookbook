@@ -13,8 +13,8 @@ directory node['pokermahjong']['src_path'] do
 end
 
 git "#{node['pokermahjong']['src_path']}/gameserver" do
-  repository node[:git][:repository]
-  revision node[:git][:revision]
+  repository node[:git][:pokermahjong][:repository]
+  revision node[:git][:pokermahjong][:revision]
   action :sync
 end
 
