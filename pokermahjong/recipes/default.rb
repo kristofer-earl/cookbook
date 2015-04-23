@@ -1,3 +1,5 @@
+include_recipe 'spiral::default'
+
 package 'ant'
 package 'maven'
 
