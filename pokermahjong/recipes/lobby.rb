@@ -5,11 +5,11 @@ include_recipe 'supervisor'
 package 'maven'
 package 'ant'
 
-log_path = '/var/log/gs'
+log_path = '/var/log/lobby'
 
 git "#{node['pokermahjong']['src_path']}/lobby" do
-  repository node[:git][:repository]
-  revision node[:git][:revision]
+  repository node[:git][:pokermahjong][:repository]
+  revision node[:git][:pokermahjong][:revision]
   action :sync
 end
 
@@ -61,7 +61,7 @@ end
 
 execute 'install_lobby' do
   cwd     "#{node['pokermahjong']['src_path']}/lobby/LobbyServer/target"
-  command 'install -m755 LobbyServer-1.0-SNAPSHOT-jar-with-dependencies.jar /opt/gs/lobby.jar'
+  command 'install -m755 LobbyServer-1.0-SNAPSHOT-jar-with-dependencies.jar /opt/lobby/lobby.jar'
 end
 
 directory log_path do
@@ -87,6 +87,9 @@ cookbook_file "#{node['pokermahjong']['src_path']}/insert_me.sql" do
   action :delete
 end
 
+
+rds_ip = Resolv.getaddress(node[:opsworks][:stack][:rds_instances].first[:address])
+
 template "#{node['pokermahjong']['src_path']}/insert_me.sql" do
   source 'lobby_server_insert.sql.erb'
   owner  'root'
@@ -94,8 +97,6 @@ template "#{node['pokermahjong']['src_path']}/insert_me.sql" do
   mode   '0755'
   action :create
 end
-
-rds_ip = Resolv.getaddress(node[:opsworks][:stack][:rds_instances].first[:address])
 
 execute 'db_add_lobby_server' do
   command "mysql -u apmahjong -h #{rds_ip} --password='aza6osli' < #{node['pokermahjong']['src_path']}/insert_me.sql"

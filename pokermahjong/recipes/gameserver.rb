@@ -2,7 +2,6 @@ include_recipe 'spiral::default'
 include_recipe 'pokermahjong::default'
 include_recipe 'supervisor'
 
-node['pokermahjong']['src_path'] = '/opt/src'
 log_path = '/var/log/gs'
 
 directory node['pokermahjong']['src_path'] do
@@ -13,8 +12,8 @@ directory node['pokermahjong']['src_path'] do
 end
 
 git "#{node['pokermahjong']['src_path']}/gameserver" do
-  repository node[:git][:repository]
-  revision node[:git][:revision]
+  repository node[:git][:pokermahjong][:repository]
+  revision node[:git][:pokermahjong][:revision]
   action :sync
 end
 
@@ -86,6 +85,24 @@ template "#{log_path}/logback.properties" do
   owner  'root'
   group  'root'
   mode   '0755'
+end
+
+cookbook_file "#{node['pokermahjong']['src_path']}/insert_me.sql" do
+  action :delete
+end
+
+rds_ip = Resolv.getaddress(node[:opsworks][:stack][:rds_instances].first[:address])
+
+template "#{node['pokermahjong']['src_path']}/insert_me.sql" do
+  source 'game_server_insert.sql.erb'
+  owner  'root'
+  group  'root'
+  mode   '0755'
+  action :create
+end
+
+execute 'db_add_game_server' do
+  command "mysql -u apmahjong -h #{rds_ip} --password='aza6osli' < #{node['pokermahjong']['src_path']}/insert_me.sql"
 end
 
 supervisor_service 'gameserver' do
