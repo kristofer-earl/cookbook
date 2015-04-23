@@ -91,6 +91,8 @@ cookbook_file "#{node['pokermahjong']['src_path']}/insert_me.sql" do
   action :delete
 end
 
+rds_ip = Resolv.getaddress(node[:opsworks][:stack][:rds_instances].first[:address])
+
 template "#{node['pokermahjong']['src_path']}/insert_me.sql" do
   source 'game_server_insert.sql.erb'
   owner  'root'
@@ -98,8 +100,6 @@ template "#{node['pokermahjong']['src_path']}/insert_me.sql" do
   mode   '0755'
   action :create
 end
-
-rds_ip = Resolv.getaddress(node[:opsworks][:stack][:rds_instances].first[:address])
 
 execute 'db_add_game_server' do
   command "mysql -u apmahjong -h #{rds_ip} --password='aza6osli' < #{node['pokermahjong']['src_path']}/insert_me.sql"
