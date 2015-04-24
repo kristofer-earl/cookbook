@@ -5,7 +5,7 @@ package 'memcached' do
         action :install
 end
 
-directory "/opt/cms" do
+directory '/opt/cms' do
         owner 'www-data'
         group 'www-data'
         mode '0644'
