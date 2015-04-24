@@ -7,14 +7,18 @@
 # All rights reserved - Do Not Redistribute
 #
 
-#include_recipe "php::module_mysql"
-#include_recipe "apache2::mod_php5"
+
 include_recipe "nginx"
 include_recipe "hhvm"
-#include_recipe "composer"
-#include_recipe "php5-fpm"
 
 
 package 'memcached' do
         action :install
+end
+
+directory "/opt/cms" do
+	owner 'www-data'
+	group 'www-data'
+	mode '0755'
+	action :create
 end
