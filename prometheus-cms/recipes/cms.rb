@@ -12,9 +12,12 @@ template '/opt/cms/test.php' do
 	group 'www-data'
 end
 
-link "/opt/cms/" do
-  to "/var/www/html/cms/"
-  action :create
-end
+#link '/opt/cms/' do
+#  to '/var/www/html/cms/'
+#  action :create
+#end
 
+execute "create_symlink" do
+	command 'ln -s /var/www/html/cms /opt/cms'
+end
 
