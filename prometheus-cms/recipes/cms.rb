@@ -36,6 +36,6 @@ execute "create_symlink_cmssite" do
 	not_if { ::File.exists?("/etc/nginx/sites-enabled/cms")}
 end
 
-service 'nginx'
+service 'nginx' do
 	action :restart
 end
