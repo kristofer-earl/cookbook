@@ -12,8 +12,9 @@ template '/opt/cms/test.php' do
 	group 'www-data'
 end
 
-link "/opt/cms" do
-  to "/var/www/html/cms"
+link "/opt/cms/" do
+  to "/var/www/html/cms/"
+  action :create
 end
 
 
