@@ -1,6 +1,6 @@
 include_recipe 'spiral::default'
 
-newrelic_archive_url = 'https://oss.sonatype.org/content/repositories/releases/com/newrelic/agent/java/newrelic-java/2.21.6/newrelic-java-2.21.6.zip'
+newrelic_archive_url = 'https://oss.sonatype.org/content/repositories/releases/com/newrelic/agent/java/newrelic-java/3.15.0/newrelic-java-3.15.0.zip'
 
 remote_file '/opt/nr-java.zip' do
   source newrelic_archive_url 
