@@ -24,7 +24,7 @@ end
 #	not_if { ::File.directory?("/var/www/html/cms")}
 #end
 
-link '/var/www/html/cms' do
+link '/var/www/cms' do
 	to '/opt/cms'
 	link_type :symbolic
 	action :create
@@ -41,6 +41,12 @@ end
 #        command 'ln -s /etc/nginx/sites-available/cms /etc/nginx/sites-enabled/cms'
 #	not_if { ::File.exists?("/etc/nginx/sites-enabled/cms")}
 #end
+
+link '/etc/nginx/sites-enabled/cms' do
+	to '/etc/nginx/sites-available/cms'
+	link_type :symbolic
+	action :create
+end
 
 service 'nginx' do
 	action :restart
