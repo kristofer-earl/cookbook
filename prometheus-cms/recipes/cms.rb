@@ -21,7 +21,7 @@ end
 
 execute "create_symlink_cmsdir" do
 	command 'ln -s /var/www/html/cms /opt/cms'
-	not_if { ::File.directory?("/var/www/html/cms")
+	not_if { ::File.directory?("/var/www/html/cms")}
 end
 
 template '/etc/nginx/sites-available/cms'
@@ -33,7 +33,7 @@ end
 
 execute "create_symlink_cmssite" do
         command 'ln -s /etc/nginx/sites-enabled/cms /etc/nginx/sites-availbale/cms'
-	not_if { ::File.exists?("/etc/nginx/sites-enabled/cms")
+	not_if { ::File.exists?("/etc/nginx/sites-enabled/cms")}
 end
 
 service 'nginx'
