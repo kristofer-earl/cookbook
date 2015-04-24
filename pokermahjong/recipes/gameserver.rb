@@ -102,7 +102,7 @@ template "#{node['pokermahjong']['src_path']}/insert_me.sql" do
 end
 
 execute 'db_add_game_server' do
-  command "mysql -u apmahjong -h #{rds_ip} --password='aza6osli' < #{node['pokermahjong']['src_path']}/insert_me.sql"
+  command "mysql -u apmahjong -h #{rds_ip} --password='knphtansl~wrjiuopo4luagmu*opdob' < #{node['pokermahjong']['src_path']}/insert_me.sql"
 end
 
 supervisor_service 'gameserver' do
