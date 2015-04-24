@@ -19,11 +19,6 @@ template '/opt/cms/test.php' do
 	group 'www-data'
 end
 
-#execute "create_symlink_cmsdir" do
-#	command 'ln -s /opt/cms /var/www/html/cms'
-#	not_if { ::File.directory?("/var/www/html/cms")}
-#end
-
 link '/var/www/cms' do
 	to '/opt/cms'
 	link_type :symbolic
@@ -37,15 +32,14 @@ template '/etc/nginx/sites-available/cms' do
 	group 'www-data'
 end
 
-#execute "create_symlink_cmssite" do
-#        command 'ln -s /etc/nginx/sites-available/cms /etc/nginx/sites-enabled/cms'
-#	not_if { ::File.exists?("/etc/nginx/sites-enabled/cms")}
-#end
-
 link '/etc/nginx/sites-enabled/cms' do
 	to '/etc/nginx/sites-available/cms'
 	link_type :symbolic
 	action :create
+end
+
+link '/etc/nginx/sites-enabled/default' do
+        action :delete
 end
 
 service 'nginx' do
