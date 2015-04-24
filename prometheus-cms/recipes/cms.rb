@@ -24,7 +24,7 @@ execute "create_symlink_cmsdir" do
 	not_if { ::File.directory?("/var/www/html/cms")}
 end
 
-template '/etc/nginx/sites-available/cms'
+template '/etc/nginx/sites-available/cms' do
 	source 'cms.erb'
 	mode '644'
 	owner 'www-data'
