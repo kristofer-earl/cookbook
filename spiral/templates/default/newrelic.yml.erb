@@ -12,7 +12,7 @@ common: &default_settings
   # account. For example, if your license key is 12345 use this:
   # license_key: '12345'
   # The key binds your Agent's data to your account in the New Relic service.
-  license_key: '1ed86739394ff68651132cbbb900d0627dcded77'
+  license_key: '<%= node[:newrelic][:license_key] %>'
 
   # Agent Enabled
   # Use this setting to disable the agent instead of removing it from the startup command.
@@ -27,7 +27,7 @@ common: &default_settings
   # For example, to report data to "My Application" and "My Application 2" use this:
   # app_name: My Application;My Application 2
   # This setting is required.
-  app_name: <%= node[:opsworks][:instance][:hostname] %> 
+  app_name: <%= node[:newrelic][:app_name_prefix] %>_<%= node[:opsworks][:instance][:hostname] %> 
   
   # To enable high security, set this property to true. When in high
   # security mode, the agent will use SSL and obfuscated SQL. Additionally,
