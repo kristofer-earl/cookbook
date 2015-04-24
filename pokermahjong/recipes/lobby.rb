@@ -1,4 +1,4 @@
-include_recipe 'spiral::default'
+include_recipe 'spiral::newrelic-java'
 include_recipe 'pokermahjong::default'
 include_recipe 'supervisor'
 
