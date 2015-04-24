@@ -1,8 +1,10 @@
 server {
+listen 80;
+server 127.0.0.1;
 root /var/www/cms; 
 index index.php index.html index.htm;
-access\_log /var/log/nginx/cms/access.log;
-error\_log /var/log/nginx/cms/error.log;
+access_log /var/log/nginx/cms/access.log;
+error_log /var/log/nginx/cms/error.log;
 gzip_static on;
 
 include hhvm.conf;
@@ -23,7 +25,7 @@ location ~ \..*/.*\.php$ {return 403;}
 location ~ ^/sites/.*/private/ {return 403;}
 location ~ (^|/)\. {return 403;}
 
-server_name prometheus.cms.localhost;
+server_name prometheus-cms.mtstein.net;
 
 location / {        
     try_files $uri @rewrite;

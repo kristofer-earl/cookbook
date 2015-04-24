@@ -8,13 +8,20 @@ end
 directory '/opt/cms' do
         owner 'www-data'
         group 'www-data'
-        mode '0644'
+        mode '0755'
+        action :create
+end
+
+directory '/var/log/nginx/cms' do
+        owner 'www-data'
+        group 'www-data'
+        mode '0755'
         action :create
 end
 
 template '/opt/cms/test.php' do
 	source 'test.php.erb'
-	mode '644'
+	mode '755'
 	owner 'www-data'
 	group 'www-data'
 end
@@ -27,7 +34,7 @@ end
 
 template '/etc/nginx/sites-available/cms' do
 	source 'cms.erb'
-	mode '644'
+	mode '755'
 	owner 'www-data'
 	group 'www-data'
 end
