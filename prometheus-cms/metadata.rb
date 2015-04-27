@@ -8,4 +8,3 @@ version          '0.1.0'
 
 depends 'nginx'
 depends 'hhvm'
-depends 'php5-fpm'
