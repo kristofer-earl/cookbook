@@ -11,7 +11,7 @@ include_recipe "php"
 include_recipe "nginx"
 include_recipe "hhvm"
 include_recipe "composer"
-include_recipe "php5-fpm"
+include_recipe "php5-fpm::install"
 
 
 package 'memcached' do
@@ -30,6 +30,6 @@ execute 'applymcrypt' do
         command 'php5enmod mcrypt'
 end
 
-execute 'laravel-install'
+execute 'laravel-install' do
 	command 'composer global require "laravel/installer=~1.1"'
 end
