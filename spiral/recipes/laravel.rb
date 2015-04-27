@@ -37,5 +37,5 @@ link '/etc/nginx/sites-enabled/laravel_nginx.conf' do
 end
 
 execute 'laravel_installer' do
-  command "composer global require 'laravel/installer#{node['laravel']['version']'"
+  command "composer global require 'laravel/installer#{node['laravel']['version']}'"
 end
