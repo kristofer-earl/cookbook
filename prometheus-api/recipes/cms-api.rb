@@ -7,7 +7,6 @@
 # All rights reserved - Do Not Redistribute
 #
 
-include_recipe "php"
 include_recipe "nginx"
 include_recipe "hhvm"
 include_recipe "composer"
