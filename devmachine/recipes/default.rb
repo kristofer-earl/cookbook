@@ -10,7 +10,7 @@
 include_recipe "nginx"
 include_recipe "hhvm"
 include_recipe "composer"
-include_recipe "php5-fpm"
+include_recipe "php5-fpm:install"
 
 package 'memcached' do
 	action :install
