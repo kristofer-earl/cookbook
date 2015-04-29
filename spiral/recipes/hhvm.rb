@@ -37,8 +37,8 @@ link '/etc/nginx/sites-enabled/hhvm_nginx.conf' do
   to '/etc/nginx/sites-available/hhvm_nginx.conf'
 end
 
-cookbook_file 'hhvm_server.ini' do
-  path   '/etc/hhvm/server.ini'
+cookbook_file '/etc/hhvm/hhvm_server.ini' do
+  source 'hhvm_server.ini'
   owner  'root'
   group  'root'
   action :create
