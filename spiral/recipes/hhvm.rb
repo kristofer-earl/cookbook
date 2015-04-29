@@ -36,6 +36,14 @@ link '/etc/nginx/sites-enabled/hhvm_nginx.conf' do
   to '/etc/nginx/sites-available/hhvm_nginx.conf'
 end
 
+cookbook_file 'hhvm_server.ini' do
+  path   '/etc/hhvm/server.ini'
+  owner  'root'
+  group  'root'
+  action :create
+  notifies :restart, "service[hhvm]"
+end
+
 execute 'laravel_installer' do
   command "composer global require 'laravel/installer#{node['laravel']['version']}'"
 end
