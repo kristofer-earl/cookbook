@@ -29,8 +29,8 @@ cookbook_file '/etc/php5/fpm/php.ini' do
   notifies :restart, 'service[php5-fpm]'
 end
 
-template '/etc/nginx/sites-available/nginx-php5-fpm.conf' do
-  source   'nginx-php5-fpm.conf.erb'
+template '/etc/nginx/sites-available/php5-fpm-nginx.conf' do
+  source   'php5-fpm-nginx.conf.erb'
   owner    'root'
   group    'root'
   mode     '0755'
@@ -38,7 +38,7 @@ template '/etc/nginx/sites-available/nginx-php5-fpm.conf' do
   notifies :restart, "service[nginx]"
 end
 
-link '/etc/nginx/sites-enabled/nginx-php5-fpm.conf' do
-  to '/etc/nginx/sites-available/nginx-php5-fpm.conf'
+link '/etc/nginx/sites-enabled/php5-fpm-nginx.conf' do
+  to '/etc/nginx/sites-available/php5-fpm-nginx.conf'
   notifies :restart, "service[nginx]"
 end
