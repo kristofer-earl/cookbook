@@ -32,3 +32,14 @@ cookbook_file '/etc/php5/fpm/php.ini' do
   action :create
   notifies :restart, 'service[php5-fpm]', :delayed
 end
+
+echo newrelic-php5 newrelic-php5/application-name string "My Application Name" | debconf-set-selections
+echo newrelic-php5 newrelic-php5/license-key string "0123456789abcdef0123456789abcdef01234567" | debconf-set-selections
+
+bash "debconf_newrelic" do
+  user "root"
+  code <<-EOS
+  echo newrelic-php5 newrelic-php5/license-key string #{node[:newrelic][:license_key]} | debconf-set-selections
+  echo newrelic-php5 newrelic-php5/application-name string #{node[:newrelic][:app_name_prefix]}_#{node[:opsworks][:instance][:hostname]} | debconf-set-selections
+  EOS
+end
