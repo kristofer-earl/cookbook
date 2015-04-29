@@ -26,7 +26,7 @@ cookbook_file '/etc/php5/fpm/php.ini' do
   mode  '0644'
   source 'php-fpm.ini'
   action :create
-  notifies :restart, 'service[php5-fpm]', :delayed
+  notifies :restart, 'service[php5-fpm]'
 end
 
 
