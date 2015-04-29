@@ -1,5 +1,6 @@
 include_recipe 'apt'
 include_recipe 'hhvm3'
+include_recipe 'spiral::newrelic'
 include_recipe 'spiral::nginx'
 
 
