@@ -23,8 +23,8 @@ cookbook_file '/usr/local/bin/composer' do
   action :create
 end
 
-template '/etc/nginx/sites-available/laravel_nginx.conf' do
-  source   'laravel_nginx.conf.erb'
+template '/etc/nginx/sites-available/hhvm_nginx.conf' do
+  source   'hhvm_nginx.conf.erb'
   owner    'root'
   group    'root'
   mode     '0755'
@@ -32,8 +32,8 @@ template '/etc/nginx/sites-available/laravel_nginx.conf' do
   notifies :restart, "service[nginx]"
 end
 
-link '/etc/nginx/sites-enabled/laravel_nginx.conf' do
-  to '/etc/nginx/sites-available/laravel_nginx.conf'
+link '/etc/nginx/sites-enabled/hhvm_nginx.conf' do
+  to '/etc/nginx/sites-available/hhvm_nginx.conf'
 end
 
 execute 'laravel_installer' do
