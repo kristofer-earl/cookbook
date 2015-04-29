@@ -1,0 +1,34 @@
+include_recipe 'spiral::nginx'
+include_recipe 'spiral::newrelic'
+
+package 'php5-fpm'
+package 'php5-mysql'
+package 'newrelic-php5'
+
+cookbook_file '/etc/nginx/sites-available/default' do
+  owner 'root'
+  group 'root'
+  mode  '0644'
+  source 'nginx-default.conf'
+  action :create
+  notifies :creaddte, 'link[/etc/nginx/sites-enabled/default]', :immediately
+  notifies :reload, 'service[nginx]', :delayed
+end
+
+link "/etc/nginx/sites-enabled/default" do
+  to "/etc/nginx/sites-available/default"
+end
+
+service 'php5-fpm' do
+  supports :restart => true, :reload => false
+  action :enable
+end
+
+cookbook_file '/etc/php5/fpm/php.ini' do
+  owner 'root'
+  group 'root'
+  mode  '0644'
+  source 'php-fpm.ini'
+  action :create
+  notifies :restart, 'service[php5-fpm]', :delayed
+end
