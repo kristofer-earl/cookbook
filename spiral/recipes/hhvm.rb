@@ -3,7 +3,7 @@ include_recipe 'hhvm3'
 include_recipe 'spiral::nginx'
 
 
-directory '/laravel' do
+directory '/srv/http' do
   owner 'www-data'
   group 'www-data'
   mode  '0755'
