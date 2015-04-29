@@ -24,9 +24,6 @@ service 'php5-fpm' do
   action :enable
 end
 
-echo newrelic-php5 newrelic-php5/application-name string "My Application Name" | debconf-set-selections
-echo newrelic-php5 newrelic-php5/license-key string "0123456789abcdef0123456789abcdef01234567" | debconf-set-selections
-
 bash "debconf_newrelic" do
   user "root"
   code <<-EOS
