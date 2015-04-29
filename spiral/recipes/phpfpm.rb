@@ -29,8 +29,6 @@ cookbook_file '/etc/php5/fpm/php.ini' do
   notifies :restart, 'service[php5-fpm]'
 end
 
-nginx-php5-fpm.conf
-
 template '/etc/nginx/sites-available/nginx-php5-fpm.conf' do
   source   'nginx-php5-fpm.conf.erb'
   owner    'root'
