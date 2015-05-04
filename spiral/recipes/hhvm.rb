@@ -3,6 +3,10 @@ include_recipe 'hhvm3'
 include_recipe 'spiral::newrelic'
 include_recipe 'spiral::nginx'
 
+service 'hhvm' do
+  action :enable
+  supports :status => true, :start => true, :stop => true, :restart => true
+end
 
 directory '/srv/http' do
   owner 'www-data'
