@@ -12,6 +12,24 @@ include_recipe "hhvm"
 include_recipe "composer"
 include_recipe "php5-fpm:install"
 
+package 'mysql-client-5.6' do
+	action :install
+	options '--force-yes'
+end
+
+package 'mysql-server-5.6' do
+	action :install
+        options '--force-yes'
+end
+
+package 'php5' do
+	action :install
+end
+
+package 'php5-mysql' do
+	action :install
+end
+
 package 'memcached' do
 	action :install
 end
