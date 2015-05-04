@@ -17,7 +17,7 @@ package 'mysql-client-5.6' do
 	options '--force-yes'
 end
 
-paclage 'mysql-server-5.6' do
+package 'mysql-server-5.6' do
 	action :install
         options '--force-yes'
 end
