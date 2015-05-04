@@ -3,6 +3,8 @@ include_recipe 'hhvm3'
 include_recipe 'spiral::newrelic'
 include_recipe 'spiral::nginx'
 
+package 'git'
+
 service 'hhvm' do
   action :enable
   supports :status => true, :start => true, :stop => true, :restart => true
