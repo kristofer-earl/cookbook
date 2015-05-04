@@ -50,7 +50,3 @@ cookbook_file '/etc/hhvm/hhvm_server.ini' do
   action :create
   notifies :restart, "service[hhvm]"
 end
-
-execute 'laravel_installer' do
-  command "composer global require 'laravel/installer#{node['laravel']['version']}'"
-end
