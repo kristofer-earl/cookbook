@@ -1,0 +1,3 @@
+{
+  "run_list": [ "recipe[hhvm3]", "recipe[spiral::hhvm]" ]
+}
