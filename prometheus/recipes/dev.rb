@@ -1,12 +1,11 @@
 #
-# Cookbook Name:: devmachine
-# Recipe:: default
+# Cookbook Name:: prometheus
+# Recipe:: dev
 #
-# Copyright 2015, YOUR_COMPANY_NAME
+# Copyright 2015, SpiralWorks
 #
 # All rights reserved - Do Not Redistribute
 #
-
 include_recipe "nginx"
 include_recipe "hhvm"
 include_recipe "composer"

@@ -1,3 +1,12 @@
+#
+# Cookbook Name:: prometheus
+# Recipe:: cms
+#
+# Copyright 2015, SpiralWorks
+#
+# All rights reserved - Do Not Redistribute
+#
+
 include_recipe "nginx"
 include_recipe "hhvm"
 
