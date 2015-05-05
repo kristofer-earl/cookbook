@@ -1,11 +1,11 @@
 #
-# Cookbook Name:: prometheus-api
-# Recipe:: cms-api
+# Cookbook Name:: prometheus
+# Recipe:: web
 #
-# Copyright 2015, YOUR_COMPANY_NAME
+# Copyright 2015, SpiralWorks
 #
 # All rights reserved - Do Not Redistribute
-#
+# 
 
 include_recipe "nginx"
 include_recipe "hhvm"
