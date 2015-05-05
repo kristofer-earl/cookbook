@@ -9,8 +9,8 @@
 include_recipe "nginx"
 include_recipe "hhvm"
 include_recipe "composer"
-include_recipe "php5-fpm:install"
-include_recipe "php5"
+include_recipe "php5-fpm::install"
+include_recipe "php"
 
 package 'mysql-client-5.6' do
 	action :install
