@@ -9,6 +9,7 @@
 
 include_recipe "nginx"
 include_recipe "hhvm"
+include_recipe "php5-fpm::install"
 
 package 'memcached' do
         action :install
