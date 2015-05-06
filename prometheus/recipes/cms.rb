@@ -82,3 +82,5 @@ end
 service 'nginx' do
         action :restart
 end
+
+include_recipe "capistrano::install"
