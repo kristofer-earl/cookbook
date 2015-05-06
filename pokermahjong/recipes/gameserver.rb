@@ -41,6 +41,19 @@ template "#{node['pokermahjong']['src_path']}/gameserver/ServerCore/src/main/con
   action :create
 end
 
+
+cookbook_file "#{node['pokermahjong']['src_path']}/lobby/ServerCore/src/main/resources/application.properties" do
+  action :delete
+end
+
+template "#{node['pokermahjong']['src_path']}/lobby/ServerCore/src/main/resources/application.properties" do
+  source 'facebook_staging/servercore/application.properties.erb'
+  owner  'root'
+  group  'root'
+  mode   '0755'
+  action :create
+end
+
 execute 'setup_server_core' do
   cwd     "#{node['pokermahjong']['src_path']}/gameserver/ServerCore"
   command 'mvn -f pom_base.xml install'
