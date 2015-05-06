@@ -1,0 +1,4 @@
+host.local_ip=<%= node[:opsworks][:instance][:private_ip] %>
+host.external_ip=<%= node[:opsworks][:instance][:ip] %>
+host.external_fqdn=<%= node[:opsworks][:instance][:public_dns_name] %>
+host.local_fqdn=<%= node[:opsworks][:instance][:private_dns_name] %>
