@@ -1,5 +1,5 @@
 developer.name=apmahjong
-jdbc.database=apmahjong_wallet
+jdbc.database=alex_pmahjong_wallet
 master.host=<%= Resolv.getaddress(node[:opsworks][:stack][:rds_instances].first[:address]) %>
 slave.host=${master.host}
 jdbc.driver=com.mysql.jdbc.Driver
