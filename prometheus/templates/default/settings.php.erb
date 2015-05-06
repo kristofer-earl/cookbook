@@ -5,13 +5,13 @@ $databases = array (
   array (
     'default' => 
     array (
-      'database' => 'cms_integration',
-      'username' => 'root',
-      'password' => '',
-      'host' => 'localhost',
-      'port' => '',
-      'driver' => 'mysql',
-      'prefix' => '',
+      'database' => <%= node['prometheus']['cms_db_name'] %>,
+      'username' => <%= node['prometheus']['cms_db_user'] %>,
+      'password' => <%= node['prometheus']['cms_db_pass'] %>,
+      'host' => <%= node['prometheus']['cms_db_host'] %>,
+      'port' => <%= node['prometheus']['cms_db_port'] %>,
+      'driver' => <%= node['prometheus']['cms_db_driver'] %>,
+      'prefix' => <%= node['prometheus']['cms_db_prefix'] %>,
     ),
   ),
 );
