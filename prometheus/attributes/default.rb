@@ -1,0 +1,7 @@
+default[cms][db_host] = 'localhost'
+default[cms][db_name] = 'cms'
+default[cms][db_port] = '3306'
+default[cms][db_user] = 'root'
+default[cms][db_pass] = ''
+default[cms][db_driver] = 'mysql'
+default[cms][db_prefix] = ''

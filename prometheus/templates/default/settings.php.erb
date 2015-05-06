@@ -5,13 +5,13 @@ $databases = array (
   array (
     'default' => 
     array (
-      'database' => 'cms_integration',
-      'username' => 'root',
-      'password' => '',
-      'host' => 'localhost',
-      'port' => '',
-      'driver' => 'mysql',
-      'prefix' => '',
+      'database' => <%= node['cms']['db_name'] %>,
+      'username' => <%= node['cms']['db_user'] %>,
+      'password' => <%= node['cms']['db_pass'] %>,
+      'host' => <%= node['cms']['db_host'] %>,
+      'port' => <%= node['cms']['db_port'] %>,
+      'driver' => <%= node['cms']['db_driver'] %>,
+      'prefix' => <%= node['cms']['db_prefix'] %>,
     ),
   ),
 );

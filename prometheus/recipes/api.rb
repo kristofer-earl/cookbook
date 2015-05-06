@@ -32,3 +32,16 @@ end
 execute 'laravel-install' do
 	command 'composer global require "laravel/installer=~1.1"'
 end
+
+template '/etc/nginx/sites-available/api' do
+	source 'api.erb'
+	mode '755'
+	owner 'www-data'
+	group 'www-data'
+end
+
+link '/etc/nginx/sites-enabled/api' do
+	to '/etc/nginx/sites-available/api'
+	link_type :symbolic
+	action :create
+end

@@ -15,7 +15,7 @@ package 'memcached' do
         action :install
 end
 
-directory '/opt/cms' do
+directory '/var/www/cms' do
         owner 'www-data'
         group 'www-data'
         mode '0755'
@@ -34,12 +34,6 @@ template '/opt/cms/test.php' do
 	mode '755'
 	owner 'www-data'
 	group 'www-data'
-end
-
-link '/var/www/cms' do
-	to '/opt/cms'
-	link_type :symbolic
-	action :create
 end
 
 template '/etc/nginx/sites-available/cms' do
