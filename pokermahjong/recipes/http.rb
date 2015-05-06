@@ -54,11 +54,11 @@ template "#{node['pokermahjong']['src_path']}/httpsrv/ServerCore/src/main/config
 end
 
 
-cookbook_file "#{node['pokermahjong']['src_path']}/lobby/ServerCore/src/main/resources/application.properties" do
+cookbook_file "#{node['pokermahjong']['src_path']}/httpsrv/ServerCore/src/main/resources/application.properties" do
   action :delete
 end
 
-template "#{node['pokermahjong']['src_path']}/lobby/ServerCore/src/main/resources/application.properties" do
+template "#{node['pokermahjong']['src_path']}/httpsrv/ServerCore/src/main/resources/application.properties" do
   source 'facebook_staging/servercore/application.properties.erb'
   owner  'root'
   group  'root'
