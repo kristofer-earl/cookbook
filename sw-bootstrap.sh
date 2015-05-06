@@ -12,8 +12,11 @@ mkdir chef-repo/.chef
 curd=$(pwd)
 echo "cookbook_path [ '$curd/chef-repo/cookbooks' ]" > chef-repo/.chef/knife.rb
 printf "file_cache_path \"$curd/chef-solo\"\ncookbook_path \"$curd/chef-repo/cookbooks\"" > chef-repo/solo.rb
-echo "{ \"run_list\": [ \"recipe[devmachine]\" ]}" > chef-repo/default.json
+echo "{ \"run_list\": [ \"recipe[prometheus::dev]\" ]}" > chef-repo/dev.json
+echo "{ \"run_list\": [ \"recipe[prometheus::cms]\" ]}" > chef-repo/cms.json
+echo "{ \"run_list\": [ \"recipe[prometheus::api]\" ]}" > chef-repo/api.json
+echo "{ \"run_list\": [ \"recipe[prometheus::web]\" ]}" > chef-repo/web.json
 cd chef-repo/
 rm -rf cookbooks
 mv ../Yggdrasil cookbooks
-chef-solo -c solo.rb -j default.json
+chef-solo -c solo.rb -j $1
