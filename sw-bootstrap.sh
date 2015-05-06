@@ -16,6 +16,7 @@ echo "{ \"run_list\": [ \"recipe[prometheus::dev]\" ]}" > chef-repo/dev.json
 echo "{ \"run_list\": [ \"recipe[prometheus::cms]\" ]}" > chef-repo/cms.json
 echo "{ \"run_list\": [ \"recipe[prometheus::api]\" ]}" > chef-repo/api.json
 echo "{ \"run_list\": [ \"recipe[prometheus::web]\" ]}" > chef-repo/web.json
+echo "{ \"run_list\": [ \"recipe[capistrano::install]\" ]}" > chef-repo/cap.json
 cd chef-repo/
 rm -rf cookbooks
 mv ../Yggdrasil cookbooks
