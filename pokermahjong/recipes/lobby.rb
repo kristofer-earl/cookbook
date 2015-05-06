@@ -83,25 +83,6 @@ template "#{log_path}/logback.properties" do
   mode   '0755'
 end
 
-cookbook_file "#{node['pokermahjong']['src_path']}/insert_me.sql" do
-  action :delete
-end
-
-
-rds_ip = Resolv.getaddress(node[:opsworks][:stack][:rds_instances].first[:address])
-
-template "#{node['pokermahjong']['src_path']}/insert_me.sql" do
-  source 'lobby_server_insert.sql.erb'
-  owner  'root'
-  group  'root'
-  mode   '0755'
-  action :create
-end
-
-execute 'db_add_lobby_server' do
-  command "mysql -u apmahjong -h #{rds_ip} --password='knphtansl~wrjiuopo4luagmu*opdob' < #{node['pokermahjong']['src_path']}/insert_me.sql"
-end
-
 supervisor_service 'lobby' do
   action :enable
   autostart true
