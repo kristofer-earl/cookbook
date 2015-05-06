@@ -1,5 +1,5 @@
-developer.name=pmahjong
-jdbc.database=pmahjong_wallet
+developer.name=apmahjong
+jdbc.database=apmahjong_wallet
 master.host=<%= Resolv.getaddress(node[:opsworks][:stack][:rds_instances].first[:address]) %>
 slave.host=${master.host}
 jdbc.driver=com.mysql.jdbc.Driver
@@ -7,4 +7,4 @@ jdbc.class.name=com.mysql.jdbc.jdbc2.optional.MysqlDataSource
 jdbc.master.url=jdbc:mysql://${master.host}/${jdbc.database}?autoReconnect=true
 jdbc.slave.url=jdbc:mysql://${slave.host}/${jdbc.database}?autoReconnect=true
 jdbc.username=${developer.name}
-jdbc.password=axk1prrnx2iu7JUnWtjZRMEh2GukGh1wK3zaVelVEyO5T8blgfA3Jg==
+jdbc.password=lGtJGqk+jsT4mt2wSxeh0LQm/C+Mu9B6
