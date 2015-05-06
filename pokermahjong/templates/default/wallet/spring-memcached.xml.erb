@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:cache="http://www.springframework.org/schema/cache"
+	xsi:schemaLocation="
+           http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.2.xsd
+           http://www.springframework.org/schema/cache 
+           http://www.springframework.org/schema/cache/spring-cache-3.2.xsd">
+
+
+	<cache:annotation-driven />
+
+	<!-- Custom expiration time -->
+	<bean name="cacheManager" class="com.google.code.ssm.spring.ExtendedSSMCacheManager">
+		<property name="caches">
+			<set>
+				<ref bean="cache" />
+			</set>
+		</property>
+	</bean>
+
+	<bean name="cache" class="com.google.code.ssm.spring.SSMCache">
+		<constructor-arg name="cache" index="0" ref="defaultCache" />
+		<!-- one week -->
+		<constructor-arg name="expiration" index="1" value="604800" />
+		<!-- @CacheEvict(..., "allEntries" = true) doesn't work -->
+		<constructor-arg name="allowClear" index="2" value="true" />
+	</bean>
+
+	<bean name="defaultCache" class="com.google.code.ssm.CacheFactory">
+		<property name="cacheName" value="defaultCache" />
+		<property name="cacheClientFactory">
+			<bean name="cacheClientFactory"
+				class="com.google.code.ssm.providers.xmemcached.MemcacheClientFactoryImpl" />
+		</property>
+		<property name="addressProvider">
+			<bean class="com.google.code.ssm.config.DefaultAddressProvider">
+				<property name="address" value="<%= node[:opsworks][:layers][:memcached].first[:ip] %>:11211" />
+			</bean>
+		</property>
+		<property name="configuration">
+			<bean class="com.google.code.ssm.providers.CacheConfiguration">
+				<property name="consistentHashing" value="true" />
+			</bean>
+		</property>
+	</bean>
+</beans>

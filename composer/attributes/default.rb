@@ -5,7 +5,11 @@
 # Copyright 2012-2014, Escape Studios
 #
 
+<<<<<<< HEAD
 # include_attribute 'php'
+=======
+#include_attribute 'php'
+>>>>>>> a65af26f71a969d1305a5c7c7c07eaee3f14b675
 
 if node['platform'] == 'windows'
   default['composer']['url'] = 'https://getcomposer.org/Composer-Setup.exe'

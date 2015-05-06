@@ -1,0 +1,10 @@
+INSERT INTO alex_pmahjong.game_server_info
+(SERVER_NAME, INTERNAL_IP, NO_OF_ACTORS, ACTIVE, AKKA_PORT)
+VALUES
+(
+'<%= node[:opsworks][:instance][:hostname] %>',
+'<%= node[:network][:interfaces][:eth0][:addresses].detect{|k,v| v[:family] == "inet" }.first %>',
+0,
+1,
+25527
+);

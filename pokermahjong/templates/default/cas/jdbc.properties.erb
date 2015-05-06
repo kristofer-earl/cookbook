@@ -1,0 +1,22 @@
+developer.name=pmahjong
+jdbc.database=pmahjong_userdb
+master.host=<%= Resolv.getaddress(node[:opsworks][:stack][:rds_instances].first[:address]) %>
+slave.host=<%= Resolv.getaddress(node[:opsworks][:stack][:rds_instances].first[:address]) %>
+jdbc.driver=com.mysql.jdbc.Driver
+jdbc.class.name=com.mysql.jdbc.jdbc2.optional.MysqlDataSource
+jdbc.master.url=jdbc:mysql://${master.host}/${jdbc.database}?autoReconnect=true
+jdbc.slave.url=jdbc:mysql://${slave.host}/${jdbc.database}?autoReconnect=true
+jdbc.username=${developer.name}
+jdbc.password=SNOzGQUyC9q0wjk9/Pd+zWkfCGoXSz8rNjOo/JoYpzLu7mxW5XN8Sw==
+
+dbcp.maximumPoolSize=10
+
+dbcp.minimumIdle=2
+dbcp.connectionTimeout=30000
+dbcp.idleTimeout=60000
+dbcp.maxLifetime=600000
+dbcp.connectionTestQuery=/* ping */ SELECT 1
+dbcp.dataSource.cachePrepStmts=true
+dbcp.dataSource.prepStmtCacheSize=300
+dbcp.dataSource.prepStmtCacheSqlLimit=2048
+dbcp.dataSource.useServerPrepStmts=true

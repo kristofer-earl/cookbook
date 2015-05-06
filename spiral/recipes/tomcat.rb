@@ -3,6 +3,7 @@ include_recipe 'build-essential'
 include_recipe 'python'
 include_recipe 'supervisor'
 include_recipe 'spiral::default'
+include_recipe 'spiral::newrelic-java'
 
 dl_location = "/opt/tomcat-#{node['spiral']['tomcat']['version']}.tar.gz"
 tomcat_path = "/opt/tomcat"
@@ -20,6 +21,11 @@ end
 link tomcat_path do
   to "/opt/apache-tomcat-#{node['spiral']['tomcat']['version']}"
   not_if { ::File.exists?(tomcat_path) }
+end
+
+execute 'tomcat_clean' do
+  command "rm -rf #{tomcat_path}/webapps/*"
+  action :run
 end
 
 execute 'tomcat_chown' do

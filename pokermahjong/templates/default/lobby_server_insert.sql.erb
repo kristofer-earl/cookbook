@@ -1,0 +1,27 @@
+DELETE FROM alex_pmahjong.lobby_server_info WHERE 
+SERVER_NAME = '<%= node[:opsworks][:instance][:hostname] %>' AND
+INTERNAL_IP = '<%= node[:network][:interfaces][:eth0][:addresses].detect{|k,v| v[:family] == "inet" }.first %>';
+
+INSERT INTO alex_pmahjong.lobby_server_info
+(SERVER_NAME, NO_OF_CONNECTIONS, INTERNAL_IP, ACTIVE, SOCKET_PORT, AKKA_PORT)
+VALUES
+(
+'<%= node[:opsworks][:instance][:hostname] %>',
+0
+,
+'<%= node[:network][:interfaces][:eth0][:addresses].detect{|k,v| v[:family] == "inet" }.first %>',
+1,
+10010,
+25523
+);
+
+DELETE FROM alex_pmahjong.ip_domain_mapping WHERE
+INTERNAL_IP = '<%= node[:network][:interfaces][:eth0][:addresses].detect{|k,v| v[:family] == "inet" }.first %>';
+
+INSERT INTO alex_pmahjong.ip_domain_mapping
+(INTERNAL_IP, DOMAIN)
+VALUES
+(
+'<%= node[:network][:interfaces][:eth0][:addresses].detect{|k,v| v[:family] == "inet" }.first %>',
+'<%= node[:opsworks][:instance][:public_dns_name] %>'
+);
