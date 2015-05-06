@@ -1,4 +1,4 @@
-include_recipe 'spiral::default'
+include_recipe 'spiral::newrelic-java'
 include_recipe 'pokermahjong::default'
 include_recipe 'supervisor'
 
@@ -30,6 +30,18 @@ cookbook_file "#{node['pokermahjong']['src_path']}/lobby/ServerCore/src/main/con
 end
 
 template "#{node['pokermahjong']['src_path']}/lobby/ServerCore/src/main/config/facebook_staging/application.properties" do
+  source 'facebook_staging/servercore/application.properties.erb'
+  owner  'root'
+  group  'root'
+  mode   '0755'
+  action :create
+end
+
+cookbook_file "#{node['pokermahjong']['src_path']}/lobby/ServerCore/src/main/resources/application.properties" do
+  action :delete
+end
+
+template "#{node['pokermahjong']['src_path']}/lobby/ServerCore/src/main/resources/application.properties" do
   source 'facebook_staging/servercore/application.properties.erb'
   owner  'root'
   group  'root'
@@ -81,25 +93,6 @@ template "#{log_path}/logback.properties" do
   owner  'root'
   group  'root'
   mode   '0755'
-end
-
-cookbook_file "#{node['pokermahjong']['src_path']}/insert_me.sql" do
-  action :delete
-end
-
-
-rds_ip = Resolv.getaddress(node[:opsworks][:stack][:rds_instances].first[:address])
-
-template "#{node['pokermahjong']['src_path']}/insert_me.sql" do
-  source 'lobby_server_insert.sql.erb'
-  owner  'root'
-  group  'root'
-  mode   '0755'
-  action :create
-end
-
-execute 'db_add_lobby_server' do
-  command "mysql -u apmahjong -h #{rds_ip} --password='aza6osli' < #{node['pokermahjong']['src_path']}/insert_me.sql"
 end
 
 supervisor_service 'lobby' do

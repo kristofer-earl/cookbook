@@ -8,5 +8,6 @@ version           '0.0.1'
 depends 'apt'
 depends 'supervisor'
 depends 'build-essential'
+depends 'hhvm3'
 
 supports 'ubuntu' 
