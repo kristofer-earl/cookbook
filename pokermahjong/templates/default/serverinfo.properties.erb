@@ -3,7 +3,7 @@ host.local_fqdn=<%= node[:opsworks][:instance][:private_dns_name] %>
 host.external_ip=<%= node[:opsworks][:instance][:ip] %>
 
 <% if node[:opsworks][:layers]["#{node[:pokermahjong][:my_layer]}"].has_key?('elb-load-balancers') -%>
-host.external_fqdn=<%= node[:opsworks][:layers][:cas]['elb-load-balancers'].first[:dns_name].downcase %>
+host.external_fqdn=<%= node[:opsworks][:layers]["#{node[:pokermahjong][:my_layer]}"]['elb-load-balancers'].first[:dns_name].downcase %>
 <% else -%>
 host.external_fqdn=<%= node[:opsworks][:instance][:public_dns_name] %>
 <% end -%>
