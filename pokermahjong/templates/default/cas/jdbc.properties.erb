@@ -1,5 +1,5 @@
-developer.name=pmahjong
-jdbc.database=pmahjong_userdb
+developer.name=apmahjong
+jdbc.database=alex_pmahjong_userdb
 master.host=<%= Resolv.getaddress(node[:opsworks][:stack][:rds_instances].first[:address]) %>
 slave.host=<%= Resolv.getaddress(node[:opsworks][:stack][:rds_instances].first[:address]) %>
 jdbc.driver=com.mysql.jdbc.Driver
@@ -7,7 +7,7 @@ jdbc.class.name=com.mysql.jdbc.jdbc2.optional.MysqlDataSource
 jdbc.master.url=jdbc:mysql://${master.host}/${jdbc.database}?autoReconnect=true
 jdbc.slave.url=jdbc:mysql://${slave.host}/${jdbc.database}?autoReconnect=true
 jdbc.username=${developer.name}
-jdbc.password=SNOzGQUyC9q0wjk9/Pd+zWkfCGoXSz8rNjOo/JoYpzLu7mxW5XN8Sw==
+jdbc.password=mGpZWZx1+ZYFtoTx5l/9bRo+yazqv7Yg
 
 dbcp.maximumPoolSize=10
 

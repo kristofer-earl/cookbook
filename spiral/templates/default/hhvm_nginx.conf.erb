@@ -5,7 +5,7 @@ server {
         server_name <%= node['laravel']['site_name'] %>;
 
         location / {
-		root /laravel;
+		root /srv/http;
 		fastcgi_pass   127.0.0.1:9000;
 		# or if you used a unix socket 
 		# fastcgi_pass   unix:/var/run/hhvm/sock;
