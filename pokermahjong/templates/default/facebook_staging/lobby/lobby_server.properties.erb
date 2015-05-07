@@ -1,4 +1,4 @@
-serverConfigInfo=<%= node[:network][:interfaces][:eth0][:addresses].detect{|k,v| v[:family] == "inet" }.first %>_25523
+serverConfigInfo=<%= node[:network][:interfaces][:eth0][:addresses].detect{|k,v| v[:family] == "inet" }.first %>_25523_10010
 
 playMoneyInitial=10000
 playMoneyMinimum=2000
@@ -7,3 +7,5 @@ kickOutDisconnectedUserTime(m)=5
 maxBetTimeInFastTable(s)=5
 
 broadcastMiniTableUpdateTime(s)=2
+
+resetGameUser=false
