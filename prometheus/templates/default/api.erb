@@ -1,13 +1,11 @@
 server {
 listen 80;
 
-root /var/www/api; 
+root /srv/http/api; 
 index index.php index.html index.htm;
-access_log /var/log/nginx/api/access.log;
-error_log /var/log/nginx/api/error.log;
+access_log /var/log/nginx/api_access.log;
+error_log /var/log/nginx/api_error.log;
 gzip_static on;
-
-include hhvm.conf;
 
 location = /favicon.ico {
     log_not_found off;
