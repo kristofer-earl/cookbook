@@ -3,6 +3,7 @@ include_recipe 'spiral::newrelic'
 
 package 'php5-cli'
 package 'php5-fpm'
+package 'php5-mcrypt'
 package 'php5-mysql'
 package 'newrelic-php5'
 
@@ -16,6 +17,16 @@ end
 service 'php5-fpm' do
   supports :restart => true, :reload => false
   action :enable
+end
+
+link '/etc/php5/mods-available/mcrypt.ini' do
+  to '/etc/php5/cli/conf.d/99-mcrypt.ini'
+  not_if { ::File.exists?(tomcat_path) }
+end
+
+link '/etc/php5/mods-available/mcrypt.ini' do
+  to '/etc/php5/fpm/conf.d/99-mcrypt.ini'
+  not_if { ::File.exists?(tomcat_path) }
 end
 
 bash "debconf_newrelic" do
@@ -46,8 +57,8 @@ template '/etc/php5/mods-available/newrelic.ini' do
   notifies :restart, 'service[php5-fpm]'
 end
 
-remote_file '/usr/local/bin/composer.phar' do
-  source 'https://getcomposer.org/composer'
+remote_file '/usr/local/bin/composer' do
+  source 'https://getcomposer.org/composer.phar'
   owner  'root'
   group  'root'
   mode   '0755'
