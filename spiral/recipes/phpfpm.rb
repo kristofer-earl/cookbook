@@ -6,9 +6,9 @@ package 'php5-mysql'
 package 'newrelic-php5'
 
 directory '/srv/http' do
-  owner 'www-data'
+  owner 'deploy'
   group 'www-data'
-  mode  '0755'
+  mode  '0766'
   action :create
 end
 
@@ -43,6 +43,14 @@ template '/etc/php5/mods-available/newrelic.ini' do
   mode   '0644'
   action :create
   notifies :restart, 'service[php5-fpm]'
+end
+
+remote_file '/usr/local/bin/composer.phar' do
+  source 'https://getcomposer.org/composer.phar'
+  owner  'root'
+  group  'root'
+  mode   '0755'
+  not_if { ::File.exists?('/usr/local/bin/composer.phar') }
 end
 
 template '/etc/nginx/sites-available/php5-fpm-nginx.conf' do
