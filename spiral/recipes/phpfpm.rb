@@ -6,9 +6,9 @@ package 'php5-mysql'
 package 'newrelic-php5'
 
 directory '/srv/http' do
-  owner 'www-data'
+  owner 'deploy'
   group 'www-data'
-  mode  '0755'
+  mode  '0766'
   action :create
 end
 
