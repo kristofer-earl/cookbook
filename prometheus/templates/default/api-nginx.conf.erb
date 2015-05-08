@@ -27,30 +27,33 @@ server {
 	# Make site accessible from http://localhost/
 	server_name localhost;
 
-location / {
-    try_files $uri @rewrite;
-}
+	location / {
+		try_files $uri @rewrite;
+	}
 
-location @rewrite {
-    rewrite ^ /index.php;
-}
+	location @rewrite {
+		rewrite ^ /index.php;
+	}
 
-location ~ \.php$ {
-    fastcgi_split_path_info ^(.+\.php)(/.+)$;
-    include fastcgi_params;
-    fastcgi_param SCRIPT_FILENAME $request_filename;
-    fastcgi_intercept_errors on;
-    fastcgi_pass unix:/var/run/php5-fpm.sock;
-    fastcgi_index index.php;
-}
+	location ~ \.php$ {
+		fastcgi_split_path_info ^(.+\.php)(/.+)$;
+		include fastcgi_params;
+		fastcgi_param SCRIPT_FILENAME $request_filename;
+		fastcgi_intercept_errors on;
+		fastcgi_pass unix:/var/run/php5-fpm.sock;
+		fastcgi_index index.php;
+	}
 
-location ~ ^/sites/.*/files/styles/ {
-    try_files $uri @rewrite;
-}
+	location ~ ^/sites/.*/files/styles/ {
+		try_files $uri @rewrite;
+	}
 
-location ~* \.(js|css|png|jpg|jpeg|gif|ico)$ {
-    expires max;
-    log_not_found off;
-}
-location ~ /\.ht {deny all;}
+	location ~* \.(js|css|png|jpg|jpeg|gif|ico)$ {
+		expires max;
+		log_not_found off;
+	}
+
+	location ~ /\.ht {
+		deny all;
+	}
 }
