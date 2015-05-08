@@ -10,3 +10,17 @@ cookbook_file 'web-deploy.pub' do
   mode  '0600'
   action :create
 end
+
+template '/etc/nginx/sites-available/web-nginx.conf' do
+  source   'web-nginx.conf.erb'
+  owner    'root'
+  group    'root'
+  mode     '0755'
+  action   :create
+  notifies :restart, "service[nginx]"
+end
+
+link '/etc/nginx/sites-enabled/web-nginx.conf' do
+  to '/etc/nginx/sites-available/web-nginx.conf'
+  notifies :restart, "service[nginx]"
+end
