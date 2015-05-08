@@ -5,6 +5,13 @@ package 'php5-fpm'
 package 'php5-mysql'
 package 'newrelic-php5'
 
+directory '/srv/http' do
+  owner 'www-data'
+  group 'www-data'
+  mode  '0755'
+  action :create
+end
+
 service 'php5-fpm' do
   supports :restart => true, :reload => false
   action :enable
