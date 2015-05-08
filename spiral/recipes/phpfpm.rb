@@ -62,17 +62,3 @@ remote_file '/usr/local/bin/composer' do
   mode   '0755'
   not_if { ::File.exists?('/usr/local/bin/composer.phar') }
 end
-
-template '/etc/nginx/sites-available/php5-fpm-nginx.conf' do
-  source   'php5-fpm-nginx.conf.erb'
-  owner    'root'
-  group    'root'
-  mode     '0755'
-  action   :create
-  notifies :restart, "service[nginx]"
-end
-
-link '/etc/nginx/sites-enabled/php5-fpm-nginx.conf' do
-  to '/etc/nginx/sites-available/php5-fpm-nginx.conf'
-  notifies :restart, "service[nginx]"
-end
