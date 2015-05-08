@@ -19,12 +19,12 @@ service 'php5-fpm' do
   action :enable
 end
 
-link '/etc/php5/mods-available/mcrypt.ini' do
-  to '/etc/php5/cli/conf.d/99-mcrypt.ini'
+link '/etc/php5/cli/conf.d/99-mcrypt.ini' do
+  to '/etc/php5/mods-available/mcrypt.ini'
 end
 
-link '/etc/php5/mods-available/mcrypt.ini' do
-  to '/etc/php5/fpm/conf.d/99-mcrypt.ini'
+link '/etc/php5/fpm/conf.d/99-mcrypt.ini' do
+  to '/etc/php5/mods-available/mcrypt.ini'
 end
 
 bash "debconf_newrelic" do
