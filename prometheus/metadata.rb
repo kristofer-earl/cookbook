@@ -1,4 +1,4 @@
-name              'Premetheus'
+name              'Prometheus'
 maintainer        'Spiralworks Core'
 maintainer_email  'devops@spiralwks.com'
 license           'Private'
