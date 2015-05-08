@@ -1,47 +1,47 @@
 #
 # Cookbook Name:: prometheus
-# Recipe:: api
+# Recipe:: dev
 #
 # Copyright 2015, SpiralWorks
 #
 # All rights reserved - Do Not Redistribute
 #
-
 include_recipe "nginx"
 include_recipe "hhvm"
 include_recipe "composer"
 include_recipe "php5-fpm::install"
+include_recipe "php"
 
+package 'mysql-client-5.6' do
+	action :install
+	options '--force-yes'
+end
+
+package 'mysql-server-5.6' do
+	action :install
+        options '--force-yes'
+end
+
+package 'php5-mysql' do
+	action :install
+end
 
 package 'memcached' do
-        action :install
+	action :install
 end
 
 package 'php5-memcached' do
-        action :install
+	action :install
 end
 
 package 'php5-mcrypt' do
-        action :install
+	action :install
 end
 
 execute 'applymcrypt' do
-        command 'php5enmod mcrypt'
+	command 'php5enmod mcrypt'
 end
 
-execute 'laravel-install' do
+execute 'install_laravel' do
 	command 'composer global require "laravel/installer=~1.1"'
-end
-
-template '/etc/nginx/sites-available/api' do
-	source 'api.erb'
-	mode '755'
-	owner 'www-data'
-	group 'www-data'
-end
-
-link '/etc/nginx/sites-enabled/api' do
-	to '/etc/nginx/sites-available/api'
-	link_type :symbolic
-	action :create
 end

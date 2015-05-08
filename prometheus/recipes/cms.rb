@@ -7,3 +7,24 @@ cookbook_file 'cms-deploy.pub' do
   mode  '0600'
   action :create
 end
+
+template '/etc/cms_settings.php' do
+        source 'settings.php.erb'
+        mode '644'
+        owner 'www-data'
+        group 'www-data'
+        variables ({ :database => node['prometheus']['cms_db_name'],
+                :username => node['prometheus']['cms_db_user'],
+                :password => node['prometheus']['cms_db_pass'],
+                :host => node['prometheus']['cms_db_host'],
+                :port => node['prometheus']['cms_db_port'],
+                :driver => node['prometheus']['cms_db_driver'],
+                :prefix => node['prometheus']['cms_db_prefix'] })
+end
+
+directory '/var/log/nginx/cms' do
+        owner 'www-data'
+        group 'www-data'
+        mode '0755'
+        action :create
+end
