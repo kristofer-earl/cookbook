@@ -6,7 +6,5 @@ description      'Installs/Configures PrometheusAPI'
 version          '0.1.0'
 
 depends 'nginx'
-depends 'hhvm'
 depends 'composer'
-depends 'php5-fpm'
-depends 'capistrano'
+depends 'spiral'
