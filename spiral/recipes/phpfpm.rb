@@ -46,8 +46,8 @@ template '/etc/php5/mods-available/newrelic.ini' do
   notifies :restart, 'service[php5-fpm]'
 end
 
-remote_file '/usr/local/bin/composer.phar' do
-  source 'https://getcomposer.org/composer'
+remote_file '/usr/local/bin/composer' do
+  source 'https://getcomposer.org/composer.phar'
   owner  'root'
   group  'root'
   mode   '0755'
