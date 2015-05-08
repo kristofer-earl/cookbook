@@ -45,6 +45,14 @@ template '/etc/php5/mods-available/newrelic.ini' do
   notifies :restart, 'service[php5-fpm]'
 end
 
+remote_file '/usr/local/bin/composer.phar' do
+  source 'https://getcomposer.org/composer.phar'
+  owner  'root'
+  group  'root'
+  mode   '0755'
+  not_if { ::File.exists?('/usr/local/bin/composer.phar') }
+end
+
 template '/etc/nginx/sites-available/php5-fpm-nginx.conf' do
   source   'php5-fpm-nginx.conf.erb'
   owner    'root'
