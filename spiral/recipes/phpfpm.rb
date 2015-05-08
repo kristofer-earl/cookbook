@@ -1,6 +1,7 @@
 include_recipe 'spiral::nginx'
 include_recipe 'spiral::newrelic'
 
+package 'php5-cli'
 package 'php5-fpm'
 package 'php5-mysql'
 package 'newrelic-php5'
@@ -46,7 +47,7 @@ template '/etc/php5/mods-available/newrelic.ini' do
 end
 
 remote_file '/usr/local/bin/composer.phar' do
-  source 'https://getcomposer.org/composer.phar'
+  source 'https://getcomposer.org/composer'
   owner  'root'
   group  'root'
   mode   '0755'
