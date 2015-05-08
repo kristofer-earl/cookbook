@@ -3,6 +3,7 @@ include_recipe 'spiral::newrelic'
 
 package 'php5-cli'
 package 'php5-fpm'
+package 'php5-mcrypt'
 package 'php5-mysql'
 package 'newrelic-php5'
 
