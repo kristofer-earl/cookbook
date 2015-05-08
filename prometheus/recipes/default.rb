@@ -10,8 +10,8 @@ user 'deploy' do
 end
 
 directory '/home/deploy/.ssh' do
-  owner 'root'
-  group 'root'
+  owner 'deploy'
+  group 'www-data'
   mode '0700'
   action :create
 end

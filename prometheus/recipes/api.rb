@@ -1,9 +1,9 @@
 include_recipe 'prometheus::default'
 
 cookbook_file 'api-deploy.pub' do
-  path  '/home/depoy/.ssh/authorized_keys'
+  path  '/home/deploy/.ssh/authorized_keys'
   owner 'deploy'
-  group 'deploy'
+  group 'www-data'
   mode  '0600'
-  action :delete
+  action :create
 end
