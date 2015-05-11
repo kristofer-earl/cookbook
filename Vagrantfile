@@ -1,5 +1,6 @@
 Vagrant.configure("2") do |config|
-  config.vm.box = "ubuntu/trusty64"
+  config.vm.box = "spiral/chef-trusty64"
+  config.vm.box_url = "http://stuff.marvin/Vagrant%20Box%20Files/chef-trusty64.box"
   config.vm.network :forwarded_port, host: 5000, guest: 80
 
   config.vm.provider :virtualbox do |vb|
