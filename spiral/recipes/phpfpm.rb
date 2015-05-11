@@ -7,10 +7,11 @@ package 'php5-mcrypt'
 package 'php5-mysql'
 package 'newrelic-php5'
 
+
 directory '/srv/http' do
   owner 'deploy'
   group 'www-data'
-  mode  '0766'
+  mode  '0774'
   action :create
 end
 
