@@ -1,6 +1,5 @@
 server {
-
-    root /srv/http/cms; 
+    root /srv/http/cms/current; 
     index index.php index.html index.htm;
     access_log /var/log/nginx/cms_access.log;
     error_log /var/log/nginx/cms_error.log;
@@ -51,5 +50,4 @@ server {
     }
 
     location ~ /\.ht {deny all;}
-    }
 }
