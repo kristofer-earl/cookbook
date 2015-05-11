@@ -1,12 +1,10 @@
 server {
 
-    root /var/www/html/cms; 
+    root /srv/http/cms; 
     index index.php index.html index.htm;
-    access_log /var/log/nginx/cms/access.log;
-    error_log /var/log/nginx/cms/error.log;
+    access_log /var/log/nginx/cms_access.log;
+    error_log /var/log/nginx/cms_error.log;
     gzip_static on;
-
-    include hhvm.conf;
 
     location = /favicon.ico {
         log_not_found off;
