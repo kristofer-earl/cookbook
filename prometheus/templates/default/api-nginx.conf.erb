@@ -18,14 +18,16 @@
 ##
 
 server {
-	listen 80 default_server;
-	listen [::]:80 default_server ipv6only=on;
+	listen 80;
 
-	root /srv/http/api/current/public/;
+	root /srv/http/api/current/public;
 	index index.php index.html index.htm;
 
+	access_log /var/log/nginx/api_access.log;
+        error_log /var/log/nginx/api_error.log;
+
 	# Make site accessible from http://localhost/
-	server_name localhost;
+	server_name api.marvin;
 
 	location / {
 		try_files $uri @rewrite;

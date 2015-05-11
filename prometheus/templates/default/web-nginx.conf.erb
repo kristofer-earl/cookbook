@@ -18,8 +18,8 @@
 ##
 
 server {
-	listen 80 default_server;
-	listen [::]:80 default_server ipv6only=on;
+	listen 80;
+	listen [::]:80 ipv6only=on;
 
 	root /srv/http/web/current/;
 	index index.php index.html index.htm;
