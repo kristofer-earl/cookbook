@@ -38,7 +38,7 @@
 		</property>
 		<property name="addressProvider">
 			<bean class="com.google.code.ssm.config.DefaultAddressProvider">
-				<property name="address" value="<%= node[:opsworks][:layers][:memcached].first[:ip] %>:11211" />
+				<property name="address" value="memcached1.localdomain:11211" />
 			</bean>
 		</property>
 		<property name="configuration">
