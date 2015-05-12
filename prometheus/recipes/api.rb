@@ -17,6 +17,13 @@ template '/etc/nginx/sites-available/api-nginx.conf' do
   notifies :restart, "service[nginx]"
 end
 
+directory '/srv/http/api' do
+  owner 'deploy'
+  group 'www-data'
+  mode  '0774'
+  action :create
+end
+
 directory '/srv/http/api/shared' do
   owner 'deploy'
   group 'www-data'

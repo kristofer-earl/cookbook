@@ -8,6 +8,27 @@ cookbook_file 'cms-deploy.pub' do
   action :create
 end
 
+directory '/srv/http/cms' do
+  owner 'deploy'
+  group 'www-data'
+  mode  '0774'
+  action :create
+end
+
+directory '/srv/http/cms/shared' do
+  owner 'deploy'
+  group 'www-data'
+  mode  '0774'
+  action :create
+end
+
+directory '/srv/http/cms/shared/sites' do
+  owner 'deploy'
+  group 'www-data'
+  mode  '0774'
+  action :create
+end
+
 directory '/srv/http/cms/shared/sites/default' do
   owner 'deploy'
   group 'www-data'
