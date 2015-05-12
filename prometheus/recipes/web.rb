@@ -2,6 +2,7 @@ include_recipe 'prometheus::default'
 
 package 'nodejs'
 package 'nodejs-dev'
+package 'npm'
 
 cookbook_file 'web-deploy.pub' do
   path  '/home/deploy/.ssh/authorized_keys'
