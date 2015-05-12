@@ -1,5 +1,5 @@
 {
-  "run_list": [ "recipe[percona::server]", "recipe[prometheus::web]" ],
+  "run_list": [ "recipe[percona::server]", "recipe[prometheus::web]", "recipe[memcached]" ],
   "prometheus": {
     "cms": {
       "db_host": "localhost",
@@ -25,5 +25,8 @@
     "server": {
       "bind_address": "0.0.0.0"
     }
+  },
+  "memcached": {
+    "memory": "128"
   }
 }
