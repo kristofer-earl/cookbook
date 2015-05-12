@@ -5,6 +5,7 @@ package 'php5-cli'
 package 'php5-fpm'
 package 'php5-mcrypt'
 package 'php5-mysql'
+package 'php5-memcached'
 package 'newrelic-php5'
 
 
