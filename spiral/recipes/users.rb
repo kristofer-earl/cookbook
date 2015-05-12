@@ -19,6 +19,15 @@ user 'activemq' do
   action :create
 end
 
+user 'deploy' do
+  supports :manage_home => true
+  comment 'Capistrano Deployment'
+  uid 2222
+  gid 'www-data'
+  home '/home/deploy'
+  shell '/bin/bash'
+end
+
 cookbook_file '/etc/login.defs' do
   owner 'root'
   group 'root'
