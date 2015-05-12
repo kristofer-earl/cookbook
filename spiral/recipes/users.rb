@@ -1,3 +1,5 @@
+package 'acl'
+
 group node['spiral']['users']['group'] do
   action :create
   append true
