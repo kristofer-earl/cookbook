@@ -12,7 +12,7 @@ geoip.jdbc.password=<%= node[:database][:master][:pass] %>
 
 sql.show=false
 
-failover:(tcp://amq1.localdomain:61616,tcp://amq2.localdomain:61616)?randomize=false&jms.useAsyncSend=true
+amq.url=failover:(tcp://amq1.localdomain:61616,tcp://amq2.localdomain:61616)?randomize=false&jms.useAsyncSend=true
 
 defaultCurrencyFrom=USD
 
