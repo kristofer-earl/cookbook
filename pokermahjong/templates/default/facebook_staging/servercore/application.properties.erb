@@ -8,7 +8,7 @@ cashCheckContext=/api/ms/getbalance
 cash.merch_id=mahjong
 cash.merch_pwd=0a55d231-97ce-4969-88bc-cababff91421
 
-failover:(tcp://amq1.localdomain:61616,tcp://amq2.localdomain:61616)?randomize=false&jms.useAsyncSend=true
+amq.url=failover:(tcp://amq1.localdomain:61616,tcp://amq2.localdomain:61616)?randomize=false&jms.useAsyncSend=true
 
 jdbc.url=jdbc:mysql://<%= node[:database][:master] %>:3306/pmahjong
 jdbc.username=<%= node[:database][:master][:user] %>
