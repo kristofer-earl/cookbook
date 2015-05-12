@@ -1,5 +1,5 @@
 {
-  "run_list": [ "recipe[percona::server]", "recipe[prometheus::cms]" ],
+  "run_list": [ "recipe[percona::server]", "recipe[prometheus::cms]", "recipe[memcached]" ],
   "prometheus": {
     "cms": {
       "db_host": "localhost",
@@ -8,13 +8,13 @@
       "db_pass": "cms"
     },
     "web": {
-      "db_host": "db1.localdomain",
+      "db_host": "localhost",
       "db_name": "web",
       "db_user": "web",
       "db_pass": "web"
     },
     "api": {
-      "db_host": "db1.localdomain",
+      "db_host": "localhost",
       "db_name": "api",
       "db_user": "api",
       "db_pass": "web"
