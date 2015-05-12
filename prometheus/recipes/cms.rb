@@ -14,12 +14,12 @@ template '/etc/cms_settings.php' do
         owner 'www-data'
         group 'www-data'
         variables ({ :database => node['prometheus']['cms_db_name'],
-                :username => node['prometheus']['cms_db_user'],
-                :password => node['prometheus']['cms_db_pass'],
-                :host => node['prometheus']['cms_db_host'],
-                :port => node['prometheus']['cms_db_port'],
-                :driver => node['prometheus']['cms_db_driver'],
-                :prefix => node['prometheus']['cms_db_prefix'] })
+                     :username => node['prometheus']['cms_db_user'],
+                     :password => node['prometheus']['cms_db_pass'],
+                     :host => node['prometheus']['cms_db_host'],
+                     :port => node['prometheus']['cms_db_port'],
+                     :driver => node['prometheus']['cms_db_driver'],
+                     :prefix => node['prometheus']['cms_db_prefix'] })
 end
 
 directory '/var/log/nginx/cms' do
@@ -41,4 +41,11 @@ end
 link '/etc/nginx/sites-enabled/cms-nginx.conf' do
   to '/etc/nginx/sites-available/cms-nginx.conf'
   notifies :restart, "service[nginx]"
+end
+
+directory '/srv/http/cms/shared' do
+  owner 'deploy'
+  group 'www-data'
+  mode  '0774'
+  action :create
 end

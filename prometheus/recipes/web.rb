@@ -24,3 +24,10 @@ link '/etc/nginx/sites-enabled/web-nginx.conf' do
   to '/etc/nginx/sites-available/web-nginx.conf'
   notifies :restart, "service[nginx]"
 end
+
+directory '/srv/http/web/shared' do
+  owner 'deploy'
+  group 'www-data'
+  mode  '0774'
+  action :create
+end
