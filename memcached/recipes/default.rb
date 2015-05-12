@@ -44,7 +44,7 @@ when 'centos','redhat','fedora','amazon'
   end
 end
 
-if defined node[:monit][:conf_dir]
+if defined? node[:monit][:conf_dir]
   service 'monit' do
     action :nothing
   end
