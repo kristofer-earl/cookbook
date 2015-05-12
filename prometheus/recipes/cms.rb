@@ -9,7 +9,7 @@ cookbook_file 'cms-deploy.pub' do
 end
 
 template '/etc/cms_settings.php' do
-        source 'settings.php.erb'
+        source 'cms_settings.php.erb'
         mode '644'
         owner 'www-data'
         group 'www-data'
