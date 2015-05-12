@@ -4,8 +4,6 @@ maintainer  "AWS OpsWorks"
 license     "Apache 2.0"
 version     "1.0.0"
 
-depends "opsworks_agent_monit"
-
 recipe "memcached::server", "Memcached server"
 recipe "memcached::ruby", "Memcached Ruby client libraries"
 recipe "memcached::php", "Memcached PHP client libraries"
