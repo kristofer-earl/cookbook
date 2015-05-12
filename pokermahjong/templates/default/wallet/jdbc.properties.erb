@@ -7,4 +7,4 @@ jdbc.class.name=com.mysql.jdbc.jdbc2.optional.MysqlDataSource
 jdbc.master.url=jdbc:mysql://${master.host}/${jdbc.database}?autoReconnect=true
 jdbc.slave.url=jdbc:mysql://${slave.host}/${jdbc.database}?autoReconnect=true
 jdbc.username=${developer.name}
-jdbc.password=lGtJGqk+jsT4mt2wSxeh0LQm/C+Mu9B6
+jdbc.password=<%= node[:pmahjong][:wallet][:db_master_pass] %>
