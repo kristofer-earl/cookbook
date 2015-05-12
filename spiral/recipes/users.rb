@@ -19,4 +19,10 @@ user 'activemq' do
   action :create
 end
 
-
+cookbook_file '/etc/login.defs' do
+  owner 'root'
+  group 'root'
+  mode  '0644'
+  source 'login.defs'
+  action :create
+end
