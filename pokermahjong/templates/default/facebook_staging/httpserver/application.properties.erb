@@ -23,7 +23,7 @@ bonecp.AcquireRetryDelayInMs=200
 db.dialect=org.hibernate.dialect.MySQLDialect
 db.show_sql=false
 
-amq.url=tcp://amq1.localdaomin:61616
+amq.url=failover:(tcp://amq1.localdomain:61616,tcp://amq2.localdomain:61616)?randomize=false&jms.useAsyncSend=true
 leader_board.daliy_refresh_time(s)=60
 leader_board.all_refresh_time(s)=300
 online_player.refresh_time(s)=20
