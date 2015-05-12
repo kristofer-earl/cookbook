@@ -8,7 +8,7 @@ cookbook_file 'cms-deploy.pub' do
   action :create
 end
 
-template '/etc/cms_settings.php' do
+template '/srv/http/cms/shared/settings.php' do
         source 'cms_settings.php.erb'
         mode '644'
         owner 'www-data'
