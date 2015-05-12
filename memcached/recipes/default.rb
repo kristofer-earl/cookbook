@@ -4,10 +4,6 @@ end
 
 include_recipe 'memcached::service'
 
-service 'monit' do
-  action :nothing
-end
-
 #
 # be aware that Amazon Linux uses a different configuration schema.
 case node[:platform]
@@ -48,12 +44,18 @@ when 'centos','redhat','fedora','amazon'
   end
 end
 
-template "#{node[:monit][:conf_dir]}/memcached.monitrc" do
-  source 'memcached.monitrc.erb'
-  owner 'root'
-  group 'root'
-  mode 0644
-  notifies :restart, "service[monit]"
+if defined node[:monit][:conf_dir]
+  service 'monit' do
+    action :nothing
+  end
+
+  template "#{node[:monit][:conf_dir]}/memcached.monitrc" do
+    source 'memcached.monitrc.erb'
+    owner 'root'
+    group 'root'
+    mode 0644
+    notifies :restart, "service[monit]"
+  end
 end
 
 include_recipe 'memcached::prepare_tests' if node[:opsworks][:run_cookbook_tests]
