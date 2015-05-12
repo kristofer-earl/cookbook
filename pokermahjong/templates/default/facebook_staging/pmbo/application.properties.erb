@@ -20,7 +20,7 @@ REPORT_INITIAL_SEARCH_DATE_INTERVAL=7
 
 facebook.graphapi.url=https://graph.facebook.com/v2.1/
 facebook.pokermahjong.appAccessToken=551358108301398|7PBPhpU79Y3Hf_34TuIGYqV4PcY
-pkmj.realtimeupdate.url=http://pmstaginghttp-1497071951.ap-southeast-1.elb.amazonaws.com/HttpServer/paymentCallback.mas
+pkmj.realtimeupdate.url=http://<%= node[:pmahjong][:http][:external_fqdn] %>/HttpServer/paymentCallback.mas
 dispute.message={ "object"\:"payments", "entry"\:[ { "id"\:"@", "time"\:1409818568, "changed_fields"\:[ "disputes" ] } ] }
 dispute.reasons=DENIED_REFUND,GRANTED_REPLACEMENT_ITEM,BANNED_USER
 resfund.reasons=MALICIOUS_FRAUD,FRIENDLY_FRAUD,CUSTOMER_SERVICE
