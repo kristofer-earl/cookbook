@@ -58,4 +58,6 @@ if defined? node[:monit][:conf_dir]
   end
 end
 
-include_recipe 'memcached::prepare_tests' if node[:opsworks][:run_cookbook_tests]
+if defined? node[:opsworks][:run_cookbook_tests]
+  include_recipe 'memcached::prepare_tests' if node[:opsworks][:run_cookbook_tests]
+end
