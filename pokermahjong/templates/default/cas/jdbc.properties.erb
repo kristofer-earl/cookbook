@@ -1,7 +1,7 @@
 developer.name=<%= node[:database][:master][:user] %>
 jdbc.database=pmahjong_userdb
 master.host=<%= node[:database][:master][:host] %>
-slave.host=<%= node[:database][:slave][:host] %>
+slave.host=<%= node[:database][:master][:host] %>
 jdbc.driver=com.mysql.jdbc.Driver
 jdbc.class.name=com.mysql.jdbc.jdbc2.optional.MysqlDataSource
 jdbc.master.url=jdbc:mysql://${master.host}/${jdbc.database}?autoReconnect=true
