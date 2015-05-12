@@ -1,14 +1,14 @@
-bo.jdbc.url=jdbc:mysql://<%= Resolv.getaddress(node[:opsworks][:stack][:rds_instances].first[:address]) %>:3306/alex_pmahjong?zeroDateTimeBehavior=convertToNull&noAccessToProcedureBodies=true&autoReconnect=true
-bo.jdbc.username=apmahjong
-bo.jdbc.password=aza6osli
+bo.jdbc.url=jdbc:mysql://<%= node[:database][:master][:host] %>:3306/pmahjong?zeroDateTimeBehavior=convertToNull&noAccessToProcedureBodies=true&autoReconnect=true
+bo.jdbc.username=<%= node[:database][:master][:user] %>
+bo.jdbc.password=<%= node[:database][:master][:pass] %>
 
-report.jdbc.url=jdbc:mysql://<%= Resolv.getaddress(node[:opsworks][:stack][:rds_instances].first[:address]) %>:3306/alex_pmahjong?zeroDateTimeBehavior=convertToNull&noAccessToProcedureBodies=true&autoReconnect=true
-report.jdbc.username=apmahjong
-report.jdbc.password=aza6osli
+report.jdbc.url=jdbc:mysql://<%= node[:database][:slave][:host] %>:3306/alex_pmahjong?zeroDateTimeBehavior=convertToNull&noAccessToProcedureBodies=true&autoReconnect=true
+report.jdbc.username=<%= node[:database][:slave][:user] %>
+report.jdbc.password=<%= node[:database][:slave][:pass] %>
 
-geoip.jdbc.url=jdbc:mysql://<%= Resolv.getaddress(node[:opsworks][:stack][:rds_instances].first[:address]) %>:3306/geoipdb?zeroDateTimeBehavior=convertToNull
-geoip.jdbc.username=alex_pmahjong
-geoip.jdbc.password=aza6osli
+geoip.jdbc.url=jdbc:mysql://<% node[:database][:master][:host] %>:3306/geoipdb?zeroDateTimeBehavior=convertToNull
+geoip.jdbc.username=<%= node[:database][:master][:user] %>
+geoip.jdbc.password=<%= node[:database][:master][:pass] %>
 
 sql.show=false
 

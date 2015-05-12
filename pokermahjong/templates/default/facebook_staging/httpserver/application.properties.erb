@@ -1,12 +1,12 @@
 master.jdbc.driverClass=com.mysql.jdbc.Driver
-master.jdbc.url=jdbc:mysql://<%= Resolv.getaddress(node[:opsworks][:stack][:rds_instances].first[:address]) %>:3306/alex_pmahjong
-master.jdbc.username=apmahjong
-master.jdbc.password=aza6osli
+master.jdbc.url=jdbc:mysql://<%= node[:database][:master][:host] %>:3306/pmahjong
+master.jdbc.username=<%= node[:database][:master][:user] %>
+master.jdbc.password=<%= node[:database][:master][:pass] %>
 
 slave.jdbc.driverClass=com.mysql.jdbc.Driver
-slave.jdbc.url=jdbc:mysql://<%= Resolv.getaddress(node[:opsworks][:stack][:rds_instances].first[:address]) %>:3306/alex_pmahjong
-slave.jdbc.username=apmahjong
-slave.jdbc.password=aza6osli
+slave.jdbc.url=jdbc:mysql://<%= node[:database][:slave][:host] %>:3306/pmahjong
+slave.jdbc.username=<%= node[:database][:slave][:user] %>
+slave.jdbc.password=<%= node[:database][:slave][:pass] %>
 
 bonecp.IdleMaxAgeInSeconds=0
 bonecp.IdleConnectionTestPeriodInSeconds=60

@@ -1,7 +1,7 @@
-developer.name=apmahjong
-jdbc.database=alex_pmahjong_userdb
-master.host=<%= Resolv.getaddress(node[:opsworks][:stack][:rds_instances].first[:address]) %>
-slave.host=<%= Resolv.getaddress(node[:opsworks][:stack][:rds_instances].first[:address]) %>
+developer.name=<%= node[:database][:master][:user] %>
+jdbc.database=pmahjong_userdb
+master.host=<%= node[:database][:master][:host] %>
+slave.host=<%= node[:database][:slave][:host] %>
 jdbc.driver=com.mysql.jdbc.Driver
 jdbc.class.name=com.mysql.jdbc.jdbc2.optional.MysqlDataSource
 jdbc.master.url=jdbc:mysql://${master.host}/${jdbc.database}?autoReconnect=true
