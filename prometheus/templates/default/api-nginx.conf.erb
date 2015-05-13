@@ -27,7 +27,7 @@ server {
         error_log /var/log/nginx/api_error.log;
 
 	# Make site accessible from http://localhost/
-	server_name <%= node[:prometheus][:web][:fqdn] %>; 
+	server_name <%= node[:prometheus][:api][:fqdn] %>; 
 
 	location / {
 		try_files $uri @rewrite;

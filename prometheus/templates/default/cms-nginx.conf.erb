@@ -21,7 +21,7 @@ server {
     location ~ ^/sites/.*/private/ {return 403;}
     location ~ (^|/)\. {return 403;}
 
-    server_name <%= node[:prometheus][:web][:fqdn] %>;
+    server_name <%= node[:prometheus][:cms][:fqdn] %>;
 
     location / {        
         try_files $uri @rewrite;
