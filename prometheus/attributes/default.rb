@@ -5,3 +5,7 @@ default["prometheus"]["cms"]["db_user"] = "root"
 default["prometheus"]["cms"]["db_pass"] = ""
 default["prometheus"]["cms"]["db_driver"] = "mysql"
 default["prometheus"]["cms"]["db_prefix"] = ""
+
+default["prometheus"]["cms"]["fqdn"] = "localhost"
+default["prometheus"]["web"]["fqdn"] = "localhost"
+default["prometheus"]["api"]["fqdn"] = "localhost"
