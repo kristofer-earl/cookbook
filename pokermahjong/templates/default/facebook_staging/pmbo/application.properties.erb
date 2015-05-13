@@ -2,7 +2,7 @@ bo.jdbc.url=jdbc:mysql://<%= node[:database][:master][:host] %>:3306/pmahjong?ze
 bo.jdbc.username=<%= node[:database][:master][:user] %>
 bo.jdbc.password=<%= node[:database][:master][:pass] %>
 
-report.jdbc.url=jdbc:mysql://<%= node[:database][:master][:host] %>:3306/alex_pmahjong?zeroDateTimeBehavior=convertToNull&noAccessToProcedureBodies=true&autoReconnect=true
+report.jdbc.url=jdbc:mysql://<%= node[:database][:master][:host] %>:3306/pmahjong?zeroDateTimeBehavior=convertToNull&noAccessToProcedureBodies=true&autoReconnect=true
 report.jdbc.username=<%= node[:database][:master][:user] %>
 report.jdbc.password=<%= node[:database][:master][:pass] %>
 
