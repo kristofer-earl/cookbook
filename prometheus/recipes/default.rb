@@ -7,8 +7,15 @@ directory '/home/deploy/.ssh' do
   action :create
 end
 
-# hack sudoers
+cookbook_file '/etc/login.defs' do
+  owner 'root'
+  group 'root'
+  mode  '0644'
+  source 'login.defs'
+  action :create
+end
 
+# hack sudoers
 bash "insert_sudo_for_deploy" do
   user "root"
   code <<-EOS
