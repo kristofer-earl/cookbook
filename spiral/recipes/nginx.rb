@@ -1,4 +1,4 @@
-apt_repository 'nginx'
+apt_repository 'nginx' do
   uri 'http://ppa.launchpad.net/nginx/stable/ubuntu'
   distribution node['lsb']['codename'] 
   components 'main'
