@@ -7,7 +7,7 @@ directory '/home/deploy/.ssh' do
   action :create
 end
 
-cookbook_fiule '/etc/profile.d/spiral-deploy.sh' do
+cookbook_file '/etc/profile.d/spiral-deploy.sh' do
   owner  'root'
   group  'root'
   mode   '0755'
