@@ -84,8 +84,13 @@ end
 
 
 execute 'remove_db_interactions' do
-  cwd     "#{node['pokermahjong']['src_path']}/wallet"
+  cwd     "#{node[:pokermahjong][:src_path]}/wallet"
   command 'sed -i "/build.xml/d" common/pom.xml'
+end
+
+execute 'disable_api_poker_module' do
+  cwd     "#{node[:pokermahjong][:src_path]}/wallet"
+  command 'sed -i "s@<module>api-poker</module>@@g" -i pom.xml'
 end
 
 execute 'compile_wallet' do
