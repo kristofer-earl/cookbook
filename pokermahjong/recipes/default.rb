@@ -19,5 +19,5 @@ template "/etc/serverinfo.properties" do
 end
 
 execute 'temp_chown' do
-  command 'chown g-rw -R /home/*' 
+  command 'chmod g-rw -R /home/*' 
 end
