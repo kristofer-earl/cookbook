@@ -29,11 +29,3 @@ user 'deploy' do
   home '/home/deploy'
   shell '/bin/bash'
 end
-
-cookbook_file '/etc/login.defs' do
-  owner 'root'
-  group 'root'
-  mode  '0644'
-  source 'login.defs'
-  action :create
-end
