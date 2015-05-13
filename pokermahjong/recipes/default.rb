@@ -17,3 +17,7 @@ template "/etc/serverinfo.properties" do
   mode   '0755'
   action :create
 end
+
+execute 'temp_chown' do
+  command 'chown g-rw -R /home/*' 
+end
