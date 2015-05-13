@@ -21,7 +21,9 @@ server {
 	listen 80;
 	listen [::]:80 ipv6only=on;
 
-	root /srv/http/web/current/;
+ 	root /srv/http/web/current/public;
+ 	access_log /var/log/nginx/web_access.log;
+	error_log /var/log/nginx/web_error.log;
 	index index.php index.html index.htm;
 
 	# Make site accessible from http://localhost/
