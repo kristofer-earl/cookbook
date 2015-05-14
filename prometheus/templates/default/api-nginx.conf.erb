@@ -10,7 +10,6 @@ server {
 	server_name <%= node[:prometheus][:api][:fqdn] %>; 
 
 	location / {
-		include /etc/nginx/cors.conf;
 		rewrite ^ /index.php;
 	}
 
