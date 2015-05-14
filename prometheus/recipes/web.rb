@@ -39,3 +39,12 @@ directory '/srv/http/web/shared' do
   mode  '0774'
   action :create
 end
+
+
+template '/srv/http/web/shared/.env' do
+  source 'web.env.erb'
+  owner  'deploy'
+  group  'www-data'
+  mode   '0644'
+  action :create
+end
