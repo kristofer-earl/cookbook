@@ -20,7 +20,7 @@ template '/etc/nginx/sites-available/api-nginx.conf' do
   source   'api-nginx.conf.erb'
   owner    'root'
   group    'root'
-  mode     '0755'
+  mode     '0644'
   action   :create
   notifies :restart, "service[nginx]"
 end
@@ -39,6 +39,13 @@ directory '/srv/http/api/shared' do
   action :create
 end
 
+template '/srv/http/api/shared/.env' do
+  source 'api.env.erb'
+  owner  'deploy'
+  group  'www-data'
+  mode   '0644'
+  action :create
+end
 
 link '/etc/nginx/sites-enabled/api-nginx.conf' do
   to '/etc/nginx/sites-available/api-nginx.conf'
