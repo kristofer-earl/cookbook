@@ -1,50 +1,51 @@
 server {
-    root /srv/http/cms/current; 
-    index index.php index.html index.htm;
-    access_log /var/log/nginx/cms_access.log;
-    error_log /var/log/nginx/cms_error.log;
-    gzip_static on;
+	root /srv/http/cms/current; 
+	index index.php index.html index.htm;
+	access_log /var/log/nginx/cms_access.log;
+	error_log /var/log/nginx/cms_error.log;
+	gzip_static on;
 
-    location = /favicon.ico {
-        log_not_found off;
-        access_log off;
-    }
+	location = /favicon.ico {
+		log_not_found off;
+		access_log off;
+	}
 
-    location = /robots.txt {
-        allow all;
-        log_not_found off;
-        access_log off;
-    }
+	location = /robots.txt {
+		allow all;
+		log_not_found off;
+		access_log off;
+	}
 
-    location ~* \.(txt|log)$ {deny all;}
-    location ~ \..*/.*\.php$ {return 403;}
-    location ~ ^/sites/.*/private/ {return 403;}
-    location ~ (^|/)\. {return 403;}
+	location ~* \.(txt|log)$ {deny all;}
+	location ~ \..*/.*\.php$ {return 403;}
+	location ~ ^/sites/.*/private/ {return 403;}
+	location ~ (^|/)\. {return 403;}
 
-    server_name <%= node[:prometheus][:cms][:fqdn] %>;
+	server_name <%= node[:prometheus][:cms][:fqdn] %>;
 
-    location / {
-        rewrite ^ /index.php;
-    }
-
-    location ~ \.php$ {
+	location / {
 	include /etc/nginx/cors.conf;
-        fastcgi_split_path_info ^(.+\.php)(/.+)$;
-        include fastcgi_params;
-        fastcgi_param SCRIPT_FILENAME $request_filename;
-        fastcgi_intercept_errors on;
-        fastcgi_pass unix:/var/run/php5-fpm.sock;
-        fastcgi_index index.php;
-    }
+		rewrite ^ /index.php;
+	}
 
-    location ~ ^/sites/.*/files/styles/ {
-        try_files $uri @rewrite;
-    }
+	location ~ \.php$ {
+	include /etc/nginx/cors.conf;
+		fastcgi_split_path_info ^(.+\.php)(/.+)$;
+		include fastcgi_params;
+		fastcgi_param SCRIPT_FILENAME $request_filename;
+		fastcgi_intercept_errors on;
+		fastcgi_pass unix:/var/run/php5-fpm.sock;
+		fastcgi_index index.php;
+	}
 
-    location ~* \.(js|css|png|jpg|jpeg|gif|ico)$ {
-        expires max;
-        log_not_found off;
-    }
+	location ~ ^/sites/.*/files/styles/ {
+		try_files $uri @rewrite;
+	}
 
-    location ~ /\.ht {deny all;}
+	location ~* \.(js|css|png|jpg|jpeg|gif|ico)$ {
+		expires max;
+		log_not_found off;
+	}
+
+	location ~ /\.ht {deny all;}
 }
