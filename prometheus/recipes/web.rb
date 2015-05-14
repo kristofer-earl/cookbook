@@ -16,7 +16,7 @@ template '/etc/nginx/sites-available/web-nginx.conf' do
   source   'web-nginx.conf.erb'
   owner    'root'
   group    'root'
-  mode     '0755'
+  mode     '0644'
   action   :create
   notifies :restart, "service[nginx]"
 end

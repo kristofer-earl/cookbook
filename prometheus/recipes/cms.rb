@@ -61,7 +61,7 @@ template '/etc/nginx/sites-available/cms-nginx.conf' do
   source   'cms-nginx.conf.erb'
   owner    'root'
   group    'root'
-  mode     '0755'
+  mode     '0644'
   action   :create
   notifies :restart, "service[nginx]"
 end
