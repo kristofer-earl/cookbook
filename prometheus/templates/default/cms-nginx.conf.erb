@@ -24,6 +24,7 @@ server {
     server_name <%= node[:prometheus][:cms][:fqdn] %>;
 
     location / {        
+	include /etc/nginx/cors.conf;
         try_files $uri @rewrite;
     }
 
@@ -32,6 +33,7 @@ server {
     }
 
     location ~ \.php$ {
+	include /etc/nginx/cors.conf;
         fastcgi_split_path_info ^(.+\.php)(/.+)$;
         include fastcgi_params;
         fastcgi_param SCRIPT_FILENAME $request_filename;
