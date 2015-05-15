@@ -12,6 +12,18 @@ cookbook_file 'web-deploy.pub' do
   action :create
 end
 
+link '/usr/bin/node' do
+  to '/usr/bin/nodejs'
+end
+
+execute 'install_bundler' do
+  command "gem install bundler"
+end
+
+execute 'install_bower' do
+  command "npm install bower"
+end
+
 template '/etc/nginx/sites-available/web-nginx.conf' do
   source   'web-nginx.conf.erb'
   owner    'root'
