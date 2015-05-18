@@ -51,7 +51,7 @@ return [
 			'driver'  => 'memcached',
 			'servers' => [
 				[
-					'host' => '<%= node[:prometheus][:memcached][:host] %>', 'port' => <%= node[:prometheus][:memcached][:host] %>, 'weight' => 100
+					'host' => '<%= node[:prometheus][:memcached][:host] %>', 'port' => <%= node[:prometheus][:memcached][:port] %>, 'weight' => 100
 				],
 			],
 		],
