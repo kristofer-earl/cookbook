@@ -15,7 +15,6 @@ bash "insert_line" do
   EOS
   not_if "grep -q 'prometheus-api.key' /home/deploy/.ssh/authorized_keys"
 end
-    
 
 cookbook_file 'nginx-cors.conf' do
   path  '/etc/nginx/cors.conf'
@@ -51,6 +50,14 @@ end
 template '/srv/http/api/shared/.env' do
   source 'api.env.erb'
   owner  'deploy'
+  group  'www-data'
+  mode   '0644'
+  action :create
+end
+
+template '/srv/http/api/shared/api_cache.php' do
+  source 'api_cache.php.erb'
+  owner  'root'
   group  'www-data'
   mode   '0644'
   action :create
