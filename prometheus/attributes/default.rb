@@ -9,3 +9,6 @@ default["prometheus"]["cms"]["db_prefix"] = ""
 default["prometheus"]["cms"]["fqdn"] = "localhost"
 default["prometheus"]["web"]["fqdn"] = "localhost"
 default["prometheus"]["api"]["fqdn"] = "localhost"
+
+default["prometheus"]["memcached"]["host"] = "memc1.localdomain"
+default["prometheus"]["memcached"]["port"] = 11211
