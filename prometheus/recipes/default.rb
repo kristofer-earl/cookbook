@@ -23,20 +23,6 @@ cookbook_file '/etc/login.defs' do
   action :create
 end
 
-directory '/opt/prometheus' do
-  owner 'root'
-  group 'spiral'
-  mode  '0755'
-  action :create
-end
-
-directory '/opt/prometheus/etc' do
-  owner 'root'
-  group 'spiral'
-  mode  '0755'
-  action :create
-end
-
 # hack sudoers
 bash "insert_sudo_for_deploy" do
   user "root"
