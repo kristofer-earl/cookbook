@@ -55,8 +55,8 @@ template '/srv/http/api/shared/.env' do
   action :create
 end
 
-template '/srv/http/api/shared/api_cache.php' do
-  source 'api_cache.php.erb'
+template '/srv/http/api/shared/api-cache.php' do
+  source 'api-cache.php.erb'
   owner  'root'
   group  'www-data'
   mode   '0644'
