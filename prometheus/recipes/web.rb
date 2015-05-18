@@ -5,11 +5,19 @@ package 'nodejs-dev'
 package 'npm'
 
 cookbook_file 'web-deploy.pub' do
-  path  '/home/deploy/.ssh/authorized_keys'
+  path  '/home/deploy/.ssh/authorized_keys.web'
   owner 'deploy'
   group 'www-data'
   mode  '0600'
   action :create
+end
+
+bash "insert_line" do
+  user "deploy"
+  code <<-EOS
+    cat /home/deploy/.ssh/authorized_keys.web >> /home/deploy/.ssh/authorized_keys
+  EOS
+  not_if "grep -q 'prometheus-web.key' /home/deploy/.ssh/authorized_keys"
 end
 
 link '/usr/bin/node' do

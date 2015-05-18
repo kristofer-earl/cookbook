@@ -1,11 +1,19 @@
 include_recipe 'prometheus::default'
 
 cookbook_file 'cms-deploy.pub' do
-  path  '/home/deploy/.ssh/authorized_keys'
+  path  '/home/deploy/.ssh/authorized_keys.cms'
   owner 'deploy'
   group 'www-data'
   mode  '0600'
   action :create
+end
+
+bash "insert_line" do
+  user "deploy"
+  code <<-EOS
+    cat /home/deploy/.ssh/authorized_keys.cms >> /home/deploy/.ssh/authorized_keys
+  EOS
+  not_if "grep -q 'prometheus-cms.key' /home/deploy/.ssh/authorized_keys"
 end
 
 directory '/srv/http/cms' do

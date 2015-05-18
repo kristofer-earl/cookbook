@@ -1,12 +1,21 @@
 include_recipe 'prometheus::default'
 
 cookbook_file 'api-deploy.pub' do
-  path  '/home/deploy/.ssh/authorized_keys'
+  path  '/home/deploy/.ssh/authorized_keys.api'
   owner 'deploy'
-  group 'www-data'
+ group 'www-data'
   mode  '0600'
   action :create
 end
+
+bash "insert_line" do
+  user "deploy"
+  code <<-EOS
+    cat /home/deploy/.ssh/authorized_keys.api >> /home/deploy/.ssh/authorized_keys
+  EOS
+  not_if "grep -q 'prometheus-api.key' /home/deploy/.ssh/authorized_keys"
+end
+    
 
 cookbook_file 'nginx-cors.conf' do
   path  '/etc/nginx/cors.conf'
