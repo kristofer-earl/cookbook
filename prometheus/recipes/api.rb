@@ -48,6 +48,13 @@ directory '/srv/http/api/shared' do
   action :create
 end
 
+directory '/srv/http/api/shared/config' do
+  owner 'deploy'
+  group 'www-data'
+  mode  '0774'
+  action :create
+end
+
 template '/srv/http/api/shared/.env' do
   source 'api.env.erb'
   owner  'deploy'
@@ -56,7 +63,7 @@ template '/srv/http/api/shared/.env' do
   action :create
 end
 
-template '/srv/http/api/shared/api-cache.php' do
+template '/srv/http/api/shared/config/cache.php' do
   source 'api-cache.php.erb'
   owner  'root'
   group  'www-data'
