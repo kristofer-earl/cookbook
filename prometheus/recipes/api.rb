@@ -65,7 +65,7 @@ end
 
 template '/srv/http/api/shared/config/cache.php' do
   source 'api-cache.php.erb'
-  owner  'root'
+  owner  'deploy'
   group  'www-data'
   mode   '0644'
   action :create
