@@ -17,14 +17,6 @@ bash "insert_line" do
   not_if "grep -q 'prometheus-api.key' /home/deploy/.ssh/authorized_keys"
 end
 
-cookbook_file 'nginx-cors.conf' do
-  path  '/etc/nginx/cors.conf'
-  owner 'root'
-  group 'root'
-  mode  '0644'
-  action :create
-end
-
 template '/etc/nginx/sites-available/api-nginx.conf' do
   source   'api-nginx.conf.erb'
   owner    'root'

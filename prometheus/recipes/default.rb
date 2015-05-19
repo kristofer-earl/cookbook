@@ -1,5 +1,13 @@
 include_recipe 'spiral::phpfpm'
 
+cookbook_file 'nginx-cors.conf' do
+  path  '/etc/nginx/cors.conf'
+  owner 'root'
+  group 'root'
+  mode  '0644'
+  action :create
+end
+
 directory '/home/deploy/.ssh' do
   owner 'deploy'
   group 'www-data'
