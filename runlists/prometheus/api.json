@@ -21,6 +21,10 @@
       "db_user": "api",
       "db_pass": "api",
       "fqdn": "api.marvin"
+    },
+    "memcached": {
+      "host": "localhost",
+      "port": "11211"
     }
   },
   "percona": {
