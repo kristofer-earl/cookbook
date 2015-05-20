@@ -39,3 +39,19 @@ bash "insert_sudo_for_deploy" do
   EOS
   not_if "grep -q 'deploy ALL=(ALL) NOPASSWD:ALL' /etc/sudoers"
 end
+
+package 'nodejs'
+package 'nodejs-dev'
+package 'npm'
+
+link '/usr/bin/node' do
+  to '/usr/bin/nodejs'
+end
+
+execute 'install_bundler' do
+  command "gem install bundler"
+end
+
+execute 'install_bower' do
+  command "npm install bower"
+end

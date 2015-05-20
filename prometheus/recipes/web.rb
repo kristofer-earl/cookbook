@@ -1,9 +1,5 @@
 include_recipe 'prometheus::default'
 
-package 'nodejs'
-package 'nodejs-dev'
-package 'npm'
-
 cookbook_file 'web-deploy.pub' do
   path  '/home/deploy/.ssh/authorized_keys.web'
   owner 'deploy'
@@ -18,18 +14,6 @@ bash "insert_line" do
     cat /home/deploy/.ssh/authorized_keys.web >> /home/deploy/.ssh/authorized_keys
   EOS
   not_if "grep -q 'prometheus-web.key' /home/deploy/.ssh/authorized_keys"
-end
-
-link '/usr/bin/node' do
-  to '/usr/bin/nodejs'
-end
-
-execute 'install_bundler' do
-  command "gem install bundler"
-end
-
-execute 'install_bower' do
-  command "npm install bower"
 end
 
 template '/etc/nginx/sites-available/web-nginx.conf' do
