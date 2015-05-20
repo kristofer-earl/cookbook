@@ -8,6 +8,7 @@ apt_repository 'nginx' do
 end 
 
 package 'nginx-full'
+package 'nginx-extras'
 
 cookbook_file 'default' do
   path   '/etc/nginx/sites-enabled/default'
