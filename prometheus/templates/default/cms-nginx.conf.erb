@@ -75,7 +75,7 @@ server {
         }
  
         location ~* \.(js|css|png|jpg|jpeg|gif|ico)$ {
-                expires max;
+                expires 24h;
                 log_not_found off;
         }
 }
