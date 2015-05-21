@@ -52,6 +52,10 @@ execute 'install_bundler' do
   command "gem install bundler"
 end
 
+execute 'install_sass' do
+  command "gem install sass"
+end
+
 execute 'install_bower' do
   command "npm install -g bower"
 end
