@@ -53,5 +53,5 @@ execute 'install_bundler' do
 end
 
 execute 'install_bower' do
-  command "npm install bower"
+  command "npm install -g bower"
 end
