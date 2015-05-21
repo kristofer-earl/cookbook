@@ -1,3 +1,4 @@
+include_recipe 'percona::client'
 include_recipe 'spiral::phpfpm'
 
 cookbook_file 'nginx-cors.conf' do
