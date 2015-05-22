@@ -21,7 +21,7 @@ when "debian"
     action :nothing
   end
 
-  remote_file  "/usr/share/keyrings/percona.gpg" do
+  cookbook_file  "/usr/share/keyrings/percona.gpg" do
     mode "0644"
     owner "root"
     group "root"
