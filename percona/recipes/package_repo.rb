@@ -22,6 +22,7 @@ when "debian"
     components ["main"]
     keyserver node["percona"]["apt_keyserver"]
     key node["percona"]["apt_key"]
+    condition "apt-key list | grep 'Percona MySQL Development Team'"
   end
 
 when "rhel"
