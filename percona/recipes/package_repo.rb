@@ -16,13 +16,25 @@ when "debian"
     pin_priority "1001"
   end
 
+  execute "add_percona_apt_key" do
+    command "/usr/bin/apt-key add /usr/share/keyrings/percona.gpg"
+    action :nothing
+  end
+
+  remote_file  "/usr/share/keyrings/percona.gpg" do
+    mode "0644"
+    owner "root"
+    group "root"
+    action :create
+    backup false
+    source  "percona.gpg"
+    notifies :run, resources(:execute => "add_percona_apt_key")
+  end
+
   apt_repository "percona" do
     uri node["percona"]["apt_uri"]
     distribution node["lsb"]["codename"]
     components ["main"]
-    keyserver node["percona"]["apt_keyserver"]
-    key node["percona"]["apt_key"]
-    condition "apt-key list | grep 'Percona MySQL Development Team'"
   end
 
 when "rhel"
