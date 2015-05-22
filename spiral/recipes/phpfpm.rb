@@ -2,6 +2,14 @@ include_recipe 'spiral::nginx'
 include_recipe 'spiral::newrelic'
 include_recipe 'spiral::users'
 
+apt_repository 'ondrej-php5-5_6-trusty' do
+  uri 'http://ppa.launchpad.net/ondrej/php5-5.6/ubuntu'
+  distribution node['lsb']['codename']
+  components ['main']
+  keyserver 'keyserver.ubuntu.com'
+  key 'E5267A6C'
+end
+
 package 'php5-cli'
 package 'php5-fpm'
 package 'php5-mcrypt'
