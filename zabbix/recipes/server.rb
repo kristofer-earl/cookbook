@@ -17,3 +17,11 @@ link '/etc/nginx/sites-enabled/zabbix-nginx.conf' do
   to '/etc/nginx/sites-available/zabbix-nginx.conf'
   notifies :restart, "service[nginx]"
 end
+
+template '/etc/zabbix/web/zabbix.conf.php' do
+  source 'zabbix.webconf.php.erb'
+  owner  'www-data'
+  group  'www-data'
+  mode   '0644'
+  action ':create'
+end
