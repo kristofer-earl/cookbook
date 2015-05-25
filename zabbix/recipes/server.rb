@@ -23,5 +23,5 @@ template '/etc/zabbix/web/zabbix.conf.php' do
   owner  'www-data'
   group  'www-data'
   mode   '0644'
-  action ':create'
+  action :create
 end
