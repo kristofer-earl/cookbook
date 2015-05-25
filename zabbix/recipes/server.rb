@@ -3,6 +3,7 @@ include_recipe 'zabbix::default'
 
 package 'zabbix-server-mysql'
 package 'zabbix-frontend-php'
+package 'zabbix-get'
 
 template '/etc/nginx/sites-available/zabbix-nginx.conf' do
   source   'zabbix-nginx.conf.erb'
