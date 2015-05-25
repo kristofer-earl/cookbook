@@ -1,0 +1,1 @@
+default[:zabbix][:fqdn] = 'localhost'
