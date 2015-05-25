@@ -33,4 +33,5 @@ cookbook_file  '/usr/lib/zabbix/externalscripts/zbx_nginx_stats.py' do
   action :create
   backup false
   source 'zbx_nginx_stats.py' 
+  action :create
 end
