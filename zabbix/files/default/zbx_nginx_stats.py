@@ -13,7 +13,7 @@ hostname = 'Zabbix Agent'   # Name of monitored host, like it shows in zabbix we
 time_delta = 1              # grep interval in minutes
 
 # URL to nginx stat (http_stub_status_module)
-stat_url = 'https://nginx.server/nginx_stat'
+stat_url = 'http://nginx.server/dE8hoCJoyutI0roNOnsaE3UmsKdA9Cet'
 
 # Nginx log file path
 nginx_log_file_path = '/var/log/nginx/access.log'
