@@ -25,3 +25,12 @@ template '/etc/zabbix/web/zabbix.conf.php' do
   mode   '0644'
   action :create
 end
+
+cookbook_file  '/usr/lib/zabbix/externalscripts/zbx_nginx_stats.py' do
+  mode   '0755'
+  owner  'root'
+  group  'root'
+  action :create
+  backup false
+  source 'zbx_nginx_stats.py' 
+end
