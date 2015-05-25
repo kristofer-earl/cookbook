@@ -7,13 +7,13 @@ try:
 except:
     import simplejson as json
 
-zabbix_host = '127.0.0.1'   # Zabbix server IP
+zabbix_host = 'zabbix.spiralworks-cloud.com'   # Zabbix server IP
 zabbix_port = 10051         # Zabbix server port
-hostname = 'Zabbix Agent'   # Name of monitored host, like it shows in zabbix web ui
+hostname = '<%= node[:opsworks][:instance][:hostname] %>'   # Name of monitored host, like it shows in zabbix web ui
 time_delta = 1              # grep interval in minutes
 
 # URL to nginx stat (http_stub_status_module)
-stat_url = 'http://nginx.server/dE8hoCJoyutI0roNOnsaE3UmsKdA9Cet'
+stat_url = 'http://127.0.0.1/dE8hoCJoyutI0roNOnsaE3UmsKdA9Cet'
 
 # Nginx log file path
 nginx_log_file_path = '/var/log/nginx/access.log'

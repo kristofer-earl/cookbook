@@ -1,3 +1,5 @@
+package 'python-pip'
+
 execute 'install_zabbix_repo_key' do
   command 'curl http://repo.zabbix.com/zabbix-official-repo.key | apt-key add -'
   not_if 'apt-key list | grep "Zabbix SIA"'
