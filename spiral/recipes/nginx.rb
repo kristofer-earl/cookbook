@@ -1,9 +1,22 @@
+execute "add_nginx_apt_key" do
+  command "/usr/bin/apt-key add /usr/share/keyrings/nginx.gpg"
+  action :nothing
+end
+
+cookbook_file  "/usr/share/keyrings/nginx.gpg" do
+  mode "0644"
+  owner "root"
+  group "root"
+  action :create
+  backup false
+  source  "nginx.gpg"
+  notifies :run, resources(:execute => "add_nginx_apt_key")
+end
+
 apt_repository 'nginx' do
   uri 'http://ppa.launchpad.net/nginx/stable/ubuntu'
   distribution node['lsb']['codename'] 
   components ['main']
-  keyserver 'keyserver.ubuntu.com'
-  key 'C300EE8C'
   action :add
 end 
 
