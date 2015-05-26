@@ -89,5 +89,4 @@ end
 
 execute 'install_drush7' do
   command 'composer global require drush/drush:7.*'
-  user    'deploy'
 end
