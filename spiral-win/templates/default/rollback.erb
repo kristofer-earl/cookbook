@@ -1,0 +1,103 @@
+#Arguments and Variable definitions
+$envkey = $args[0]
+$envsecret = $args[1]
+$sitename = $args[2]
+$sitedomain = $args[4]
+$siteport = $args[3]
+$sitepath = "$env:systemdrive\inetpub\$sitename"
+$siteapppool = $sitename + "AppPool"
+
+
+If (!(Get-Module -Name AWSPowershell)) {
+$Error.Clear()
+Import-Module "C:\Program Files (x86)\AWS Tools\PowerShell\AWSPowerShell\AWSPowerShell.psd1"
+if (!($?)) {
+Write-Output "Module not found, please install aws toolkit for powershell"
+exit 1
+} }
+
+Write-Output "Updating Tracker"
+$file = "C:\\DeployTracker"
+if (Get-S3Object -BucketName sw-tmp -Key Tracker -AccessKey $envkey -SecretKey $envsecret) {
+Read-S3Object -BucketName sw-tmp -Key Tracker -AccessKey $envkey -SecretKey $envsecret -File $file
+} else {
+Write-Output "There was an issue fetching tracker file, check internet connection and try again. (Code: F1)"
+}
+
+$deployfile = Get-Content C:\DeployTracker | Select -First 1 -Skip 1
+#$deployfile = "C:\$deployfile"
+
+If (Test-Path "c:\$deployfile") {
+Write-Output "Deployment package already downloaded, skipping fetch."
+} else {
+Write-Output "Fetching Deployment Package"
+if (Get-S3Object -BucketName sw-tmp -Key $deployfile -AccessKey $envkey -SecretKey $envsecret) {
+Read-S3Object -BucketName sw-tmp -Key $deployfile -AccessKey $envkey -SecretKey $envsecret -File "c:\$deployfile"
+} else {
+Write-Output "There was an issue fetching package file, check internet connection. (code: F2)"
+}
+}
+
+$sitezip = 'C:\Deploy.zip'
+If (Test-path $sitezip) { Remove-Item $sitezip }
+Copy-Item -Path "C:\$deployfile" -Destination "C:\Deploy.zip"
+#echo $sitezip
+
+#Verify IIS is installed if not Install it
+If (!(Get-WindowsFeature -Name "Web-Server" | Where InstallState -eq "Installed" )) {
+Write-Output "Web-Server Role not found: Will install"
+Install-WindowsFeature -Name "Web-Server", "Web-Common-Http", "Web-Net-Ext45"
+Install-WindowsFeature -Name "Web-App-Dev" -IncludeAllSubFeature
+Write-Output "Installation complete!"
+} else {
+#Add verbosity
+Write-Output "Web-Server Role Installed: OK"
+}
+
+#Define Website Specs (first Disable Default Website)
+If (Get-WebsiteState -Name "Default Web Site" | Where Value -eq "Started") {
+Write-Output "Default Website is running, will stop"
+Stop-Website -Name "Default Web Site"
+Write-Output "Default Website is now Stopped" 
+}
+
+$destination = "$sitepath\$deployfile"
+#Check if Deploy path Exists: Will be particularly important when implementing versions
+If (!(Test-Path $destination)) { New-Item $destination -ItemType Directory }
+
+Write-Host -ForegroundColor YELLOW $destination " AND " $sitezip
+
+#Unzip the zip container for zip files.
+If (Test-Path "$destination\*") { Remove-Item -Recurse -Force "$destination\\*\\" }
+$shell = New-Object -com shell.application
+$zip = $shell.Namespace("$sitezip")
+foreach($item in $zip.items())
+{
+$shell.Namespace($destination).copyhere($item)
+}
+
+#Prepare specific Application Pool for the website, will create if none.
+if (!(Test-Path "IIS:\AppPools\$siteapppool")) {
+New-WebAppPool $siteapppool
+}
+
+#Create site if it doesn't exist
+If (!(Get-Website -Name $sitename)) {
+Write-Output "Website not found creating $sitename ..."
+New-Website -Name $sitename -Port $siteport -PhysicalPath "$sitepath\$deployfile" -HostHeader $sitedomain
+Set-ItemProperty -Path "IIS:\Sites\$sitename" -Name ApplicationPool -Value $siteapppool
+} else { 
+Write-Output "Site already exist updating..."
+Set-ItemProperty -Path "IIS:\Sites\$sitename" -Name physicalPath -Value "$sitepath\$deployfile"
+}
+
+$deployfile = Get-Content C:\DeployTracker | Select -Skip 1
+Set-Content C:\DeployTracker $deployfile
+
+Write-Output "Updating Tracker with Rollback"
+$file = "C:\\DeployTracker"
+if (Test-Path $file) {
+Write-S3Object -BucketName sw-tmp -Key Tracker -AccessKey $envkey -SecretKey $envsecret -File $file
+}
+
+Write-Output "Rollback Successful!"
