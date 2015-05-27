@@ -1,0 +1,33 @@
+$envkey = args[0]
+$envsecret = args[1]
+
+#$envkey = 'AKIAIUEM73TGBMTKP5JA'
+#$envsecret = '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'
+
+If (!(Get-Module -Name AWSPowershell)) {
+$Error.Clear()
+Import-Module "C:\Program Files (x86)\AWS Tools\PowerShell\AWSPowerShell\AWSPowerShell.psd1"
+if (!($?)) {
+
+Write-Host "Module not found, please install aws toolkit for powershell"
+exit 1
+} }
+
+Write-Host "Updating Tracker"
+$file = "\DeployTracker"
+if (Get-S3Object -BucketName sw-tmp -Key Tracker -AccessKey $envkey -SecretKey $envsecret) {
+Read-S3Object -BucketName sw-tmp -Key Tracker -AccessKey $envkey -SecretKey $envsecret -File $file
+} else {
+Write-Host "There was an issue fetching tracker file, check internet connection and try again. (Code: F1)"
+}
+
+$deployfile = Get-Content .\DeployTracker -First 1
+
+Write-Host "Fetching Deployment Package"
+if (Get-S3Object -BucketName sw-tmp -Key $deployfile -AccessKey $envkey -SecretKey $envsecret) {
+Read-S3Object -BucketName sw-tmp -Key $deployfile -AccessKey $envkey -SecretKey $envsecret -File $deployfile
+} else {
+Write-Host "There was an issue fetching package file, check internet connection. (code: F2)"
+}
+
+
