@@ -8,3 +8,4 @@ cas.server.url_<%= node[:pmahjong][:cas][:external_fqdn] %>=http://<%= node[:pma
 mappingSuffix=.jspx
 
 wallet.server.url=http://<%= node[:pmahjong][:wallet][:external_fqdn] %>/api
+wallet.fetch.operator.uri=${wallet.server.url}/internal/fetchOpertors
