@@ -43,7 +43,7 @@ $conf['page_cache_without_database'] = TRUE;
 $conf['page_cache_invoke_hooks'] = FALSE;
 
 $conf['memcache_servers'] = array(
- '<%= node[:prometheus][:memcached][:host]:node[:prometheus][:memcached][:port] %>' => 'default'
+ '<%= node[:prometheus][:memcached][:host] %>:<%= node[:prometheus][:memcached][:port] %>' => 'default'
 );
 
 $conf['memcache_bins'] = array(
