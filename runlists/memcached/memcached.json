@@ -1,0 +1,6 @@
+{
+  "run_list": [ "recipe[memcached]" ],
+  "memcached": {
+    "memory": "512"
+  }
+}
