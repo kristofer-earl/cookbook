@@ -21,10 +21,10 @@
       "db_user": "api",
       "db_pass": "Ts1soRvaRabA4rAn",
       "fqdn": "api.marvin"
+    },
+    "memcached": {
+      "host": "memc1.localdomain",
+      "port": "11211"
     }
-  },
-  "memcached": {
-    "host": "memc1.localdomain",
-    "port": "11211"
   }
 }
