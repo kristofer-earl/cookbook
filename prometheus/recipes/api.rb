@@ -1,4 +1,3 @@
-include_recipe 'memcached'
 include_recipe 'prometheus::default'
 
 cookbook_file 'api-deploy.pub' do
