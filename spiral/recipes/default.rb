@@ -20,7 +20,7 @@ package 'oracle-java7-set-default'
 package 'git'
 
 execute 'git_url_default_to_https' do
-  command 'git config --global url."https://".insteadOf git://'
+  command 'git config --global url."https://".insteadOf git://',
   user 'deploy',
   :environment => { 'HOME' => "/home/deploy" }
 end
