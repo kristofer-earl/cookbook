@@ -1,3 +1,5 @@
+include_recipe 'spiral::default'
+
 execute "add_nginx_apt_key" do
   command "/usr/bin/apt-key add /usr/share/keyrings/nginx.gpg"
   action :nothing
