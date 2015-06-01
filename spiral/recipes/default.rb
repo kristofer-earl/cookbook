@@ -21,7 +21,8 @@ package 'git'
 
 execute 'git_url_default_to_https' do
   command 'git config --global url."https://".insteadOf git://'
-  user 'deploy'
+  user 'deploy',
+  :environment => { 'HOME' => "/home/deploy" }
 end
 
 # get RDS instance for MySQL connection
