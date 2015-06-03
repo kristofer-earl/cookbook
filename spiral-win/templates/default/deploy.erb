@@ -4,6 +4,8 @@ $envsecret = $args[1]
 $sitename = $args[2]
 $siteport = $args[3]
 $sitedomain = $args[4]
+$bucket = $args[5]
+$folders = $args[6]
 
 $sitepath = "$env:systemdrive\inetpub\$sitename"
 $siteapppool = $sitename + "AppPool"
@@ -19,8 +21,8 @@ exit 1
 
 Write-Output "Updating Tracker"
 $file = "C:\\DeployTracker"
-if (Get-S3Object -BucketName sw-tmp -Key Tracker -AccessKey $envkey -SecretKey $envsecret) {
-Read-S3Object -BucketName sw-tmp -Key Tracker -AccessKey $envkey -SecretKey $envsecret -File $file
+if (Get-S3Object -BucketName $bucket -Key "$folders/Tracker" -AccessKey $envkey -SecretKey $envsecret) {
+Read-S3Object -BucketName $bucket -Key "$folders/Tracker" -AccessKey $envkey -SecretKey $envsecret -File $file
 } else {
 Write-Output "There was an issue fetching tracker file, check internet connection and try again. (Code: F1)"
 }
@@ -32,8 +34,8 @@ If (Test-Path "c:\$deployfile") {
 Write-Output "Deployment package already downloaded, skipping fetch."
 } else {
 Write-Output "Fetching Deployment Package"
-if (Get-S3Object -BucketName sw-tmp -Key $deployfile -AccessKey $envkey -SecretKey $envsecret) {
-Read-S3Object -BucketName sw-tmp -Key $deployfile -AccessKey $envkey -SecretKey $envsecret -File "c:\$deployfile"
+if (Get-S3Object -BucketName $bucket -Key "$folders/$deployfile" -AccessKey $envkey -SecretKey $envsecret) {
+Read-S3Object -BucketName $bucket -Key "$folders/$deployfile" -AccessKey $envkey -SecretKey $envsecret -File "c:\$deployfile"
 } else {
 Write-Output "There was an issue fetching package file, check internet connection. (code: F2)"
 }
