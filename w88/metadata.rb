@@ -1,0 +1,17 @@
+name              'w88'
+maintainer        'Spiralworks W88 Stuff'
+maintainer_email  'devops@spiralwks.com'
+license           'Private'
+description       'Configures basic infrastruture resused within the contexts of many inhouse applications'
+version           '0.0.1'
+
+depends 'apt'
+depends 'spiral'
+depends 'supervisor'
+depends 'build-essential'
+depends 'hhvm3'
+depends 'mongodb'
+depends 'elasticsearch'
+depends 'graylog2'
+
+supports 'ubuntu' 
