@@ -1,0 +1,18 @@
+{
+  "run_list": [ "recipe[spiral::graylog]" ],
+  "elasticsearch": {
+    "cluster": {
+      "name": "graylog2"
+    }
+  },
+  "graylog2": {
+    "elasticsearch": {
+      "config_file": "/usr/local/etc/elasticsearch/elasticsearch.yml"
+    },
+    "web": {
+      "secret": "mZmUi6dMj4G7bx3GYu56OVyh0Z9pTdTDQWRQmXlu5k3cIU28zfRm685cGHit6BPt6STJnEhhgkDNCVNuev2nY2AnVXSZOSPg"
+    },
+    "password_secret": "MKQXXJwOzpGyqSyrRZuYRvgAZYTQmKWLjXiK59pSlfIXuU7xMIMvkyjZjDqrfsbWrSuxIKrYeBnXq1xJ3me7wN95lJUDuFWc",
+    "root_password_sha2": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8"
+  }
+}

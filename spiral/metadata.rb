@@ -9,5 +9,8 @@ depends 'apt'
 depends 'supervisor'
 depends 'build-essential'
 depends 'hhvm3'
+depends 'mongodb'
+depends 'elasticsearch'
+depends 'graylog2'
 
 supports 'ubuntu' 
