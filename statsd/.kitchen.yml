@@ -1,0 +1,24 @@
+---
+driver:
+  name: vagrant
+  require_chef_omnibus: true
+  customize:
+    memory: 512
+
+provisioner:
+  name: chef_zero
+
+platforms:
+- name: ubuntu-12.04
+  run_list:
+  - recipe[apt]
+- name: centos-6.5
+  run_list:
+  - recipe[yum]
+
+suites:
+- name: default
+  run_list:
+  - recipe[minitest-handler]
+  - recipe[statsd]
+  attributes: {}
