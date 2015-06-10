@@ -2,6 +2,10 @@ include_recipe 'apt'
 include_recipe 'spiral::users'
 include_recipe 'spiral::newrelic'
 
+execute 'custom_apt_list_update' do
+  command 'apt-get update'
+end
+
 apt_repository 'webupd8team-java-trusty' do
   uri 'http://ppa.launchpad.net/webupd8team/java/ubuntu'
   distribution node['lsb']['codename']

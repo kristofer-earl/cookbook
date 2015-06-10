@@ -4,6 +4,7 @@ include_recipe 'spiral::users'
 
 execute "add_php_apt_key" do
   command "/usr/bin/apt-key add /usr/share/keyrings/php.gpg"
+  notifies :run, resources(:execute => "custom_apt_list_update")
   action :nothing
 end
 
