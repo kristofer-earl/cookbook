@@ -1,6 +1,5 @@
 include_recipe "git"
 include_recipe "nodejs"
-include_recipe "runit"
 
 git node["statsd"]["dir"] do
   repository node["statsd"]["repository"]
@@ -58,13 +57,10 @@ user node["statsd"]["username"] do
   shell "/bin/false"
 end
 
-runit_service "statsd" do
-  action [:enable, :start]
-  default_logger true
-  options ({
-    :user => node['statsd']['username'],
-    :statsd_dir => node['statsd']['dir'],
-    :conf_dir => node['statsd']['conf_dir'],
-    :nodejs_bin => node['statsd']['nodejs_bin']
-  })
+service "statsd" do
+ action [:enable, :start]
+  supports :restart => true, :reload => false
+  restart_command "/usr/sbin/invoke-rc.d statsd restart"
+  start_command "/usr/sbin/invoke-rc.d statsd start"
+  stop_command "/usr/sbin/invoke-rc.d statsd stop"
 end
