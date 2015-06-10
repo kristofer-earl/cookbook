@@ -41,6 +41,9 @@ end
 
 service 'php5-fpm' do
   supports :restart => true, :reload => false
+  restart_command "/usr/sbin/invoke-rc.d php5-fpm restart"
+  start_command "/usr/sbin/invoke-rc.d php5-fpm start"
+  stop_command "/usr/sbin/invoke-rc.d php5-fpm stop"
   action :enable
 end
 
