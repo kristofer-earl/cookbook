@@ -8,12 +8,12 @@ directory '/srv/http' do
   action :create
 end
 
-directory '/srv/http/wordpress' do
-  owner 'www-data'
-  group 'www-data'
-  mode  '0774'
-  action :create
-end
+#directory '/srv/http/wordpress' do
+#  owner 'www-data'
+#  group 'www-data'
+#  mode  '0774'
+#  action :create
+#end
 
 cookbook_file '/etc/nginx/sites-available/w88info.com-nginx.conf' do
   source   'w88info.com-nginx.conf'
