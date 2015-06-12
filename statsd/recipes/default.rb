@@ -57,10 +57,13 @@ user node["statsd"]["username"] do
   shell "/bin/false"
 end
 
-service "statsd" do
- action [:enable, :start]
-  supports :restart => true, :reload => false
-  restart_command "/usr/sbin/invoke-rc.d statsd restart"
-  start_command "/usr/sbin/invoke-rc.d statsd start"
-  stop_command "/usr/sbin/invoke-rc.d statsd stop"
+runit_service "statsd" do
+  action [:enable, :start]
+  default_logger true
+  options ({
+    :user => node['statsd']['username'],
+    :statsd_dir => node['statsd']['dir'],
+    :conf_dir => node['statsd']['conf_dir'],
+    :nodejs_bin => node['statsd']['nodejs_bin']
+  })
 end
