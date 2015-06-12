@@ -1,5 +1,6 @@
 include_recipe "git"
 include_recipe "nodejs"
+include_recipe "runit"
 
 git node["statsd"]["dir"] do
   repository node["statsd"]["repository"]
