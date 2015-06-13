@@ -1,0 +1,29 @@
+server {
+	listen 80;
+
+	root /srv/http/casino/current/public;
+	index index.php index.html index.htm;
+
+	access_log /var/log/nginx/api_access.log;
+        error_log /var/log/nginx/api_error.log;
+
+	server_name <%= node[:socialcasino][:http][:fqdn] %>; 
+
+	location / {
+		rewrite ^ /index.php;
+	}
+
+	location ~ \.php$ {
+		include /etc/nginx/cors.conf;
+		fastcgi_split_path_info ^(.+\.php)(/.+)$;
+		include fastcgi_params;
+		fastcgi_param SCRIPT_FILENAME $request_filename;
+		fastcgi_intercept_errors on;
+		fastcgi_pass unix:/var/run/php5-fpm.sock;
+		fastcgi_index index.php;
+	}
+
+	location ~ /\.ht {
+		deny all;
+	}
+}
