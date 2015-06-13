@@ -4,8 +4,8 @@ server {
 	root /srv/http/casino/current/public;
 	index index.php index.html index.htm;
 
-	access_log /var/log/nginx/api_access.log;
-        error_log /var/log/nginx/api_error.log;
+	access_log /var/log/nginx/access.log;
+        error_log /var/log/nginx/error.log;
 
 	server_name <%= node[:socialcasino][:http][:fqdn] %>; 
 
