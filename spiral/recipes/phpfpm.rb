@@ -67,6 +67,15 @@ cookbook_file '/etc/php5/fpm/php.ini' do
   notifies :restart, 'service[php5-fpm]'
 end
 
+template '/etc/php5/fpm/pool.d/www.conf' do
+  source 'fpm-pool.conf.erb'
+  owner  'root'
+  group  'root'
+  mode   '0644'
+  action :create
+  notifies :restart, 'service[php5-fpm]'
+end
+
 template '/etc/php5/mods-available/newrelic.ini' do
   source 'php5-newrelic.ini.erb'
   owner  'root'

@@ -1,0 +1,16 @@
+[www]
+user = www-data
+group = www-data
+listen = /var/run/php5-fpm.sock
+listen.owner = www-data
+listen.group = www-data
+pm = dynamic
+pm.max_children = <%= node[:spiral][:fpm][:max_children] %>
+pm.start_servers = <%= node[:spiral][:fpm][:start_servers] %>
+pm.min_spare_servers = <%= node[:spiral][:fpm][:min_spare_servers] %> 
+pm.max_spare_servers = <%= node[:spiral][:fpm][:max_spare_servers] %> 
+pm.max_requests = <%= node[:spiral][:fpm][:max_requests] %> 
+chdir = /
+request_terminate_timeout = 30s
+rlimit_files = 131072
+rlimit_core = unlimited
