@@ -1,9 +1,8 @@
 #
-# Cookbook Name:: rabbitmq
-# Resource:: parameter
+# Cookbook Name:: rabbitmq_test
+# Recipe:: cluster
 #
-# Author: Sean Porter <portertech@gmail.com>
-# Copyright 2015 by Sean Porter
+# Copyright 2012, Opscode, Inc. <legal@opscode.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,10 +17,5 @@
 # limitations under the License.
 #
 
-actions :set, :clear, :list
-default_action :set
-
-attribute :parameter, :kind_of => String, :name_attribute => true
-attribute :component, :kind_of => String
-attribute :vhost, :kind_of => String
-attribute :params, :kind_of => [Hash, Array], :default => {}
+node.set['rabbitmq']['cluster'] = true
+include_recipe 'rabbitmq::default'

@@ -82,7 +82,6 @@ template "#{node['pokermahjong']['src_path']}/wallet/api-poker/src/main/resource
   action :create
 end
 
-
 execute 'remove_db_interactions' do
   cwd     "#{node[:pokermahjong][:src_path]}/wallet"
   command 'sed -i "/build.xml/d" common/pom.xml'
