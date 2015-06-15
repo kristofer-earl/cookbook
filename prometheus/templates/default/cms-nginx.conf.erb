@@ -1,5 +1,5 @@
 server { 
-        server_name <%= node[:prometheus][:cms][:fqdn] %>;
+        server_name <%= node[:prometheus][:cms][:vhost] %>;
 	root /srv/http/cms/current;
  
         # Enable compression, this will help if you have for instance advagg‎ module
