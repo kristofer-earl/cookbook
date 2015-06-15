@@ -14,5 +14,6 @@ depends 'elasticsearch'
 depends 'graylog2'
 depends 'spiral'
 depends 'percona'
+depends 'rabbitmq'
 
 supports 'ubuntu' 
