@@ -1,4 +1,4 @@
-include_recipe 'rabbitmq::mgmt_console '
+include_recipe 'rabbitmq::mgmt_console'
 
 rabbitmq_user 'guest' do
   action :delete
