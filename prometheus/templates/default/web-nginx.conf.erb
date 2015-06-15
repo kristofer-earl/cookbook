@@ -8,7 +8,7 @@ server {
 	index index.php index.html index.htm;
 
 	# Make site accessible from http://localhost/
-	server_name <%= node[:prometheus][:web][:vhost] %>;
+	server_name <%= node[:prometheus][:web][:fqdn] %> <%= node[:prometheus][:web][:vhost] %>;
 
 	location / {
 		try_files $uri @rewrite;
