@@ -70,12 +70,9 @@ New-Item $destination -ItemType Directory
 
 #Unzip the zip container for zip files.
 
-$shell = New-Object -com shell.application
-$zip = $shell.Namespace("$sitezip")
-foreach($item in $zip.items())
-{
-$shell.Namespace($destination).copyhere($item)
-}
+Add-Type -assembly "system.io.compression.filesystem"
+
+[io.compression.zipfile]::ExtractToDirectory($sitezip, $destination)
 
 If (Get-Service -Name "$servicename" -ErrorAction SilentlyContinue) {
 Write-Host "Service already exists, will update..."
