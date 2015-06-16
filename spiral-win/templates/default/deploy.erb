@@ -10,6 +10,7 @@ $folders = $args[6]
 $sitepath = "$env:systemdrive\inetpub\$sitename"
 $siteapppool = $sitename + "AppPool"
 
+if (!(Test-Path "c:\$sitename")) { New-Item c:\$sitename -ItemType Directory }
 
 If (!(Get-Module -Name AWSPowershell)) {
 $Error.Clear()
@@ -30,12 +31,12 @@ Write-Output "There was an issue fetching tracker file, check internet connectio
 $deployfile = Get-Content $file -First 1
 #$deployfile = "C:\$deployfile"
 
-If (Test-Path "c:\$deployfile") {
+If (Test-Path "c:\$sitename\$deployfile") {
 Write-Output "Deployment package already downloaded, skipping fetch."
 } else {
 Write-Output "Fetching Deployment Package"
 if (Get-S3Object -BucketName $bucket -Key "$folders/$deployfile" -AccessKey $envkey -SecretKey $envsecret) {
-Read-S3Object -BucketName $bucket -Key "$folders/$deployfile" -AccessKey $envkey -SecretKey $envsecret -File "c:\$deployfile"
+Read-S3Object -BucketName $bucket -Key "$folders/$deployfile" -AccessKey $envkey -SecretKey $envsecret -File "c:\$sitename\$deployfile"
 } else {
 Write-Output "There was an issue fetching package file, check internet connection. (code: F2)"
 }
@@ -43,7 +44,7 @@ Write-Output "There was an issue fetching package file, check internet connectio
 
 $sitezip = 'C:\Deploy.zip'
 If (Test-path $sitezip) { Remove-Item $sitezip }
-Copy-Item -Path "C:\$deployfile" -Destination "C:\Deploy.zip"
+Copy-Item -Path "C:\$sitename\$deployfile" -Destination "C:\Deploy.zip"
 #echo $sitezip
 
 #Verify IIS is installed if not Install it
