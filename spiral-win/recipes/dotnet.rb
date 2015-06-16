@@ -10,12 +10,15 @@ directory 'C:\spiralworks' do
   not_if 'Test-Path C:\spiralworks'
 end
 
-template 'C:\spiralworks\deploy.ps1' do
-  source 'deploy.erb'
-end
 
-template 'C:\spiralworks\rollback.ps1' do
-  source 'rollback.erb'
+TemplatesErb = ["deploy",
+                "rollback",
+                "winserv"]
+
+TemplatesErb.each do |tmp|
+   template "C:\\spiralworks\\#{tmp}.ps1" do
+     source "#{tmp}.erb"
+   end
 end
 
 remote_file 'C:\AWSToolsAndSDKForNet.msi' do
@@ -25,4 +28,17 @@ end
 windows_package 'aws_sdk' do
   action :install
   source 'C:\AWSToolsAndSDKForNet.msi'
+end
+
+user 'deploy' do
+  username 'deploy'
+  password 'M4k3itg00d4Sp1r4lw0rks'
+  comment 'This is a deployer User'
+  action :create
+end
+
+group "Administrators" do
+  members ['deploy']
+  append true
+  action :modify
 end

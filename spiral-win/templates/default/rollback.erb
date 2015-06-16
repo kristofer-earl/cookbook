@@ -30,12 +30,12 @@ Write-Output "There was an issue fetching tracker file, check internet connectio
 $deployfile = Get-Content C:\DeployTracker | Select -First 1 -Skip 1
 #$deployfile = "C:\$deployfile"
 
-If (Test-Path "c:\$deployfile") {
+If (Test-Path "c:\$sitename\$deployfile") {
 Write-Output "Deployment package already downloaded, skipping fetch."
 } else {
 Write-Output "Fetching Deployment Package"
 if (Get-S3Object -BucketName $bucket -Key "$folders/$deployfile" -AccessKey $envkey -SecretKey $envsecret) {
-Read-S3Object -BucketName $bucket -Key "$folders/$deployfile" -AccessKey $envkey -SecretKey $envsecret -File "c:\$deployfile"
+Read-S3Object -BucketName $bucket -Key "$folders/$deployfile" -AccessKey $envkey -SecretKey $envsecret -File "c:\$sitename\$deployfile"
 } else {
 Write-Output "There was an issue fetching package file, check internet connection. (code: F2)"
 }
@@ -43,7 +43,7 @@ Write-Output "There was an issue fetching package file, check internet connectio
 
 $sitezip = 'C:\Deploy.zip'
 If (Test-path $sitezip) { Remove-Item $sitezip }
-Copy-Item -Path "C:\$deployfile" -Destination "C:\Deploy.zip"
+Copy-Item -Path "C:\$sitename\$deployfile" -Destination "C:\Deploy.zip"
 #echo $sitezip
 
 #Verify IIS is installed if not Install it
@@ -100,7 +100,7 @@ Set-Content C:\DeployTracker $deployfile
 Write-Output "Updating Tracker with Rollback"
 $file = "C:\\DeployTracker"
 if (Test-Path $file) {
-Write-S3Object -BucketName $bucket -Key "$folders/$tracker" -AccessKey $envkey -SecretKey $envsecret -File $file
+Write-S3Object -BucketName $bucket -Key "$folders/Tracker" -AccessKey $envkey -SecretKey $envsecret -File $file
 }
 
 Write-Output "Rollback Successful!"
