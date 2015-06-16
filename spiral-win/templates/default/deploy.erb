@@ -73,12 +73,11 @@ Write-Host -ForegroundColor YELLOW $destination " AND " $sitezip
 
 #Unzip the zip container for zip files.
 If (Test-Path "$destination\*") { Remove-Item -Recurse -Force "$destination\\*\\" }
-$shell = New-Object -com shell.application
-$zip = $shell.Namespace("$sitezip")
-foreach($item in $zip.items())
-{
-$shell.Namespace($destination).copyhere($item)
-}
+
+
+Add-Type -assembly "system.io.compression.filesystem"
+
+[io.compression.zipfile]::ExtractToDirectory($sitezip, $destination)
 
 #Prepare specific Application Pool for the website, will create if none.
 if (!(Test-Path "IIS:\AppPools\$siteapppool")) {
