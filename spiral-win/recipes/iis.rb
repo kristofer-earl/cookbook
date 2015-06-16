@@ -21,7 +21,7 @@ WindowsFeatures.each do |wf|
 
    powershell_script "Install-WindowsFeature #{wf}" do
      code "Install-WindowsFeature -Name #{wf}"
-     guard_interpreter :powershell_script
+#     guard_interpreter :powershell_script
      only_if "(Get-WindowsFeature -Name #{wf} | Where InstallState -Like 'Installed') -eq $null"
    end
 

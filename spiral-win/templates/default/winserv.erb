@@ -1,0 +1,92 @@
+#Arguments and Variables definition
+$envkey = $args[0]
+#$envkey = 'AKIAIUEM73TGBMTKP5JA'
+$envsecret = $args[1]
+#$envsecret = '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'
+$servicename = $args[2]
+#$servicename = "Casino.DataService"
+$bucket = $args[3]
+#$bucket = 'sw-sgnets'
+$folders = $args[4]
+#$folders = 'deployment/dev/DataService'
+
+$sitepath = "$env:systemdrive\apps\$servicename"
+
+if (!(Test-Path "c:\$servicename")) { New-Item c:\$servicename -ItemType Directory }
+
+If (!(Get-Module -Name AWSPowershell)) {
+$Error.Clear()
+Import-Module "C:\Program Files (x86)\AWS Tools\PowerShell\AWSPowerShell\AWSPowerShell.psd1"
+if (!($?)) {
+Write-Output "Module not found, please install aws toolkit for powershell"
+exit 1
+} }
+
+Write-Output "Updating Tracker"
+$file = "C:\\DeployTracker"
+if (Get-S3Object -BucketName $bucket -Key "$folders/Tracker" -AccessKey $envkey -SecretKey $envsecret) {
+Read-S3Object -BucketName $bucket -Key "$folders/Tracker" -AccessKey $envkey -SecretKey $envsecret -File $file
+} else {
+Write-Output "There was an issue fetching tracker file, check internet connection and try again. (Code: F1)"
+}
+
+$deployfile = Get-Content $file -First 1
+
+If (Test-Path "c:\$servicename\$deployfile") {
+Write-Output "Deployment package already downloaded, skipping fetch."
+} else {
+Write-Output "Fetching Deployment Package"
+if (Get-S3Object -BucketName $bucket -Key "$folders/$deployfile" -AccessKey $envkey -SecretKey $envsecret) {
+Read-S3Object -BucketName $bucket -Key "$folders/$deployfile" -AccessKey $envkey -SecretKey $envsecret -File "c:\$servicename\$deployfile"
+} else {
+Write-Output "There was an issue fetching package file, check internet connection. (code: F2)"
+}
+}
+
+$sitezip = 'C:\Deploy.zip'
+If (Test-path $sitezip) { Remove-Item $sitezip }
+Copy-Item -Path "C:\$servicename\$deployfile" -Destination "C:\Deploy.zip"
+#echo $sitezip
+
+#Check if service existed
+If (Get-Service -Name "$servicename" -ErrorAction SilentlyContinue) {
+
+Write-Host "Stopping Service..."
+Stop-Service -Name "$servicename"
+$svc = Get-Service -Name "$servicename"
+$svc.WaitForStatus('Stopped','00:00:15')
+
+}
+
+If (Test-Path "$sitepath\*") { Remove-Item -Recurse -Force "$sitepath\\*\\" -ErrorAction SilentlyContinue}
+
+$destination = "$sitepath\$deployfile"
+#Check if Deploy path Exists: Will be particularly important when implementing versions
+If (!(Test-Path $destination)) { New-Item $destination -ItemType Directory 
+} else { 
+$destination = $destination + "_1"
+New-Item $destination -ItemType Directory
+}
+
+#Unzip the zip container for zip files.
+
+$shell = New-Object -com shell.application
+$zip = $shell.Namespace("$sitezip")
+foreach($item in $zip.items())
+{
+$shell.Namespace($destination).copyhere($item)
+}
+
+If (Get-Service -Name "$servicename" -ErrorAction SilentlyContinue) {
+Write-Host "Service already exists, will update..."
+$service = Get-WmiObject -Class Win32_Service -Filter "Name='$servicename'"
+$service.delete()
+}
+
+Do {
+Start-Sleep -s 5
+Write-Host "Waiting"
+} While (Get-Service -Name "$servicename" -ErrorAction SilentlyContinue)
+
+New-Service -Name "$servicename" -DisplayName "$servicename" -BinaryPathName "$destination\$servicename.exe" -StartupType Automatic
+Start-Service -Name "$servicename"
