@@ -58,7 +58,14 @@ template '/srv/http/cms/shared/sites/default/settings.php' do
                      :prefix => node['prometheus']['cms_db_prefix'] })
 end
 
-directory '/var/log/nginx/cms' do
+file '/var/log/nginx/cms_access.log' do
+        owner 'www-data'
+        group 'www-data'
+        mode '0755'
+        action :create
+end
+
+file '/var/log/nginx/cms_error.log' do
         owner 'www-data'
         group 'www-data'
         mode '0755'
