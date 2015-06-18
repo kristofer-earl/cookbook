@@ -33,6 +33,13 @@ cookbook_file 'default' do
   manage_symlink_source true
 end
 
+directory '/var/log/nginx' do
+  owner  'www-data'
+  group  'www-data'
+  mode   '0755'
+  action :create
+end
+
 service 'nginx' do
   action :enable
   supports :status => true, :start => true, :stop => true, :restart => true
