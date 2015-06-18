@@ -22,6 +22,7 @@ package 'oracle-java7-installer'
 package 'oracle-java7-unlimited-jce-policy'
 package 'oracle-java7-set-default'
 package 'git'
+package 'nfs-common'
 
 execute 'git_url_default_to_https' do
   command 'git config --global url."https://".insteadOf git://'
