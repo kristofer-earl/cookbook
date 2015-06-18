@@ -55,16 +55,16 @@ server {
                 # Else this rewrite block wouldn't be needed (GlobalRedirect)
                 #rewrite ^/(.*)$ /index.php?q=$1;
         }
- 
+
         location ~ \.php$ {
-		include /etc/nginx/cors.conf;
-                fastcgi_split_path_info ^(.+\.php)(/.+)$;
-                #NOTE: You should have "cgi.fix_pathinfo = 0;" in php.ini
-                include fastcgi_params;
-                fastcgi_param SCRIPT_FILENAME $request_filename;
-                fastcgi_intercept_errors on;
-                fastcgi_pass unix:/var/run/php5-fpm.sock;
-        }
+                include /etc/nginx/cors.conf;
+                fastcgi_pass   127.0.0.1:9000;
+                # or if you used a unix socket
+                # fastcgi_pass   unix:/var/run/hhvm/sock;
+                fastcgi_index  index.php;
+                fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
+                include        fastcgi_params;
+        } 
  
         # Fighting with Styles? This little gem is amazing.
         # This is for D6
