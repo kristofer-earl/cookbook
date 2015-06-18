@@ -2,6 +2,9 @@ server {
 	listen 80;
 	listen [::]:80 ipv6only=on;
 
+        server_tokens   off;
+        more_set_headers 'Server: MagicBooBooLand';
+
  	root /srv/http/web/current/public;
  	access_log /var/log/nginx/web_access.log;
 	error_log /var/log/nginx/web_error.log;

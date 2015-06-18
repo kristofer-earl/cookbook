@@ -1,6 +1,9 @@
 server {
 	listen 80;
 
+        server_tokens   off;
+        more_set_headers 'Server: MagicBooBooLand';
+
 	root /srv/http/api/current/public;
 	index index.php index.html index.htm;
 
