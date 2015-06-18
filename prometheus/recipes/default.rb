@@ -49,11 +49,13 @@ link '/usr/bin/node' do
 end
 
 execute 'install_bundler' do
-  command "gem install bundler"
+  command 'gem install bundler'
+  creates '/usr/local/bin/bundler'
 end
 
 execute 'install_sass' do
-  command "gem install sass"
+  command 'gem install sass'
+  creates '/usr/local/bin/sass'
 end
 
 execute 'install_bower' do
