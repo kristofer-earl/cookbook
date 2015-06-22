@@ -17,10 +17,6 @@ end
   end
 end
 
-link '/var/www' do
-  to '/srv/http/wordpress'
-end
-
 cookbook_file '/etc/nginx/sites-available/w88info.com-nginx.conf' do
   source   'w88info.com-nginx.conf'
   owner    'root'
