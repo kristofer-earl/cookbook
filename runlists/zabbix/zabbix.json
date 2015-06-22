@@ -1,9 +1,0 @@
-{
-  "run_list": [ "recipe[zabbix::server]" ],
-  "percona": {
-    "skip_passwords": "true",
-    "server": {
-      "bind_address": "0.0.0.0"
-    }
-  }
-}
