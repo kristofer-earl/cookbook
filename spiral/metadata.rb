@@ -12,5 +12,6 @@ depends 'hhvm3'
 depends 'mongodb'
 depends 'elasticsearch'
 depends 'graylog2'
+depends 'nfs'
 
 supports 'ubuntu' 
