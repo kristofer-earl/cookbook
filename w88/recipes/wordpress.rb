@@ -3,9 +3,9 @@ include_recipe 'spiral::phpfpm'
 
 mount '/srv' do
   device "#{node['nfs']['server']}:#{node['nfs']['share']}" 
-  device_type :label
-  fstype "nfs"
-  options "rw,async"
+  fstype 'nfs'
+  options 'rw,async'
+  action [:mount, :enable]
 end
 
 %w[ /srv/http /srv/http/wordpress ].each do |path|
