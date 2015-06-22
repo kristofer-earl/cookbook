@@ -1,7 +1,0 @@
-{
-  "run_list": [ "recipe[gitolite::basic]" ],
-  "gitolite": {
-    "admin": "git",
-    "ssh_key": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC6bSECYqVkZ29tJaA5kHS/14nk+W1xon4EEZxGJJsp14g+S+nvUWOXZPO+bxCB4np9DEIU4bmY+G6/o/ofjCpAocqkjP2rhNjrl5XEJfGjHPqSN+KfU9phBGy9vCoWTLsP7/1RgcI3K9VDhXSWSZJIutmvoAMI+VS7ocd2fnUNMreOZONk5asTmfUBy3xVmwpgiXDxWuEmyE5tFNl6MsWZi1mHg+hde8B0DHJy49lsxSiLd3XzXk6z9BxP+ZKOzPfuL7cBuvpgi4VdGtnvIAjDpqlakHJdWnD6wXWJBkCD+g4gIPEA7n4qKC1KTVbzMrVvQpEbqRM9geNGd4IxC8L5 kth5@pille"
-  }
-}

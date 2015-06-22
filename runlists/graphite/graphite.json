@@ -1,6 +1,0 @@
-{
-  "run_list": [ "recipe[graphite::web]",
-                "recipe[graphite::carbon]",
-                "recipe[graphite::uwsgi]",
-                "recipe[statsd]" ]
-}
