@@ -5,5 +5,5 @@ nfs_export '/srv' do
   network '0.0.0.0/0'
   writeable true 
   sync false 
-  options ['no_root_squash']
+  options ['no_root_squash', 'no_subtree_check']
 end
