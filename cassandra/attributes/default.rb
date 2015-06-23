@@ -4,7 +4,7 @@ default['java']['set_default'] = true
 default['java']['oracle']['accept_oracle_download_terms'] = true
 
 default['cassandra']['install_method'] = 'datastax'
-default['cassandra']['install_java'] = true
+default['cassandra']['install_java'] = false
 default['cassandra']['cluster_name'] = nil
 default['cassandra']['notify_restart'] = false
 default['cassandra']['setup_jamm'] = false
