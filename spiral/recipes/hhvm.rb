@@ -3,8 +3,6 @@ include_recipe 'hhvm3'
 include_recipe 'spiral::newrelic'
 include_recipe 'spiral::nginx'
 
-package 'git'
-
 service 'hhvm' do
   action :enable
   supports :status => true, :start => true, :stop => true, :restart => true
@@ -39,9 +37,9 @@ template '/etc/nginx/sites-available/hhvm_nginx.conf' do
   notifies :restart, "service[nginx]"
 end
 
-link '/etc/nginx/sites-enabled/hhvm_nginx.conf' do
-  to '/etc/nginx/sites-available/hhvm_nginx.conf'
-end
+#link '/etc/nginx/sites-enabled/hhvm_nginx.conf' do
+#  to '/etc/nginx/sites-available/hhvm_nginx.conf'
+#end
 
 cookbook_file '/etc/hhvm/hhvm_server.ini' do
   source 'hhvm_server.ini'

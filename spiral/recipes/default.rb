@@ -1,6 +1,11 @@
 include_recipe 'apt'
+include_recipe 'nfs::client4'
 include_recipe 'spiral::users'
 include_recipe 'spiral::newrelic'
+
+execute 'custom_apt_list_update' do
+  command 'apt-get update'
+end
 
 apt_repository 'webupd8team-java-trusty' do
   uri 'http://ppa.launchpad.net/webupd8team/java/ubuntu'
@@ -17,6 +22,14 @@ end
 package 'oracle-java7-installer'
 package 'oracle-java7-unlimited-jce-policy'
 package 'oracle-java7-set-default'
+package 'git'
+package 'nfs-common'
+
+execute 'git_url_default_to_https' do
+  command 'git config --global url."https://".insteadOf git://'
+  user 'deploy'
+  environment ({ 'HOME' => '/home/deploy' })
+end
 
 # get RDS instance for MySQL connection
 #rds_instance_ip = Resolv.getaddress(node[:opsworks][:stack][:rds_instances].first[:address])

@@ -1,5 +1,4 @@
 include_recipe 'percona::client'
-include_recipe 'spiral::phpfpm'
 
 cookbook_file 'nginx-cors.conf' do
   path  '/etc/nginx/cors.conf'
@@ -50,11 +49,13 @@ link '/usr/bin/node' do
 end
 
 execute 'install_bundler' do
-  command "gem install bundler"
+  command 'gem install bundler'
+  creates '/usr/local/bin/bundler'
 end
 
 execute 'install_sass' do
-  command "gem install sass"
+  command 'gem install sass'
+  creates '/usr/local/bin/sass'
 end
 
 execute 'install_bower' do

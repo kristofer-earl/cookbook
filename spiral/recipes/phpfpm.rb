@@ -4,6 +4,7 @@ include_recipe 'spiral::users'
 
 execute "add_php_apt_key" do
   command "/usr/bin/apt-key add /usr/share/keyrings/php.gpg"
+  notifies :run, resources(:execute => "custom_apt_list_update")
   action :nothing
 end
 
@@ -41,15 +42,10 @@ end
 
 service 'php5-fpm' do
   supports :restart => true, :reload => false
+  restart_command "/usr/sbin/invoke-rc.d php5-fpm restart"
+  start_command "/usr/sbin/invoke-rc.d php5-fpm start"
+  stop_command "/usr/sbin/invoke-rc.d php5-fpm stop"
   action :enable
-end
-
-link '/etc/php5/cli/conf.d/99-mcrypt.ini' do
-  to '/etc/php5/mods-available/mcrypt.ini'
-end
-
-link '/etc/php5/fpm/conf.d/99-mcrypt.ini' do
-  to '/etc/php5/mods-available/mcrypt.ini'
 end
 
 bash "debconf_newrelic" do
@@ -67,6 +63,15 @@ cookbook_file '/etc/php5/fpm/php.ini' do
   group 'root'
   mode  '0644'
   source 'php-fpm.ini'
+  action :create
+  notifies :restart, 'service[php5-fpm]'
+end
+
+template '/etc/php5/fpm/pool.d/www.conf' do
+  source 'fpm-pool.conf.erb'
+  owner  'root'
+  group  'root'
+  mode   '0644'
   action :create
   notifies :restart, 'service[php5-fpm]'
 end

@@ -43,3 +43,7 @@ unless node["percona"]["skip_passwords"]
   include_recipe "percona::access_grants"
   include_recipe "percona::replication"
 end
+
+execute 'empty_debian_cnf' do
+  command 'echo -n "" > /etc/mysql/debian.cnf'
+end

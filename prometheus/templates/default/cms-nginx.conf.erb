@@ -1,6 +1,9 @@
 server { 
-        server_name <%= node[:prometheus][:cms][:fqdn] %>;
+        server_name <%= node[:prometheus][:cms][:fqdn] %> <%= node[:prometheus][:cms][:vhost] %>;
 	root /srv/http/cms/current;
+
+        server_tokens   off;
+        more_set_headers 'Server: MagicBooBooLand';
  
         # Enable compression, this will help if you have for instance advagg‎ module
         # by serving Gzip versions of the files.
@@ -55,16 +58,16 @@ server {
                 # Else this rewrite block wouldn't be needed (GlobalRedirect)
                 #rewrite ^/(.*)$ /index.php?q=$1;
         }
- 
-        location ~ \.php$ {
-		include /etc/nginx/cors.conf;
-                fastcgi_split_path_info ^(.+\.php)(/.+)$;
-                #NOTE: You should have "cgi.fix_pathinfo = 0;" in php.ini
-                include fastcgi_params;
-                fastcgi_param SCRIPT_FILENAME $request_filename;
-                fastcgi_intercept_errors on;
-                fastcgi_pass unix:/var/run/php5-fpm.sock;
-        }
+
+	location ~ \.php$ {
+	        include /etc/nginx/cors.conf;
+		fastcgi_split_path_info ^(.+\.php)(/.+)$;
+		include fastcgi_params;
+		fastcgi_param SCRIPT_FILENAME $request_filename;
+		fastcgi_intercept_errors on;
+		fastcgi_pass unix:/var/run/php5-fpm.sock;
+		fastcgi_index index.php;
+	}
  
         # Fighting with Styles? This little gem is amazing.
         # This is for D6
@@ -75,7 +78,7 @@ server {
         }
  
         location ~* \.(js|css|png|jpg|jpeg|gif|ico)$ {
-                expires 24h;
+                expires max;
                 log_not_found off;
         }
 }

@@ -1,5 +1,8 @@
+include_recipe 'spiral::default'
+
 execute "add_nginx_apt_key" do
   command "/usr/bin/apt-key add /usr/share/keyrings/nginx.gpg"
+  notifies :run, resources(:execute => "custom_apt_list_update")
   action :nothing
 end
 
@@ -28,6 +31,13 @@ cookbook_file 'default' do
   notifies :restart, "service[nginx]"
   action :delete
   manage_symlink_source true
+end
+
+directory '/var/log/nginx' do
+  owner  'www-data'
+  group  'www-data'
+  mode   '0755'
+  action :create
 end
 
 service 'nginx' do
