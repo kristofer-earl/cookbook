@@ -1,4 +1,4 @@
-include_recipe 'spiral::hhvm'
+include_recipe 'spiral::phpfpm'
 include_recipe 'prometheus::default'
 
 cookbook_file 'cms-deploy.pub' do
