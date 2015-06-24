@@ -1,4 +1,4 @@
-include_recipe 'spiral::default'
+include_recipe 'spiral::java'
 
 newrelic_archive_url = 'https://oss.sonatype.org/content/repositories/releases/com/newrelic/agent/java/newrelic-java/3.15.0/newrelic-java-3.15.0.zip'
 
