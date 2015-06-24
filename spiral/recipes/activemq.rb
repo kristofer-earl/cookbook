@@ -2,7 +2,7 @@ include_recipe 'apt'
 include_recipe 'build-essential'
 include_recipe 'python'
 include_recipe 'supervisor'
-include_recipe 'spiral::default'
+include_recipe 'spiral::java'
 
 dl_location = "/opt/activemq-#{node['spiral']['activemq']['version']}-bin.tar.gz"
 activemq_path = "/opt/activemq"

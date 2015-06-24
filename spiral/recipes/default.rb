@@ -1,4 +1,3 @@
-include_recipe 'apt'
 include_recipe 'nfs::client4'
 include_recipe 'spiral::users'
 include_recipe 'spiral::newrelic'

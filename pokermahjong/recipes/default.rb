@@ -1,4 +1,4 @@
-include_recipe 'spiral::default'
+include_recipe 'spiral::java'
 
 package 'ant'
 package 'maven'
