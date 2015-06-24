@@ -6,7 +6,7 @@
 default['graphite']['version'] = '0.9.12'
 default['graphite']['twisted_version'] = '13.1'
 default['graphite']['django_version'] = '1.5.5'
-default['graphite']['password'] = 'change_me'
+default['graphite']['password'] = 'gr@ph1t3'
 default['graphite']['user'] = 'graphite'
 default['graphite']['group'] = 'graphite'
 default['graphite']['base_dir'] = '/opt/graphite'
