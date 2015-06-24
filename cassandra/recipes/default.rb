@@ -17,9 +17,6 @@
 # limitations under the License.
 #
 
-# dirty spiralworks hack to get Java going
-include_recipe 'spiral::java'
-
 case node['cassandra']['version']
 # Submit an issue if jamm version is not correct for 0.x or 1.x version
 when /^0\./, /^1\./, /^2\.0/
