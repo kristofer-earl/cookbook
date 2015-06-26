@@ -1,5 +1,5 @@
 include_recipe 'spiral::nginx'
-include_recipe 'spiral::newrelic'
+#include_recipe 'spiral::newrelic'
 include_recipe 'spiral::users'
 
 execute "add_php_apt_key" do
