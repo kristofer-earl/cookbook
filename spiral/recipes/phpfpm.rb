@@ -56,8 +56,6 @@ bash "debconf_newrelic" do
   EOS
 end
 
-package 'newrelic-php5'
-
 cookbook_file '/etc/php5/fpm/php.ini' do
   owner 'root'
   group 'root'
