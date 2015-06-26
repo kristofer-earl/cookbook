@@ -41,9 +41,9 @@ default['nfs']['packages'] = %w(nfs-utils rpcbind)
 default['nfs']['service']['portmap'] = 'rpcbind'
 default['nfs']['service']['lock'] = 'nfslock'
 default['nfs']['service']['server'] = 'nfs'
-default['nfs']['service_provider']['lock'] = Chef::Platform.find_provider_for_node node, :service
-default['nfs']['service_provider']['portmap'] = Chef::Platform.find_provider_for_node node, :service
-default['nfs']['service_provider']['server'] = Chef::Platform.find_provider_for_node node, :service
+default['nfs']['service_provider']['lock'] = Chef::Provider::Service::Upstart 
+default['nfs']['service_provider']['portmap'] = Chef::Provider::Service::Upstart 
+default['nfs']['service_provider']['server'] = Chef::Provider::Service::Upstart 
 default['nfs']['config']['client_templates'] = %w(/etc/sysconfig/nfs)
 default['nfs']['config']['server_template'] = '/etc/sysconfig/nfs'
 
