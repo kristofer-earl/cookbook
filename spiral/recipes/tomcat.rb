@@ -2,7 +2,6 @@ include_recipe 'apt'
 include_recipe 'build-essential'
 include_recipe 'python'
 include_recipe 'supervisor'
-include_recipe 'spiral::default'
 include_recipe 'spiral::newrelic-java'
 
 dl_location = "/opt/tomcat-#{node['spiral']['tomcat']['version']}.tar.gz"
