@@ -31,7 +31,7 @@ package 'php5-mysql'
 package 'php5-redis'
 package 'php5-memcached'
 package 'php5-gd'
-package 'newrelic-php5'
+#package 'newrelic-php5'
 
 directory '/srv/http' do
   owner 'deploy'
@@ -81,7 +81,7 @@ template '/etc/php5/mods-available/newrelic.ini' do
   owner  'root'
   group  'root'
   mode   '0644'
-  action :create
+  action :delete
   notifies :restart, 'service[php5-fpm]'
 end
 
