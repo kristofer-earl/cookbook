@@ -59,5 +59,11 @@ execute 'install_sass' do
 end
 
 execute 'install_bower' do
-  command "npm install -g bower"
+  command 'npm install -g bower'
+  creates '/usr/loca/bin/bower'
 end
+
+execute 'install_gulp' do
+  command "npm install -g gulp"
+  creates '/usr/loca/bin/gulp'
+end 
