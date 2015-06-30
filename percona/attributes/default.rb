@@ -119,7 +119,7 @@ default["percona"]["server"]["slow_query_logdir"] = "/var/log/mysql"
 default["percona"]["server"]["slow_query_log_file"] = "#{node["percona"]["server"]["slow_query_logdir"]}/mysql-slow.log"
 default["percona"]["server"]["long_query_time"] = 2
 
-if node['percona']['server']['server_id'].nil? || node['percona']['server']['server_id'].empty
+if node['percona']['server']['server_id'].nil?
   default["percona"]["server"]["server_id"] = 1
 end
 
