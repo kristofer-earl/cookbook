@@ -118,12 +118,9 @@ default["percona"]["server"]["slow_query_log"] = 1
 default["percona"]["server"]["slow_query_logdir"] = "/var/log/mysql"
 default["percona"]["server"]["slow_query_log_file"] = "#{node["percona"]["server"]["slow_query_logdir"]}/mysql-slow.log"
 default["percona"]["server"]["long_query_time"] = 2
-# FIX ME COS THIS IS DIRTY AS FUCK!
 
-if node['hostname'] == 'mysql1'
+if node['percona']['server']['server_id'].nil? || node['percona']['server']['server_id'].empty
   default["percona"]["server"]["server_id"] = 1
-else
-  default["percona"]["server"]["server_id"] = 2
 end
 
 default["percona"]["server"]["binlog_do_db"] = []
