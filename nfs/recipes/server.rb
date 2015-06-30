@@ -34,8 +34,8 @@ service node['nfs']['service']['server'] do
   provider node['nfs']['service_provider']['server']
   action [:start, :enable]
   supports status: true
-  start_command '/usr/sbin/invoke.rc-d nfs-kernel-server start'
-  restart_command '/usr/sbin/invoke.rc-d nfs-kernel-server restart'
-  stop_command '/usr/sbin/invoke.rc-d nfs-kernel-server stop'
-  status_command '/usr/sbin/invoke.rc-d nfs-kernel-server status'
+  start_command '/usr/sbin/invoke-rc.d nfs-kernel-server start'
+  restart_command '/usr/sbin/invoke-rc.d nfs-kernel-server restart'
+  stop_command '/usr/sbin/invoke-rc.d nfs-kernel-server stop'
+  status_command '/usr/sbin/invoke-rc.d nfs-kernel-server status'
 end
