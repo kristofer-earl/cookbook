@@ -47,32 +47,31 @@ packages.each do |pkg|
     end
 end
 
-template "Configure Phabricator" do
-    path "#{phabricator_dir}/conf/local/local.json"
-    source "local.json.erb"
-    user install_user
-    mode 0644
-    variables ({ :config => node['phabricator']['config'] })
-    notifies :run, "bash[Upgrade Phabricator storage]", :immediately
-end
+#template "Configure Phabricator" do
+#    path "#{phabricator_dir}/conf/local/local.json"
+#    source "local.json.erb"
+#    user install_user
+#    mode 0644
+#    variables ({ :config => node['phabricator']['config'] })
+#    notifies :run, "bash[Upgrade Phabricator storage]", :immediately
+#end
 
 bash "Upgrade Phabricator storage" do
     user install_user
     cwd phabricator_dir
     code "./bin/storage upgrade --force"
-    action :nothing
-    notifies :create, "template[Create admin script]", :immediately
+    action :run
 end
 
-# Install custom script to easily install an admin user
-template "Create admin script" do
-    path "#{phabricator_dir}/scripts/user/admin.php"
-    source "account.erb"
-    user install_user
-    mode 0755
-    action :nothing
-    notifies :run, "bash[Install admin account]", :immediately
-end
+## Install custom script to easily install an admin user
+#template "Create admin script" do
+#    path "#{phabricator_dir}/scripts/user/admin.php"
+#    source "account.erb"
+#    user install_user
+#    mode 0755
+#    action :nothing
+#    notifies :run, "bash[Install admin account]", :immediately
+##end
 
 template "/etc/php5/fpm/pool.d/www.conf" do
     source "fpm.erb"
@@ -80,22 +79,22 @@ template "/etc/php5/fpm/pool.d/www.conf" do
     action :create
 end
 
-service "php5-fpm" do
-    action :restart
+execute "restart_php5-fpm" do
+    command 'sudo service php5-fpm restart'
 end
 
-bash "Install admin account" do
-    user install_user
-    cwd "#{phabricator_dir}/scripts/user"
-    code "./admin.php"
-    action :nothing
-    notifies :delete, "file[Remove admin script]", :immediately
-end
+#bash "Install admin account" do
+#    user install_user
+#    cwd "#{phabricator_dir}/scripts/user"
+#    code "./admin.php"
+#    action :nothing
+#    notifies :delete, "file[Remove admin script]", :immediately
+#end
 
-file "Remove admin script" do
-    path "#{phabricator_dir}/scripts/user/admin.php"
-    action :nothing
-end
+#file "Remove admin script" do
+#    path "#{phabricator_dir}/scripts/user/admin.php"
+#    action :nothing
+#end
 
 # just to be sure dirs exist
 directory "/etc/nginx/sites-available"
@@ -125,6 +124,6 @@ link "Enable Phabricator for nginx" do
     target_file "/etc/nginx/sites-enabled/phabricator"
 end
 
-service "nginx" do
-    action :restart
+execute "restart-nginx" do
+    command "sudo service nginx restart"
 end
