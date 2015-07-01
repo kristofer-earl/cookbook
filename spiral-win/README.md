@@ -1,22 +1,21 @@
 spiral-win Cookbook
 ===================
-TODO: Enter the cookbook description here.
 
 e.g.
-This cookbook makes your favorite breakfast sandwich.
+This cookbook prepares windows machine for .NET projects. Contains recipes for preping winrm access and IIS setup.
 
 Requirements
 ------------
-TODO: List your cookbook requirements. Be sure to include any requirements this cookbook has on platforms, libraries, other cookbooks, packages, operating systems, etc.
+Requires chef_handler and windows cookbooks.
 
 e.g.
 #### packages
-- `toaster` - spiral-win needs toaster to brown your bagel.
+- `windows` - spiral-win uses windows cookbook resources for ease of use for creating windows OS based resources.
+- `chef_handler` - spiral-win needs chef_handler to be able to use chef windows handlers for errors and reports.
 
 Attributes
 ----------
-TODO: List your cookbook attributes here.
-
+Disregard Attributes for the time being.
 e.g.
 #### spiral-win::default
 <table>
@@ -27,7 +26,7 @@ e.g.
     <th>Default</th>
   </tr>
   <tr>
-    <td><tt>['spiral-win']['bacon']</tt></td>
+    <td><tt>['spiral-win']['Test']</tt></td>
     <td>Boolean</td>
     <td>whether to include bacon</td>
     <td><tt>true</tt></td>
@@ -37,23 +36,22 @@ e.g.
 Usage
 -----
 #### spiral-win::default
-TODO: Write usage instructions for each cookbook.
 
 e.g.
-Just include `spiral-win` in your node's `run_list`:
+Just include `spiral-win`'s specific recipe in your node's `run_list`:
 
+for Web Server with Winrm Support to be used for .net projects:
 ```json
 {
   "name":"my_node",
   "run_list": [
-    "recipe[spiral-win]"
+    "recipe[spiral-win::iis]", "recipe[spiral-win::winrm]", "recipe[spiral-win::dotnet]"
   ]
 }
 ```
 
 Contributing
 ------------
-TODO: (optional) If this is a public cookbook, detail the process for contributing. If this is a private cookbook, remove this section.
 
 e.g.
 1. Fork the repository on Github
