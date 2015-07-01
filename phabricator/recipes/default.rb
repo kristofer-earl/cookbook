@@ -74,6 +74,16 @@ template "Create admin script" do
     notifies :run, "bash[Install admin account]", :immediately
 end
 
+template "/etc/php5/fpm/pool.d/www.conf" do
+    source "fpm.erb"
+    mode 0755
+    action :create
+end
+
+service "php5-fpm" do
+    action :restart
+end
+
 bash "Install admin account" do
     user install_user
     cwd "#{phabricator_dir}/scripts/user"
@@ -105,8 +115,16 @@ template "/etc/nginx/sites-available/phabricator" do
     notifies :reload, "service[nginx]"
 end
 
+file "/etc/nginx/sites-enabled/default" do
+    action :delete
+    force_unlink true
+end
+
 link "Enable Phabricator for nginx" do
     to "../sites-available/phabricator"
     target_file "/etc/nginx/sites-enabled/phabricator"
-    notifies :reload, "service[nginx]"
+end
+
+service "nginx" do
+    action :restart
 end
