@@ -212,7 +212,7 @@ default['cassandra']['opscenter']['server']['interface'] = '0.0.0.0'
 default['cassandra']['opscenter']['server']['authentication'] = false
 
 default['cassandra']['opscenter']['agent']['package_name'] = 'datastax-agent'
-default['cassandra']['opscenter']['agent']['download_url'] = nil
+default['cassandra']['opscenter']['agent']['download_url'] = 'http://www.planetcassandra.org/cassandra/?dlink=http://downloads.datastax.com/community/dsc-cassandra-2.1.7-bin.tar.gz' 
 default['cassandra']['opscenter']['agent']['checksum'] = nil
 default['cassandra']['opscenter']['agent']['install_dir'] = '/opt'
 default['cassandra']['opscenter']['agent']['install_folder_name'] = 'opscenter_agent'
