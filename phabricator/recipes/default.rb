@@ -45,7 +45,7 @@ end
 bash "Set Base URI" do
     user install_user
     cwd phabricator_dir
-    code "./bin/config set phabricator.base.uri http://#{domain_name}/"
+    code "./bin/config set phabricator.base-uri http://#{domain_name}/"
     action :run
 end
 
