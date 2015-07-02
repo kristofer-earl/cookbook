@@ -1,19 +1,9 @@
-#
 ## Cookbook Name:: phabricator
 ## Recipe:: default
 ##
 ## Copyright 2015
 ##
-#
 
-#package 'nginx'
-#package 'php5-fpm'
-#package 'mysql-server-core-5.5'
-#package 'mysql-server-5.5'
-#package 'mysql-client-5.5'
-#package 'php5-cli'
-#package 'php5-mysql'
-#package 'php5-curl'
 
 # Install required packages
 Rpackages = ["nginx",
@@ -29,11 +19,9 @@ Rpackages.each do |pkg|
     package pkg
 end
 
-# user to own the checked out files
 install_user = node['phabricator']['user']
-# dir where phabricator and deps are installed
+domain_name = node['phabricator']['domain']
 install_dir = node['phabricator']['install_dir']
-# phabricator dir, used too often, so create local variable
 phabricator_dir = "#{install_dir}/phabricator"
 
 # checkout code
@@ -47,15 +35,6 @@ packages.each do |pkg|
     end
 end
 
-#template "Configure Phabricator" do
-#    path "#{phabricator_dir}/conf/local/local.json"
-#    source "local.json.erb"
-#    user install_user
-#    mode 0644
-#    variables ({ :config => node['phabricator']['config'] })
-#    notifies :run, "bash[Upgrade Phabricator storage]", :immediately
-#end
-
 bash "Upgrade Phabricator storage" do
     user install_user
     cwd phabricator_dir
@@ -63,15 +42,12 @@ bash "Upgrade Phabricator storage" do
     action :run
 end
 
-## Install custom script to easily install an admin user
-#template "Create admin script" do
-#    path "#{phabricator_dir}/scripts/user/admin.php"
-#    source "account.erb"
-#    user install_user
-#    mode 0755
-#    action :nothing
-#    notifies :run, "bash[Install admin account]", :immediately
-##end
+bash "Set Base URI" do
+    user install_user
+    cwd phabricator_dir
+    code "./bin/config set phabricator.base.uri http://#{domain_name}/"
+    action :run
+end
 
 template "/etc/php5/fpm/pool.d/www.conf" do
     source "fpm.erb"
@@ -83,26 +59,12 @@ execute "restart_php5-fpm" do
     command 'sudo service php5-fpm restart'
 end
 
-#bash "Install admin account" do
-#    user install_user
-#    cwd "#{phabricator_dir}/scripts/user"
-#    code "./admin.php"
-#    action :nothing
-#    notifies :delete, "file[Remove admin script]", :immediately
-#end
-
-#file "Remove admin script" do
-#    path "#{phabricator_dir}/scripts/user/admin.php"
-#    action :nothing
-#end
-
 # just to be sure dirs exist
 directory "/etc/nginx/sites-available"
 directory "/etc/nginx/sites-enabled"
 
 # enable and start, will reload if symlink is created or config updated
 service "nginx" do
-    service_name node['phabricator']['nginx']['service']
     action [:enable, :start]
 end
 
@@ -126,4 +88,11 @@ end
 
 execute "restart-nginx" do
     command "sudo service nginx restart"
+end
+
+bash "Start Phabricator Daemon" do
+    user install_user
+    cwd phabricator_dir
+    code "./bin/phd start"
+    action :run
 end
