@@ -1,10 +1,12 @@
 server { 
         server_name <%= node[:prometheus][:cms][:fqdn] %> <%= node[:prometheus][:cms][:vhost] %>;
-	root /srv/http/cms/current;
 
         server_tokens   off;
         more_set_headers 'Server: MagicBooBooLand';
  
+        access_log /var/log/nginx/cms_access.log;
+        error_log /var/log/nginx/cms_error.log; 
+
         # Enable compression, this will help if you have for instance advagg‎ module
         # by serving Gzip versions of the files.
         gzip_static on;
