@@ -14,7 +14,10 @@ end
 if node['spiral']['graylog']['enable'] == true
   service 'rsyslog' do
     action :enable
-    supports :status => true, :start => true, :stop => true, :restart => true
+    supports :status => false, :start => true, :stop => true, :restart => true
+    restart_command '/usr/sbin/invoke-rc.d rsyslog restart'
+    start_command '/usr/sbin/invoke-rc.d rsyslog start'
+    stop_command '/usr/sbin/invoke-rc.d rsyslog stop'
   end
 
   template '/etc/rsyslog.d/99-graylog.conf' do
