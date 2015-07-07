@@ -11,14 +11,13 @@ execute 'git_url_default_to_https' do
   environment ({ 'HOME' => '/home/deploy' })
 end
 
-# get RDS instance for MySQL connection
-#rds_instance_ip = Resolv.getaddress(node[:opsworks][:stack][:rds_instances].first[:address])
-#rds_name = 'rds1.localdomain'
-
-#bash "insert_line" do
-#  user "root"
-#  code <<-EOS
-#  echo "#{rds_instance_ip} #{rds_name}" >> /etc/hosts
-#  EOS
-#  not_if "grep -q #{rds_name} /etc/hosts"
-#end
+if node['spiral']['graylog']['enable'] == true
+  template '/etc/rsyslog.d/99-graylog.conf' do
+    source 'rsyslog-graylog.conf.erb'
+    owner  'root'
+    group  'root'
+    mode   '0644'
+    action :create
+    notifies :restart, 'service[rsyslog]'
+  end
+end
