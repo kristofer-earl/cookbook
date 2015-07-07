@@ -5,7 +5,7 @@ server {
 	server_tokens   off;
 	more_set_headers 'Server: MagicBooBooLand';
 
- 	root /srv/http/web/current;
+ 	root /srv/http/web/current/public;
  	access_log /var/log/nginx/web_access.log;
 
 	<% if node['spiral']['graylog']['enable'] == true %>
