@@ -2,10 +2,6 @@ include_recipe 'nfs::client4'
 include_recipe 'spiral::users'
 include_recipe 'spiral::newrelic'
 
-execute 'custom_apt_list_update' do
-  command 'apt-get update'
-end
-
 package 'git'
 package 'nfs-common'
 
