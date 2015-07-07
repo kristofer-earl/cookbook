@@ -10,7 +10,7 @@ server {
 	access_log /var/log/nginx/api_access.log;
        
 	<% if node['spiral']['graylog']['enable'] == true %>
-	error_log syslog:server=node['spiral']['graylog']['host']:['spiral']['graylog']['syslog_udp']['port'],facility=daemon;
+	error_log syslog:server=<%= node['spiral']['graylog']['host'] %>:<%= node['spiral']['graylog']['syslog_udp']['port'] %>,facility=daemon;
 	<%- else %>
 	error_log /var/log/nginx/api_error.log;
 	<%- end %>
