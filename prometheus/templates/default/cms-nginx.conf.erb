@@ -1,68 +1,73 @@
 server { 
-        server_name <%= node[:prometheus][:cms][:fqdn] %> <%= node[:prometheus][:cms][:vhost] %>;
+	server_name <%= node[:prometheus][:cms][:fqdn] %> <%= node[:prometheus][:cms][:vhost] %>;
 
-        server_tokens   off;
-        more_set_headers 'Server: MagicBooBooLand';
+	server_tokens   off;
+	more_set_headers 'Server: MagicBooBooLand';
  
-        access_log /var/log/nginx/cms_access.log;
-        error_log /var/log/nginx/cms_error.log; 
+	access_log /var/log/nginx/cms_access.log;
 
-        # Enable compression, this will help if you have for instance advagg‎ module
-        # by serving Gzip versions of the files.
-        gzip_static on;
+	<% if node['spiral']['graylog']['enable'] == true %>
+	error_log syslog:server=node['spiral']['graylog']['host']:['spiral']['graylog']['syslog_udp']['port'],facility=daemon;
+	<%- else %>
+	error_log /var/log/nginx/cms_error.log;
+	<%- end %>
+
+	# Enable compression, this will help if you have for instance advagg‎ module
+	# by serving Gzip versions of the files.
+	gzip_static on;
  
-        location = /favicon.ico {
-                log_not_found off;
-                access_log off;
-        }
+	location = /favicon.ico {
+		log_not_found off;
+		access_log off;
+	}
  
-        location = /robots.txt {
-                allow all;
-                log_not_found off;
-                access_log off;
-        }
+	location = /robots.txt {
+		allow all;
+		log_not_found off;
+		access_log off;
+	}
  
-        # This matters if you use drush prior to 5.x
-        # After 5.x backups are stored outside the Drupal install.
-        #location = /backup {
-        #        deny all;
-        #}
+	# This matters if you use drush prior to 5.x
+	# After 5.x backups are stored outside the Drupal install.
+	#location = /backup {
+	#	deny all;
+	#}
  
-        location ~ \..*/.*\.php$ {
-                return 403;
-        }
+	location ~ \..*/.*\.php$ {
+		return 403;
+	}
  
-        # No no for private
-        location ~ ^/sites/.*/private/ {
-                return 403;
-        }
+	# No no for private
+	location ~ ^/sites/.*/private/ {
+		return 403;
+	}
  
-        # Block access to "hidden" files and directories whose names begin with a
-        # period. This includes directories used by version control systems such
-        # as Subversion or Git to store control files.
-        location ~ (^|/)\. {
-                return 403;
-        }
+	# Block access to "hidden" files and directories whose names begin with a
+	# period. This includes directories used by version control systems such
+	# as Subversion or Git to store control files.
+	location ~ (^|/)\. {
+		return 403;
+	}
  
-        location / {
+	location / {
 		include /etc/nginx/cors.conf;
-                # This is cool because no php is touched for static content
-                try_files $uri @rewrite;
-        }
+		# This is cool because no php is touched for static content
+		try_files $uri @rewrite;
+	}
  
-        location @rewrite {
-                # You have 2 options here
-                # For D7 and above:
-                # Clean URLs are handled in drupal_environment_initialize().
-                rewrite ^ /index.php;
-                # For Drupal 6 and bwlow:
-                # Some modules enforce no slash (/) at the end of the URL
-                # Else this rewrite block wouldn't be needed (GlobalRedirect)
-                #rewrite ^/(.*)$ /index.php?q=$1;
-        }
+	location @rewrite {
+		# You have 2 options here
+		# For D7 and above:
+		# Clean URLs are handled in drupal_environment_initialize().
+		rewrite ^ /index.php;
+		# For Drupal 6 and bwlow:
+		# Some modules enforce no slash (/) at the end of the URL
+		# Else this rewrite block wouldn't be needed (GlobalRedirect)
+		#rewrite ^/(.*)$ /index.php?q=$1;
+	}
 
 	location ~ \.php$ {
-	        include /etc/nginx/cors.conf;
+		include /etc/nginx/cors.conf;
 		fastcgi_split_path_info ^(.+\.php)(/.+)$;
 		include fastcgi_params;
 		fastcgi_param SCRIPT_FILENAME $request_filename;
@@ -71,16 +76,16 @@ server {
 		fastcgi_index index.php;
 	}
  
-        # Fighting with Styles? This little gem is amazing.
-        # This is for D6
-        #location ~ ^/sites/.*/files/imagecache/ {
-        # This is for D7 and D8
-        location ~ ^/sites/.*/files/styles/ {
-                try_files $uri @rewrite;
-        }
+	# Fighting with Styles? This little gem is amazing.
+	# This is for D6
+	#location ~ ^/sites/.*/files/imagecache/ {
+	# This is for D7 and D8
+	location ~ ^/sites/.*/files/styles/ {
+		try_files $uri @rewrite;
+	}
  
-        location ~* \.(js|css|png|jpg|jpeg|gif|ico)$ {
-                expires max;
-                log_not_found off;
-        }
+	location ~* \.(js|css|png|jpg|jpeg|gif|ico)$ {
+		expires max;
+		log_not_found off;
+	}
 }
