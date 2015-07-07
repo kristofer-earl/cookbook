@@ -12,6 +12,11 @@ execute 'git_url_default_to_https' do
 end
 
 if node['spiral']['graylog']['enable'] == true
+  service 'rsyslog' do
+    action :enable
+    supports :status => true, :start => true, :stop => true, :restart => true
+  end
+
   template '/etc/rsyslog.d/99-graylog.conf' do
     source 'rsyslog-graylog.conf.erb'
     owner  'root'
