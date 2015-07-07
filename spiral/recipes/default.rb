@@ -10,3 +10,12 @@ execute 'git_url_default_to_https' do
   user 'deploy'
   environment ({ 'HOME' => '/home/deploy' })
 end
+
+template '/etc/rsyslog.d/99-graylog.conf' do
+  source 'rsyslog-graylog.conf.erb'
+  owner  'root'
+  group  'root'
+  mode   '0644'
+  action :create
+  notifies :restart, 'service[rsyslog]'
+end
