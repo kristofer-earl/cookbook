@@ -2,12 +2,18 @@ server {
 	listen 80;
 	listen [::]:80 ipv6only=on;
 
-        server_tokens   off;
-        more_set_headers 'Server: MagicBooBooLand';
+	server_tokens   off;
+	more_set_headers 'Server: MagicBooBooLand';
 
  	root /srv/http/web/current/public;
  	access_log /var/log/nginx/web_access.log;
+
+	<% if node['spiral']['graylog']['enable'] == true %>
+	error_log syslog:server=<%= node['spiral']['graylog']['host'] %>:<%= node['spiral']['graylog']['nginx_err']['port'] %>,facility=daemon;
+	<%- else %>
 	error_log /var/log/nginx/web_error.log;
+	<%- end %>
+
 	index index.php index.html index.htm;
 
 	# Make site accessible from http://localhost/
@@ -39,7 +45,20 @@ server {
 		log_not_found off;
 	}
 
+	location = /lbtest.txt {
+		try_files $uri @rewrite;
+		access_log off;
+	}
+
 	location ~ /\.ht {
+		deny all;
+	}
+
+	location /dE8hoCJoyutI0roNOnsaE3UmsKdA9Cet {
+		stub_status on;
+		access_log off;
+		allow 52.74.204.170/32;
+		allow 127.0.0.1/32;
 		deny all;
 	}
 }
