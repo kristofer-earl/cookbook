@@ -45,6 +45,11 @@ server {
 		log_not_found off;
 	}
 
+	location = /lbtest.txt {
+		try_files $uri @rewrite;
+		access_log off;
+	}
+
 	location ~ /\.ht {
 		deny all;
 	}
