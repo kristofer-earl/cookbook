@@ -1,8 +1,7 @@
 include_recipe 'spiral::default'
 
 execute "add_nginx_apt_key" do
-  command "/usr/bin/apt-key add /usr/share/keyrings/nginx.gpg"
-  notifies :run, resources(:execute => "custom_apt_list_update")
+  command "/usr/bin/apt-key add /usr/share/keyrings/nginx.gpg && /usr/bin/apt-get update"
   action :nothing
 end
 
