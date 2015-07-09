@@ -60,11 +60,19 @@ $conf['memcache_servers'] = array(
 
 $conf['memcache_bins'] = array(
  'cache' => 'default',
+ 'cache_block' => 'default',
  'cache_bootstrap' => 'default',
+ 'cache_content' => 'default',
  'cache_field' => 'default',
  'cache_filter' => 'default',
+ 'cache_libraries' => 'default',
  'cache_menu' => 'default',
- 'cache_page' => 'default'
+ 'cache_page' => 'default',
+ 'cache_path' => 'default',
+ 'cache_views' => 'default',
+ 'cache_views_data' => 'default',
+ 'session' => 'default',
+ 'users' => 'default'
 );
 
 # Move storage for lock system into memcached.
