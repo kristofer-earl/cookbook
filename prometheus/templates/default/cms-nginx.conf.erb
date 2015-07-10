@@ -1,3 +1,8 @@
+uptream proxy_api {
+    server api1;
+    server api2;
+}
+
 server { 
 	server_name <%= node[:prometheus][:cms][:fqdn] %> <%= node[:prometheus][:cms][:vhost] %>;
 
@@ -27,6 +32,12 @@ server {
 		allow all;
 		log_not_found off;
 		access_log off;
+	}
+
+	location ~ ^/api/int/.*$ {
+		rewrite ^/api/int/(.*)$ /api/$1 break;
+		proxy_pass http://proxy_api;
+		proxy_redirect    default;
 	}
  
 	# This matters if you use drush prior to 5.x
