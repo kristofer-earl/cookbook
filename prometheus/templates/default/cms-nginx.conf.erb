@@ -1,8 +1,3 @@
-uptream proxy_api {
-    server api1;
-    server api2;
-}
-
 server { 
 	server_name <%= node[:prometheus][:cms][:fqdn] %> <%= node[:prometheus][:cms][:vhost] %>;
 
@@ -34,12 +29,6 @@ server {
 		access_log off;
 	}
 
-	location ~ ^/api/int/.*$ {
-		rewrite ^/api/int/(.*)$ /api/$1 break;
-		proxy_pass http://proxy_api;
-		proxy_redirect    default;
-	}
- 
 	# This matters if you use drush prior to 5.x
 	# After 5.x backups are stored outside the Drupal install.
 	#location = /backup {
