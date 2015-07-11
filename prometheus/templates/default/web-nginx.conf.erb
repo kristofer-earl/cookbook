@@ -1,3 +1,8 @@
+uptream proxy_api {
+    server api1;
+    server api2;
+}
+
 server {
 	listen 80;
 	listen [::]:80 ipv6only=on;
@@ -25,6 +30,12 @@ server {
 
 	location @rewrite {
 		rewrite ^ /index.php;
+	}
+
+	location ~ ^/api-int/.*$ {
+		rewrite ^/api-int/(.*)$ /api/$1 break;
+		proxy_pass http://proxy_api;
+		proxy_redirect    default;
 	}
 
 	location ~ \.php$ {
