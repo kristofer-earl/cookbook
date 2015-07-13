@@ -6,7 +6,7 @@ description      "A library cookbook for extracting archive files"
 long_description "A library cookbook for extracting archive files"
 version          "0.5.0"
 
-supports "ubuntu"
+supports 'ubuntu', '= 14.04'
 supports "arch"
 supports "mac_os_x"
 
