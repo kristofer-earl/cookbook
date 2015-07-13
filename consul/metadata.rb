@@ -22,7 +22,7 @@ supports 'arch'
 
 recommends 'chef-provisioning'
 
-depends 'libarchive', "~> 0.4.0"
+depends 'libarchive'
 depends 'golang', '~> 1.4'
 depends 'runit'
 depends 'yum-repoforge'
