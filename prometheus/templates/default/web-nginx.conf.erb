@@ -32,8 +32,7 @@ server {
 		rewrite ^ /index.php;
 	}
 
-	location ~ ^/api-int/.*$ {
-		rewrite ^/api-int/(.*)$ /api/$1 break;
+	location ~ ^/api/.*$ {
 		proxy_pass http://proxy_api;
 		proxy_redirect    default;
 	}
