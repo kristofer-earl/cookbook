@@ -2,7 +2,7 @@ include_recipe 'apt'
 include_recipe 'spiral::default'
 
 execute 'add_webupd8_java_ppa' do
-  command '/usr/bin/apt-add-repository ppa:webupd8team/java && /usr/bin/apt-get update'
+  command '/usr/bin/apt-add-repository -y ppa:webupd8team/java && /usr/bin/apt-get update'
 end
 
 execute 'accept_oracle_license' do
