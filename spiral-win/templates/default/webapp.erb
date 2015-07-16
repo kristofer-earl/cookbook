@@ -2,9 +2,10 @@
 $envkey = $args[0]
 $envsecret = $args[1]
 $sitename = $args[2]
-$site = $args[3]
-$bucket = $args[4]
-$folders = $args[5]
+$webbinding = $args[3]
+$site = $args[4]
+$bucket = $args[5]
+$folders = $args[6]
 
 $sitepath = "$env:systemdrive\inetpub\$sitename"
 $siteapppool = $sitename + "AppPool"
@@ -87,3 +88,9 @@ Write-Output "Site already exist updating..."
 Set-ItemProperty -Path "IIS:\Sites\$site\$sitename" -Name physicalPath -Value "$sitepath\$deployfile"
 }
 
+if (Get-Webbinding -Name $site | Where bindingInformation -like "*$webbinding") {
+Write-Output "Web Binding Exists skipping web binding addition"
+} else {
+Write-Output "Web Binding doesnt exists, adding web application headers binding"
+New-WebBinding -Name $site -HostHeader $webbinding
+}
