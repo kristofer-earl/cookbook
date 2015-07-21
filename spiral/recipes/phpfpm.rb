@@ -1,5 +1,4 @@
 include_recipe 'spiral::nginx'
-#include_recipe 'spiral::newrelic'
 include_recipe 'spiral::users'
 
 execute 'add_ondrej_php_ppa' do
@@ -14,7 +13,6 @@ package 'php5-mysql'
 package 'php5-redis'
 package 'php5-memcached'
 package 'php5-gd'
-#package 'newrelic-php5'
 
 directory '/srv/http' do
   owner  'deploy'
@@ -23,14 +21,14 @@ directory '/srv/http' do
   action :create
 end
 
-directory '/srv/http/adm'
+directory '/srv/http/adm' do
   owner  'www-data'
   group  'www-data'
   mode   '0744'
   action :create
 end
 
-directory '/srv/http/adm/phpfpm-cache-clear'
+directory '/srv/http/adm/phpfpm-cache-clear' do
   owner  'www-data'
   group  'www-data'
   mode   '0744'
