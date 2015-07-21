@@ -43,6 +43,10 @@ server {
 	}
 
 	location ~ ^/.*/api/v.*$ {
+	        if ($request_method != GET) {
+			return 403;
+		}
+
 		proxy_pass http://proxy_cms;
 		proxy_redirect    default;
 	}
