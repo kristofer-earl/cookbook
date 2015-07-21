@@ -1,6 +1,11 @@
 upstream proxy_api {
-    server api1;
-    server api2;
+	server api1;
+	server api2;
+}
+
+upstream proxy_cms {
+	server cms1;
+	server cms2;
 }
 
 server {
@@ -32,7 +37,13 @@ server {
 	}
 
 	location ~ ^/api/.*$ {
+		rewrite ^/api/int/(.*)$ /api/$1 break;
 		proxy_pass http://proxy_api;
+		proxy_redirect    default;
+	}
+
+	location ~ ^/.*/api/v.*$ {
+		proxy_pass http://proxy_cms;
 		proxy_redirect    default;
 	}
 
