@@ -4,8 +4,7 @@ uptream proxy_api {
 }
 
 server {
-	listen 80;
-	listen [::]:80 ipv6only=on;
+	listen 80 default_server;
 
 	server_tokens   off;
 	more_set_headers 'Server: MagicBooBooLand';
