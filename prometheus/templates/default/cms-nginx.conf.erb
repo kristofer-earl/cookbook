@@ -1,4 +1,6 @@
 server { 
+	listen 80 default_server;
+
 	server_name <%= node[:prometheus][:cms][:fqdn] %> <%= node[:prometheus][:cms][:vhost] %>;
 
 	server_tokens   off;
