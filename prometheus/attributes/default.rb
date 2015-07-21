@@ -15,3 +15,6 @@ default["prometheus"]["memcached"]["port"] = 11211
 
 default["prometheus"]["api"]["bo_endpoint"] = "http://ws.aqzbouat.com"
 default["prometheus"]["api"]["bo_payment_endpoint"] = "http://paymentservices.aqzbouat.com"
+default["prometheus"]["api"]["bo_msgservice_endpoint"] = "http://msgservices.aqzbouat.com"
+default["prometheus"]["api"]["bo_payment_endpoint"] = "http://paymentservices.aqzbouat.com"
+default["prometheus"]["api"]["bo_affiliate_endpoint"] = "http://affiliateservices.aqzbouat.com"

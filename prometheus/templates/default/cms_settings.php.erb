@@ -1,10 +1,8 @@
 <?php
 
 $databases = array (
-  'default' => 
-  array (
-    'default' => 
-    array (
+  'default' => array (
+    'default' => array (
       'database' => "<%= node['prometheus']['cms']['db_name'] %>",
       'username' => "<%= node['prometheus']['cms']['db_user'] %>",
       'password' => "<%= node['prometheus']['cms']['db_pass'] %>",
@@ -16,9 +14,7 @@ $databases = array (
   ),
 );
 
-
 $update_free_access = FALSE;
-
 
 $drupal_hash_salt = 'JOVJdjelvQ32SO6IIdWOJ2KkOnRops_bHgKupA5Elb8';
 
@@ -33,9 +29,9 @@ $conf['404_fast_html'] = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN"
 # memcache configuration for drupal
 include_once DRUPAL_ROOT . '/includes/cache.inc';
 include_once DRUPAL_ROOT . '/sites/all/modules/contrib/memcache_storage/memcache_storage.inc';
+
 $conf['cache_backends'][] = 'sites/all/modules/contrib/memcache_storage/memcache_storage.inc';
 $conf['cache_default_class'] = 'MemCacheStorage';
-# The 'cache_form' bin must be assigned to non-volatile storage.
 $conf['cache_class_cache_form'] = 'DrupalDatabaseCache';
 $conf['cache_class_cache_update'] = 'DrupalDatabaseCache';
 
@@ -45,7 +41,7 @@ $conf['page_cache_invoke_hooks'] = FALSE;
 
 $conf['memcache_extension'] = 'Memcached';
 $conf['memcache_storage_debug'] = FALSE;
-$conf['memcache_storage_key_prefix'] = 'mc-cms';
+$conf['memcache_storage_key_prefix'] = md5('mc-cms-'.$_SERVER['HTTP_HOST']);
 $conf['memcache_storage_persistent_connection'] = TRUE;
 
 # Configure memcached extenstion.
@@ -55,29 +51,28 @@ $conf['memcache_options'] = array(
 );
 
 $conf['memcache_servers'] = array(
- '<%= node[:prometheus][:memcached][:host] %>:<%= node[:prometheus][:memcached][:port] %>' => 'default'
+  '<%= node[:prometheus][:memcached][:host] %>:<%= node[:prometheus][:memcached][:port] %>' => 'default'
 );
 
 $conf['memcache_bins'] = array(
- 'cache' => 'default',
- 'cache_block' => 'default',
- 'cache_bootstrap' => 'default',
- 'cache_content' => 'default',
- 'cache_field' => 'default',
- 'cache_filter' => 'default',
- 'cache_libraries' => 'default',
- 'cache_menu' => 'default',
- 'cache_page' => 'default',
- 'cache_path' => 'default',
- 'cache_views' => 'default',
- 'cache_views_data' => 'default',
- 'session' => 'default',
- 'users' => 'default'
+  'cache' => 'default',
+  'cache_block' => 'default',
+  'cache_bootstrap' => 'default',
+  'cache_content' => 'default',
+  'cache_field' => 'default',
+  'cache_filter' => 'default',
+  'cache_libraries' => 'default',
+  'cache_menu' => 'default',
+  'cache_page' => 'default',
+  'cache_path' => 'default',
+  'cache_views' => 'default',
+  'cache_views_data' => 'default',
+  'session' => 'default',
+  'users' => 'default',
 );
 
 # Move storage for lock system into memcached.
 $conf['lock_inc'] = 'sites/all/modules/contrib/memcache_storage/includes/lock.inc';
-$conf['session_inc'] = 'sites/all/modules/contrib/memcache_storage/includes/session.inc';
+# $conf['session_inc'] = 'sites/all/modules/contrib/memcache_storage/includes/session.inc';
 
 include DRUPAL_ROOT . '/sites/all/modules/contrib/domain/settings.inc';
-

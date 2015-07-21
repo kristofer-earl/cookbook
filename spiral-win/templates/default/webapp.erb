@@ -1,0 +1,96 @@
+#Arguments and Variables definition
+$envkey = $args[0]
+$envsecret = $args[1]
+$sitename = $args[2]
+$webbinding = $args[3]
+$site = $args[4]
+$bucket = $args[5]
+$folders = $args[6]
+
+$sitepath = "$env:systemdrive\inetpub\$sitename"
+$siteapppool = $sitename + "AppPool"
+
+if (!(Test-Path "c:\$sitename")) { New-Item c:\$sitename -ItemType Directory }
+
+If (!(Get-Module -Name AWSPowershell)) {
+$Error.Clear()
+Import-Module "C:\Program Files (x86)\AWS Tools\PowerShell\AWSPowerShell\AWSPowerShell.psd1"
+if (!($?)) {
+Write-Output "Module not found, please install aws toolkit for powershell"
+exit 1
+} }
+
+Write-Output "Updating Tracker"
+$file = "C:\\DeployTracker"
+if (Get-S3Object -BucketName $bucket -Key "$folders/Tracker" -AccessKey $envkey -SecretKey $envsecret) {
+Read-S3Object -BucketName $bucket -Key "$folders/Tracker" -AccessKey $envkey -SecretKey $envsecret -File $file
+} else {
+Write-Output "There was an issue fetching tracker file, check internet connection and try again. (Code: F1)"
+}
+
+$deployfile = Get-Content $file -First 1
+#$deployfile = "C:\$deployfile"
+
+If (Test-Path "c:\$sitename\$deployfile") {
+Write-Output "Deployment package already downloaded, skipping fetch."
+} else {
+Write-Output "Fetching Deployment Package"
+if (Get-S3Object -BucketName $bucket -Key "$folders/$deployfile" -AccessKey $envkey -SecretKey $envsecret) {
+Read-S3Object -BucketName $bucket -Key "$folders/$deployfile" -AccessKey $envkey -SecretKey $envsecret -File "c:\$sitename\$deployfile"
+} else {
+Write-Output "There was an issue fetching package file, check internet connection. (code: F2)"
+}
+}
+
+$sitezip = 'C:\Deploy.zip'
+If (Test-path $sitezip) { Remove-Item $sitezip }
+Copy-Item -Path "C:\$sitename\$deployfile" -Destination "C:\Deploy.zip"
+#echo $sitezip
+
+#Verify IIS is installed if not Install it
+If (!(Get-WindowsFeature -Name "Web-Server" | Where InstallState -eq "Installed" )) {
+Write-Output "Web-Server Role not found: Will install"
+Install-WindowsFeature -Name "Web-Server", "Web-Common-Http", "Web-Net-Ext45"
+Install-WindowsFeature -Name "Web-App-Dev" -IncludeAllSubFeature
+Write-Output "Installation complete!"
+} else {
+#Add verbosity
+Write-Output "Web-Server Role Installed: OK"
+}
+
+#Define Website Specs (first Disable Default Website)
+If (Get-WebsiteState -Name "Default Web Site" | Where Value -eq "Started") {
+Write-Output "Default Website is running, will stop"
+Stop-Website -Name "Default Web Site"
+Write-Output "Default Website is now Stopped"
+}
+
+$destination = "$sitepath\$deployfile"
+#Check if Deploy path Exists: Will be particularly important when implementing versions
+If (!(Test-Path $destination)) { New-Item $destination -ItemType Directory }
+
+#Unzip the zip container for zip files.
+If (Test-Path "$destination\*") { Remove-Item -Recurse -Force "$destination\\*\\" }
+Add-Type -assembly "system.io.compression.filesystem"
+[io.compression.zipfile]::ExtractToDirectory($sitezip, $destination)
+
+#Prepare specific Application Pool for the website, will create if none.
+if (!(Test-Path "IIS:\AppPools\$siteapppool")) {
+New-WebAppPool $siteapppool
+}
+
+#Create site if it doesn't exist
+If (!(Get-WebApplication -Name $sitename)) {
+Write-Output "WebApplication not found creating $sitename ..."
+New-WebApplication -Site $site -Name $sitename -PhysicalPath "$sitepath\$deployfile" -ApplicationPool $siteapppool
+} else {
+Write-Output "Site already exist updating..."
+Set-ItemProperty -Path "IIS:\Sites\$site\$sitename" -Name physicalPath -Value "$sitepath\$deployfile"
+}
+
+if (Get-Webbinding -Name $site | Where bindingInformation -like "*$webbinding") {
+Write-Output "Web Binding Exists skipping web binding addition"
+} else {
+Write-Output "Web Binding doesnt exists, adding web application headers binding"
+New-WebBinding -Name $site -HostHeader $webbinding
+}

@@ -13,7 +13,8 @@ end
 
 TemplatesErb = ["deploy",
                 "rollback",
-                "winserv"]
+                "winserv",
+		"webapp"]
 
 TemplatesErb.each do |tmp|
    template "C:\\spiralworks\\#{tmp}.ps1" do
