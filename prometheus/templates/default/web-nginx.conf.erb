@@ -47,6 +47,11 @@ server {
 		proxy_redirect    default;
 	}
 
+	location ~ ^/sites/.*$ {
+		proxy_pass http://proxy_cms;
+		proxy_redirect    default;
+	}
+
 	location ~ \.php$ {
 		fastcgi_split_path_info ^(.+\.php)(/.+)$;
 		include fastcgi_params;
