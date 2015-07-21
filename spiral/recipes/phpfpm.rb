@@ -17,10 +17,46 @@ package 'php5-gd'
 #package 'newrelic-php5'
 
 directory '/srv/http' do
-  owner 'deploy'
-  group 'www-data'
-  mode  '0774'
+  owner  'deploy'
+  group  'www-data'
+  mode   '0774'
   action :create
+end
+
+directory '/srv/http/adm'
+  owner  'www-data'
+  group  'www-data'
+  mode   '0744'
+  action :create
+end
+
+directory '/srv/http/adm/phpfpm-cache-clear'
+  owner  'www-data'
+  group  'www-data'
+  mode   '0744'
+  action :create
+end
+
+cookbook_file '/srv/http/adm/phpfpm-cache-clear/index.php' do
+  owner 'root'
+  group 'root'
+  mode  '0644'
+  source 'phpfpm-cache-clear.php'
+  action :create
+end
+
+cookbook_file '/etc/nginx/sites-available/phpfpm-cache-clear.conf' do
+  owner 'root'
+  group 'root'
+  mode  '0644'
+  source 'phpfpm-cache-clear.conf'
+  action :create
+  notifies :restart, 'service[nginx]'
+end
+
+link '/etc/nginx/sites-enabled/phpfpm-cache-clear.conf' do
+  to '/etc/nginx/sites-available/phpfpm-cache-clear.conf'
+  notifies :restart, "service[nginx]"
 end
 
 service 'php5-fpm' do
