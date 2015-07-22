@@ -54,7 +54,6 @@ server {
 	}
  
 	location / {
-		include /etc/nginx/cors.conf;
 		# This is cool because no php is touched for static content
 		try_files $uri @rewrite;
 	}
@@ -71,7 +70,6 @@ server {
 	}
 
 	location ~ \.php$ {
-		include /etc/nginx/cors.conf;
 		fastcgi_split_path_info ^(.+\.php)(/.+)$;
 		include fastcgi_params;
 
