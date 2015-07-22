@@ -19,11 +19,4 @@ default["prometheus"]["api"]["bo_msgservice_endpoint"] = "http://msgservices.aqz
 default["prometheus"]["api"]["bo_payment_endpoint"] = "http://paymentservices.aqzbouat.com"
 default["prometheus"]["api"]["bo_affiliate_endpoint"] = "http://affiliateservices.aqzbouat.com"
 
-
-default["prometheus"]["graylog"]["host"] = "graylog.local"
-default["prometheus"]["graylog"]["port"] = "12197"
-
-default["prometheus"]["statsd"]["host"] = "graphite.local"
-default["prometheus"]["statsd"]["port"] = "8125"
-
 default["prometheus"]["env"] = "localdev"
