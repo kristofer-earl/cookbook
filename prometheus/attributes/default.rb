@@ -10,8 +10,8 @@ default["prometheus"]["cms"]["fqdn"] = "localhost"
 default["prometheus"]["web"]["fqdn"] = "localhost"
 default["prometheus"]["api"]["fqdn"] = "localhost"
 
-default["prometheus"]["memcached"]["host"] = "memc1.localdomain"
-default["prometheus"]["memcached"]["port"] = 11211
+default["memcached"]["host"] = "memc1.localdomain"
+default["memcached"]["port"] = 11211
 
 default["prometheus"]["api"]["bo_endpoint"] = "http://ws.aqzbouat.com"
 default["prometheus"]["api"]["bo_payment_endpoint"] = "http://paymentservices.aqzbouat.com"
