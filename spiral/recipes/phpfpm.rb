@@ -105,5 +105,5 @@ remote_file '/usr/local/bin/composer' do
   owner  'root'
   group  'root'
   mode   '0755'
-  not_if { ::File.exists?('/usr/local/bin/composer.phar') }
+  not_if { ::File.exists?('/usr/local/bin/composer') }
 end
