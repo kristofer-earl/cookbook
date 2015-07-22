@@ -65,5 +65,5 @@ end
 
 execute 'install_gulp' do
   command "npm install -g gulp"
-  creates '/usr/loca/bin/gulp'
+  creates '/usr/local/bin/gulp'
 end 
