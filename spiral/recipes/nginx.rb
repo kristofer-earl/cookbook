@@ -7,11 +7,10 @@ end
 package 'nginx-full'
 package 'nginx-extras'
 
-cookbook_file 'nginx-server.conf' do
-  path   '/etc/nginx/nginx.conf'
+cookbook_file '/etc/nginx/nginx.conf' do
+  source 'nginx-server.conf'
   notifies :restart, 'service[nginx]'
-  action :delete
-  manage_symlink_source true
+  action :create
 end
 
 cookbook_file 'default' do
