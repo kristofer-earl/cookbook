@@ -7,6 +7,13 @@ end
 package 'nginx-full'
 package 'nginx-extras'
 
+cookbook_file 'nginx-server.conf' do
+  path   '/etc/nginx/nginx.conf'
+  notifies :restart, 'service[nginx]'
+  action :delete
+  manage_symlink_source true
+end
+
 cookbook_file 'default' do
   path   '/etc/nginx/sites-enabled/default'
   notifies :restart, 'service[nginx]'
