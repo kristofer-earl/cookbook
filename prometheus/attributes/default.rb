@@ -25,3 +25,5 @@ default["prometheus"]["graylog"]["port"] = "12197"
 
 default["prometheus"]["statsd"]["host"] = "localhost"
 default["prometheus"]["statsd"]["port"] = "8125"
+
+default["prometheus"]["env"] = "localdev"
