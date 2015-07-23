@@ -4,6 +4,7 @@ include_recipe 'spiral::newrelic'
 
 package 'git'
 package 'nfs-common'
+package 'iptables-persistent'
 
 execute 'git_url_default_to_https' do
   command 'git config --global url."https://".insteadOf git://'
