@@ -1,27 +1,10 @@
 include_recipe 'spiral::nginx'
-#include_recipe 'spiral::newrelic'
 include_recipe 'spiral::users'
 
-execute "add_php_apt_key" do
-  command "/usr/bin/apt-key add /usr/share/keyrings/php.gpg && apt-get update"
-  action :nothing
+execute 'add_ondrej_php_ppa' do
+  command '/usr/bin/apt-add-repository -y ppa:ondrej/php5-5.6; apt-get update'
 end
 
-cookbook_file  "/usr/share/keyrings/php.gpg" do
-  mode "0644"
-  owner "root"
-  group "root"
-  action :create
-  backup false
-  source  "php.gpg"
-  notifies :run, resources(:execute => "add_php_apt_key")
-end
-
-apt_repository 'ondrej-php5-5_6-trusty' do
-  uri 'http://ppa.launchpad.net/ondrej/php5-5.6/ubuntu'
-  distribution node['lsb']['codename']
-  components ['main']
-end
 
 package 'php5-cli'
 package 'php5-fpm'
@@ -30,13 +13,48 @@ package 'php5-mysql'
 package 'php5-redis'
 package 'php5-memcached'
 package 'php5-gd'
-#package 'newrelic-php5'
 
 directory '/srv/http' do
-  owner 'deploy'
-  group 'www-data'
-  mode  '0774'
+  owner  'deploy'
+  group  'www-data'
+  mode   '0774'
   action :create
+end
+
+directory '/srv/http/adm' do
+  owner  'www-data'
+  group  'www-data'
+  mode   '0744'
+  action :create
+end
+
+directory '/srv/http/adm/phpfpm-cache-clear' do
+  owner  'www-data'
+  group  'www-data'
+  mode   '0744'
+  action :create
+end
+
+cookbook_file '/srv/http/adm/phpfpm-cache-clear/index.php' do
+  owner 'root'
+  group 'root'
+  mode  '0644'
+  source 'phpfpm-cache-clear.php'
+  action :create
+end
+
+cookbook_file '/etc/nginx/sites-available/phpfpm-cache-clear.conf' do
+  owner 'root'
+  group 'root'
+  mode  '0644'
+  source 'phpfpm-cache-clear.conf'
+  action :create
+  notifies :restart, 'service[nginx]'
+end
+
+link '/etc/nginx/sites-enabled/phpfpm-cache-clear.conf' do
+  to '/etc/nginx/sites-available/phpfpm-cache-clear.conf'
+  notifies :restart, "service[nginx]"
 end
 
 service 'php5-fpm' do
@@ -87,5 +105,5 @@ remote_file '/usr/local/bin/composer' do
   owner  'root'
   group  'root'
   mode   '0755'
-  not_if { ::File.exists?('/usr/local/bin/composer.phar') }
+  not_if { ::File.exists?('/usr/local/bin/composer') }
 end

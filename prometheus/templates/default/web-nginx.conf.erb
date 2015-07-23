@@ -1,11 +1,15 @@
-uptream proxy_api {
-    server api1;
-    server api2;
+upstream proxy_api {
+	server api1;
+	server api2;
+}
+
+upstream proxy_cms {
+	server cms1;
+	server cms2;
 }
 
 server {
-	listen 80;
-	listen [::]:80 ipv6only=on;
+	listen 80 default_server;
 
 	server_tokens   off;
 	more_set_headers 'Server: MagicBooBooLand';
@@ -33,7 +37,26 @@ server {
 	}
 
 	location ~ ^/api/.*$ {
+		rewrite ^/api/int/(.*)$ /api/$1 break;
 		proxy_pass http://proxy_api;
+		proxy_redirect    default;
+	}
+
+	location ~ ^/.*/api/v.*$ {
+	        if ($request_method != GET) {
+			return 403;
+		}
+
+		proxy_pass http://proxy_cms;
+		proxy_redirect    default;
+	}
+
+	location ~ ^/sites/.*$ {
+	        if ($request_method != GET) {
+			return 403;
+		}
+
+		proxy_pass http://proxy_cms;
 		proxy_redirect    default;
 	}
 
@@ -44,10 +67,6 @@ server {
 		fastcgi_intercept_errors on;
 		fastcgi_pass unix:/var/run/php5-fpm.sock;
 		fastcgi_index index.php;
-	}
-
-	location ~ ^/sites/.*/files/styles/ {
-		try_files $uri @rewrite;
 	}
 
 	location ~* \.(js|css|png|jpg|jpeg|gif|ico)$ {

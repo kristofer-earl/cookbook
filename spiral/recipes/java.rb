@@ -1,16 +1,8 @@
 include_recipe 'apt'
 include_recipe 'spiral::default'
 
-execute 'custom_apt_list_update' do
-  command 'apt-get update'
-end
-
-apt_repository 'webupd8team-java-trusty' do
-  uri 'http://ppa.launchpad.net/webupd8team/java/ubuntu'
-  distribution node['lsb']['codename']
-  components ['main']
-  keyserver 'keyserver.ubuntu.com'
-  key 'EEA14886'
+execute 'add_webupd8_java_ppa' do
+  command '/usr/bin/apt-add-repository -y ppa:webupd8team/java && /usr/bin/apt-get update'
 end
 
 execute 'accept_oracle_license' do

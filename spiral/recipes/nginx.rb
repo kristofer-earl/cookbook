@@ -1,33 +1,21 @@
 include_recipe 'spiral::default'
 
-execute "add_nginx_apt_key" do
-  command "/usr/bin/apt-key add /usr/share/keyrings/nginx.gpg && /usr/bin/apt-get update"
-  action :nothing
+execute 'add_nginx_ppa' do
+  command '/usr/bin/apt-add-repository -y ppa:nginx/stable; /usr/bin/apt-get update'
 end
-
-cookbook_file  "/usr/share/keyrings/nginx.gpg" do
-  mode "0644"
-  owner "root"
-  group "root"
-  action :create
-  backup false
-  source  "nginx.gpg"
-  notifies :run, resources(:execute => "add_nginx_apt_key")
-end
-
-apt_repository 'nginx' do
-  uri 'http://ppa.launchpad.net/nginx/stable/ubuntu'
-  distribution node['lsb']['codename'] 
-  components ['main']
-  action :add
-end 
 
 package 'nginx-full'
 package 'nginx-extras'
 
+cookbook_file '/etc/nginx/nginx.conf' do
+  source 'nginx-server.conf'
+  notifies :restart, 'service[nginx]'
+  action :create
+end
+
 cookbook_file 'default' do
   path   '/etc/nginx/sites-enabled/default'
-  notifies :restart, "service[nginx]"
+  notifies :restart, 'service[nginx]'
   action :delete
   manage_symlink_source true
 end

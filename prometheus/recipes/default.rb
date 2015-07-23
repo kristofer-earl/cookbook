@@ -60,10 +60,10 @@ end
 
 execute 'install_bower' do
   command 'npm install -g bower'
-  creates '/usr/loca/bin/bower'
+  creates '/usr/local/bin/bower'
 end
 
 execute 'install_gulp' do
   command "npm install -g gulp"
-  creates '/usr/loca/bin/gulp'
+  creates '/usr/local/bin/gulp'
 end 
