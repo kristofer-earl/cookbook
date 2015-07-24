@@ -23,7 +23,7 @@ server {
 	error_log /var/log/nginx/web_error.log;
 	<%- end %>
 
-	<% if node[:prometheus][:handle_ssl] == true %>
+	<% if node[:prometheus][:handle_ssl] == "true" %>
 	listen 443 ssl spdy;
 	ssl_certificate /etc/nginx/ssl/prometheus.crt;
 	ssl_certificate_key /etc/nginx/ssl/prometheus.key;
