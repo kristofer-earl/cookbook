@@ -17,10 +17,16 @@ server {
  	root /srv/http/web/current/public;
  	access_log /var/log/nginx/web_access.log;
 
-	<% if node['spiral']['graylog']['enable'] == true %>
-	error_log syslog:server=<%= node['spiral']['graylog']['host'] %>:<%= node['spiral']['graylog']['nginx_err']['port'] %>,facility=daemon;
+	<% if node[:spiral][:graylog][:enable] == true %>
+	error_log syslog:server=<%= node[:spiral][:graylog][:host] %>:<%= node[:spiral][:graylog][:nginx_err][:port] %>,facility=daemon;
 	<%- else %>
 	error_log /var/log/nginx/web_error.log;
+	<%- end %>
+
+	<% if node[:prometheus][:handle_ssl] == true %>
+	listen 443 ssl spdy;
+	ssl_certificate /etc/nginx/ssl/prometheus.crt;
+	ssl_certificate_key /etc/nginx/ssl/prometheus.key;
 	<%- end %>
 
 	index index.php index.html index.htm;
