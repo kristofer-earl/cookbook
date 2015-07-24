@@ -17,3 +17,5 @@ default["prometheus"]["api"]["bo_payment_endpoint"] = "http://paymentservices.aq
 default["prometheus"]["api"]["bo_affiliate_endpoint"] = "http://affiliateservices.aqzbouat.com"
 
 default["prometheus"]["env"] = "localdev"
+
+default["prometheus"]["handle_ssl"] = false
