@@ -18,4 +18,5 @@ default["prometheus"]["api"]["bo_affiliate_endpoint"] = "http://affiliateservice
 
 default["prometheus"]["env"] = "localdev"
 
-default["prometheus"]["handle_ssl"] = false
+default["prometheus"]["handle_ssl"] = "false"
+default["prometheus"]["force_ssl"] = "false"
