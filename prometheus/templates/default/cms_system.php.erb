@@ -32,5 +32,5 @@ $databases = array (
 );
 
 $conf['memcache_servers'] = array(
-  '127.0.0.1:11211' => 'default'
+  '<%= node[:memcached][:host] %>:<%= node[:memcached][:port] %>' => 'default'
 );
