@@ -40,7 +40,7 @@ server {
 
 	location @rewrite {
 		<% if node[:prometheus][:force_ssl] == "true" %>
-		if ( $sheme = 'http' ) {
+		if ( $scheme = 'http' ) {
 			rewrite ^(.*)$ https://$host$request_uri permanent;
 		}
 		<%- end %>
