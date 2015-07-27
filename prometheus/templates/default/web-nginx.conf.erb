@@ -9,6 +9,8 @@ upstream proxy_cms {
 }
 
 server {
+	listen 80 default_server;
+
 	server_tokens   off;
 	more_set_headers 'Server: MagicBooBooLand';
 
