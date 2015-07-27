@@ -70,6 +70,10 @@ server {
 	}
 
 	location ~ \.php$ {
+		<% if node[:prometheus][:enable_cors] == true %>
+		include /etc/nginx/cors.conf;
+		<%- end %>
+
 		fastcgi_split_path_info ^(.+\.php)(/.+)$;
 		include fastcgi_params;
 
