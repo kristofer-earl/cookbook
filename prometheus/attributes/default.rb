@@ -20,3 +20,4 @@ default["prometheus"]["env"] = "localdev"
 
 default["prometheus"]["handle_ssl"] = "false"
 default["prometheus"]["force_ssl"] = "false"
+default["prometheus"]["enable_cors"] = "false"
