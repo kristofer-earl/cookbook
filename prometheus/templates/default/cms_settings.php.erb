@@ -1,18 +1,6 @@
 <?php
 
-$databases = array (
-  'default' => array (
-    'default' => array (
-      'database' => "<%= node['prometheus']['cms']['db_name'] %>",
-      'username' => "<%= node['prometheus']['cms']['db_user'] %>",
-      'password' => "<%= node['prometheus']['cms']['db_pass'] %>",
-      'host' => "<%= node['prometheus']['cms']['db_host'] %>",
-      'port' => "<%= node['prometheus']['cms']['db_port'] %>",
-      'driver' => "<%= node['prometheus']['cms']['db_driver'] %>",
-      'prefix' => "<%= node['prometheus']['cms']['db_prefix'] %>",
-    ),
-  ),
-);
+include_once DRUPAL_ROOT . '/sites/default/settings.system.php';
 
 $update_free_access = FALSE;
 
@@ -48,10 +36,6 @@ $conf['memcache_storage_persistent_connection'] = TRUE;
 $conf['memcache_options'] = array(
   Memcached::OPT_TCP_NODELAY => TRUE,
   Memcached::OPT_BINARY_PROTOCOL => TRUE,
-);
-
-$conf['memcache_servers'] = array(
-  '<%= node[:memcached][:host] %>:<%= node[:memcached][:port] %>' => 'default'
 );
 
 $conf['memcache_bins'] = array(
