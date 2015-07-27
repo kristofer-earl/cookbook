@@ -71,7 +71,7 @@ server {
 	}
 
 	location ~ \.php$ {
-		<% if node[:prometheus][:enable_cors] == true %>
+		<% if node[:prometheus][:enable_cors] == "true" %>
 		include /etc/nginx/cors.conf;
 		<%- end %>
 
