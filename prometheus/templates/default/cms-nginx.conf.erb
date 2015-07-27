@@ -19,6 +19,7 @@ server {
 	# Enable compression, this will help if you have for instance advagg‎ module
 	# by serving Gzip versions of the files.
 	gzip_static on;
+	client_max_body_size 10m;
  
 	location = /favicon.ico {
 		log_not_found off;
