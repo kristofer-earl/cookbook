@@ -1,0 +1,36 @@
+<?php
+
+$databases = array (
+  'default' => array (
+    'default' => array(
+      'driver' => 'autoslave',
+      'master' => 'master',
+      'slave' => 'slave',
+      'replication lag' => 2,
+    ),
+    'master' => array (
+      'database' => "<%= node['prometheus']['cms']['db_name'] %>",
+      'username' => "<%= node['prometheus']['cms']['db_user'] %>",
+      'password' => "<%= node['prometheus']['cms']['db_pass'] %>",
+      'host' => "<%= node['prometheus']['cms']['db_host'] %>",
+      'port' => "<%= node['prometheus']['cms']['db_port'] %>",
+      'driver' => 'mysql',
+      'prefix' => '',
+      'tables' => array('sessions', 'semaphore', 'watchdog', 'users','history'),
+    ),
+    'slave' => array (
+      'database' => "<%= node['prometheus']['cms']['db_name'] %>",
+      'username' => "<%= node['prometheus']['cms']['db_user'] %>",
+      'password' => "<%= node['prometheus']['cms']['db_pass'] %>",
+      'host' => "<%= node['prometheus']['cms']['db_slave_host'] %>",
+      'port' => "<%= node['prometheus']['cms']['db_slave_port'] %>",
+      'driver' => 'mysql',
+      'prefix' => '',
+      'readonly' => TRUE,
+    ),
+  ),
+);
+
+$conf['memcache_servers'] = array(
+  '<%= node[:memcached][:host] %>:<%= node[:memcached][:port] %>' => 'default'
+);
