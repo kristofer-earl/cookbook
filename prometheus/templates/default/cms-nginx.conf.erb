@@ -10,8 +10,8 @@ server {
  
 	access_log /var/log/nginx/cms_access.log;
 
-	<% if node['spiral']['graylog']['enable'] == true %>
-	error_log syslog:server=<%= node['spiral']['graylog']['host'] %>:<%= node['spiral']['graylog']['nginx_err']['port'] %>,facility=daemon;
+	<% if node[:spiral][:graylog][:enable] == true %>
+	error_log syslog:server=<%= node[:spiral][:graylog][:host] %>:<%= node[:spiral][:graylog][:nginx_err][:port] %>,facility=daemon;
 	<%- else %>
 	error_log /var/log/nginx/cms_error.log;
 	<%- end %>
@@ -19,6 +19,7 @@ server {
 	# Enable compression, this will help if you have for instance advagg‎ module
 	# by serving Gzip versions of the files.
 	gzip_static on;
+	client_max_body_size 10m;
  
 	location = /favicon.ico {
 		log_not_found off;
@@ -70,6 +71,10 @@ server {
 	}
 
 	location ~ \.php$ {
+		<% if node[:prometheus][:enable_cors] == "true" %>
+		include /etc/nginx/cors.conf;
+		<%- end %>
+
 		fastcgi_split_path_info ^(.+\.php)(/.+)$;
 		include fastcgi_params;
 
