@@ -7,12 +7,12 @@ server {
 	root /srv/http/api/current/public;
 	index index.php index.html index.htm;
 
-	access_log /var/log/nginx/api_access.log;
-       
 	<% if node[:spiral][:graylog][:enable] == true %>
+	access_log syslog:server=<%= node[:spiral][:graylog][:host] %>:<%= node[:spiral][:graylog][:nginx_acc][:port] %>,facility=daemon;
 	error_log syslog:server=<%= node[:spiral][:graylog][:host] %>:<%= node[:spiral][:graylog][:nginx_err][:port] %>,facility=daemon;
 	<%- else %>
-	error_log /var/log/nginx/api_error.log;
+	access_log /var/log/nginx/web_access.log;
+	error_log /var/log/nginx/web_error.log;
 	<%- end %>
 
 	server_name <%= node[:prometheus][:api][:fqdn] %>; 
