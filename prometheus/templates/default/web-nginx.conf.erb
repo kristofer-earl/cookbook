@@ -39,6 +39,10 @@ server {
 		try_files $uri @rewrite;
 	}
 
+	location ~ ^/launcher/.*$ {
+		rewrite ^ /index.php;
+	}
+
 	location @rewrite {
 		<% if node[:prometheus][:force_ssl] == "true" %>
 		if ( $scheme = 'http' ) {
