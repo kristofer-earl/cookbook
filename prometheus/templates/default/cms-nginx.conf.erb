@@ -7,13 +7,13 @@ server {
 	more_set_headers 'Server: MagicBooBooLand';
 
 	root /srv/http/cms/current;
- 
-	access_log /var/log/nginx/cms_access.log;
 
 	<% if node[:spiral][:graylog][:enable] == true %>
+	access_log syslog:server=<%= node[:spiral][:graylog][:host] %>:<%= node[:spiral][:graylog][:nginx_acc][:port] %>,facility=daemon;
 	error_log syslog:server=<%= node[:spiral][:graylog][:host] %>:<%= node[:spiral][:graylog][:nginx_err][:port] %>,facility=daemon;
 	<%- else %>
-	error_log /var/log/nginx/cms_error.log;
+	access_log /var/log/nginx/web_access.log;
+	error_log /var/log/nginx/web_error.log;
 	<%- end %>
 
 	# Enable compression, this will help if you have for instance advagg‎ module
