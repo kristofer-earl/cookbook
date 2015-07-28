@@ -7,8 +7,10 @@ default["prometheus"]["cms"]["db_driver"] = "mysql"
 default["prometheus"]["cms"]["db_prefix"] = ""
 
 default["prometheus"]["cms"]["fqdn"] = "localhost"
+default["prometheus"]["cms"]["int_fqdn"] = "cms1.localdomain"
 default["prometheus"]["web"]["fqdn"] = "localhost"
 default["prometheus"]["api"]["fqdn"] = "localhost"
+default["prometheus"]["api"]["int_fqdn"] = "api1.localdomain"
 
 default["prometheus"]["api"]["bo_endpoint"] = "http://ws.aqzbouat.com"
 default["prometheus"]["api"]["bo_payment_endpoint"] = "http://paymentservices.aqzbouat.com"
