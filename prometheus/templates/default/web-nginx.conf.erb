@@ -9,6 +9,23 @@ upstream proxy_cms {
 }
 
 server {
+	listen 80;
+	<% if node[:prometheus][:handle_ssl] == "true" %>
+	listen 443 ssl spdy;
+	ssl_certificate /etc/nginx/ssl/prometheus.crt;
+	ssl_certificate_key /etc/nginx/ssl/prometheus.key;
+	<%- end %>	
+
+	server_name www.<%= node[:prometheus][:web][:fqdn] %>;
+	server_tokens   off;
+	more_set_headers 'Server: MagicBooBooLand';
+	
+	location / {
+		rewrite ^(.*)$ https://<%= node[:prometheus][:web][:fqdn] %>$request_uri permanent;
+	}
+}
+
+server {
 	listen 80 default_server;
 
 	server_tokens   off;
@@ -39,6 +56,10 @@ server {
 		try_files $uri @rewrite;
 	}
 
+	location ~ ^/launcher/.*$ {
+		rewrite ^ /index.php;
+	}
+
 	location @rewrite {
 		<% if node[:prometheus][:force_ssl] == "true" %>
 		if ( $scheme = 'http' ) {
@@ -55,7 +76,7 @@ server {
 	}
 
 	location ~ ^/.*/api/v.*$ {
-	        if ($request_method != GET) {
+		if ($request_method != GET) {
 			return 403;
 		}
 
@@ -64,7 +85,7 @@ server {
 	}
 
 	location ~ ^/sites/.*$ {
-	        if ($request_method != GET) {
+		if ($request_method != GET) {
 			return 403;
 		}
 

@@ -4,7 +4,7 @@
 				 http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
 	<bean id="memcachedClient" class="net.spy.memcached.spring.MemcachedClientFactoryBean" >
-		<property name="servers" value="memcached1.localdomain:11211" />
+		<property name="servers" value="<%= node[:memcached][:host] %>:11211" />
 		<property name="protocol" value="BINARY" />
 		<property name="transcoder">
 			<bean class="net.spy.memcached.transcoders.SerializingTranscoder">
