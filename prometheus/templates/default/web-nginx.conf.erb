@@ -10,6 +10,11 @@ upstream proxy_cms {
 
 server {
 	listen 80;
+	<% if node[:prometheus][:handle_ssl] == "true" %>
+	listen 443 ssl spdy;
+	ssl_certificate /etc/nginx/ssl/prometheus.crt;
+	ssl_certificate_key /etc/nginx/ssl/prometheus.key;
+	<%- end %>	
 
 	server_name www.<%= node[:prometheus][:web][:fqdn] %>;
 	server_tokens   off;
