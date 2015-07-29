@@ -9,6 +9,18 @@ upstream proxy_cms {
 }
 
 server {
+	listen 80;
+
+	server_name www.<%= node[:prometheus][:web][:fqdn] %>;
+	server_tokens   off;
+	more_set_headers 'Server: MagicBooBooLand';
+	
+	location / {
+		rewrite ^(.*)$ https://<%= node[:prometheus][:web][:fqdn] %>$request_uri permanent;
+	}
+}
+
+server {
 	listen 80 default_server;
 
 	server_tokens   off;
@@ -59,7 +71,7 @@ server {
 	}
 
 	location ~ ^/.*/api/v.*$ {
-	        if ($request_method != GET) {
+		if ($request_method != GET) {
 			return 403;
 		}
 
@@ -68,7 +80,7 @@ server {
 	}
 
 	location ~ ^/sites/.*$ {
-	        if ($request_method != GET) {
+		if ($request_method != GET) {
 			return 403;
 		}
 
