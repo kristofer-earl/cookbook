@@ -1,0 +1,26 @@
+server {
+	root /srv/http/cmsv2/current/public;
+	index index.php index.html index.htm;
+	access_log /var/log/nginx/cmsv2_access.log;
+	error_log /var/log/nginx/cmsv2_error.log;
+	add_header Access-Control-Allow-Origin *;
+
+	server_name <%= node[:prometheus][:cmsv2][:fqdn] %> <%= node[:prometheus][:cmsv2][:vhost] %>;
+
+	location / {
+		try_files $uri $uri/ /index.php?$query_string;
+	}
+
+	location ~ \.php$ {
+		fastcgi_split_path_info ^(.+\.php)(/.+)$;
+		include fastcgi_params;
+		fastcgi_param SCRIPT_FILENAME $request_filename;
+		fastcgi_intercept_errors on;
+		fastcgi_pass unix:/var/run/php5-fpm.sock;
+		fastcgi_index index.php;
+	}
+
+	location ~ /\. {
+		deny all;
+	}
+}
