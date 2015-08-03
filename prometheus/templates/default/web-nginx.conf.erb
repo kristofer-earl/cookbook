@@ -9,17 +9,41 @@ upstream proxy_cms {
 }
 
 server {
+	listen 80;
+	<% if node[:prometheus][:handle_ssl] == "true" %>
+	listen 443 ssl spdy;
+	ssl_certificate /etc/nginx/ssl/prometheus.crt;
+	ssl_certificate_key /etc/nginx/ssl/prometheus.key;
+	ssl_dhparam /etc/nginx/ssl/dhparam.pem;
+	ssl_session_cache shared:SSL:20m;
+	ssl_session_timeout 60m;
+	ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+	ssl_prefer_server_ciphers on;
+	ssl_ciphers ECDH+AESGCM:ECDH+AES256:ECDH+AES128:DH+3DES:!ADH:!AECDH:!MD5;
+	<%- end %>	
+
+	server_name www.<%= node[:prometheus][:web][:fqdn] %>;
+	server_tokens   off;
+	more_set_headers 'Server: MagicBooBooLand';
+	
+	location / {
+		rewrite ^(.*)$ https://<%= node[:prometheus][:web][:fqdn] %>$request_uri permanent;
+	}
+}
+
+server {
 	listen 80 default_server;
 
 	server_tokens   off;
 	more_set_headers 'Server: MagicBooBooLand';
 
  	root /srv/http/web/current/public;
- 	access_log /var/log/nginx/web_access.log;
 
 	<% if node[:spiral][:graylog][:enable] == true %>
+	access_log syslog:server=<%= node[:spiral][:graylog][:host] %>:<%= node[:spiral][:graylog][:nginx_acc][:port] %>,facility=daemon;
 	error_log syslog:server=<%= node[:spiral][:graylog][:host] %>:<%= node[:spiral][:graylog][:nginx_err][:port] %>,facility=daemon;
 	<%- else %>
+	access_log /var/log/nginx/web_access.log;
 	error_log /var/log/nginx/web_error.log;
 	<%- end %>
 
@@ -27,6 +51,12 @@ server {
 	listen 443 ssl spdy;
 	ssl_certificate /etc/nginx/ssl/prometheus.crt;
 	ssl_certificate_key /etc/nginx/ssl/prometheus.key;
+	ssl_dhparam /etc/nginx/ssl/dhparam.pem;
+	ssl_session_cache shared:SSL:20m;
+	ssl_session_timeout 60m;
+	ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+	ssl_prefer_server_ciphers on;
+	ssl_ciphers ECDH+AESGCM:ECDH+AES256:ECDH+AES128:DH+3DES:!ADH:!AECDH:!MD5;
 	<%- end %>
 
 	index index.php index.html index.htm;
@@ -36,6 +66,10 @@ server {
 
 	location / {
 		try_files $uri @rewrite;
+	}
+
+	location ~ ^/launcher/.*$ {
+		rewrite ^ /index.php;
 	}
 
 	location @rewrite {
@@ -54,7 +88,7 @@ server {
 	}
 
 	location ~ ^/.*/api/v.*$ {
-	        if ($request_method != GET) {
+		if ($request_method != GET) {
 			return 403;
 		}
 
@@ -63,7 +97,7 @@ server {
 	}
 
 	location ~ ^/sites/.*$ {
-	        if ($request_method != GET) {
+		if ($request_method != GET) {
 			return 403;
 		}
 
