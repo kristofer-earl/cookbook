@@ -15,15 +15,6 @@ directory '/srv/http/livezilla' do
   action :create
 end
 
-cookbook_file '/etc/nginx/sites-available/livezilla-nginx.conf' do
-  source   'livezilla-nginx.conf'
-  owner    'root'
-  group    'root'
-  mode     '0644'
-  action   :create
-  notifies :restart, "service[nginx]"
-end
-
 cookbook_file '/etc/nginx/sites-available/en-livezilla-nginx.conf' do
   source   'en-livezilla-nginx.conf'
   owner    'root'
