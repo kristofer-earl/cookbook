@@ -27,7 +27,7 @@ server {
 	more_set_headers 'Server: MagicBooBooLand';
 	
 	location / {
-		rewrite ^(.*)$ https://<%= node[:prometheus][:web][:fqdn] %>$request_uri permanent;
+		rewrite ^(.*)$ https://$host$request_uri permanent;
 	}
 }
 
