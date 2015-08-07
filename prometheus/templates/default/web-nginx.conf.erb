@@ -25,9 +25,13 @@ server {
 	server_name www.<%= node[:prometheus][:web][:fqdn] %>;
 	server_tokens   off;
 	more_set_headers 'Server: MagicBooBooLand';
-	
+
+	if ($host ~* ^www\.(.*)) {       
+		set $host_non_www $1;
+	}	
+
 	location / {
-		rewrite ^(.*)$ https://$host$request_uri permanent;
+		rewrite ^(.*)$ https://$host_non_www$request_uri permanent;
 	}
 }
 
