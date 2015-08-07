@@ -30,5 +30,8 @@ ff02::3 ip6-allhosts
 <% end -%>
 <% end -%>
 
+<% @custom_hosts.each do |host| -%>
+<%= host %>
+<% end -%>
 
 52.68.44.211	graphite.local graylog.local graphite.localdomain graylog.localdomain
