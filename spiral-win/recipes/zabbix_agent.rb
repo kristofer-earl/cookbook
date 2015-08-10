@@ -35,3 +35,7 @@ end
 execute 'service-zabbix' do
 	command 'c:\spiralworks\zabbix\zabbix_agentd.exe --start'
 end
+
+execute 'open-firewall' do
+  command 'netsh advfirewall firewall add rule name="Zabbix Port" dir=in protocol=TCP localport=10050 action=allow'
+end
