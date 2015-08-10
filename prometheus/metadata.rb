@@ -8,4 +8,4 @@ version          '0.1.0'
 depends 'memcached'
 depends 'percona'
 depends 'spiral'
-
+depends 'rabbitmq'
