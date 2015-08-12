@@ -29,10 +29,10 @@ windows_zipfile 'c:/spiralworks' do
 end
 
 execute 'service-zabbix' do
+	guard_interpreter :powershell_script
 	command 'c:\spiralworks\zabbix\zabbix_agentd.exe --config c:\spiralworks\zabbix\zabbix_agentd.conf --install'
 	notifies :run, 'execute[service-zabbix]', :immediately
-	guard_interpreter :powershell_script
-        not_if 'Get-Service | Where Name -eq 'Zabbix Agent'
+        not_if 'Get-Service | Where Name -eq "Zabbix Agent"'
 end
 
 execute 'service-zabbix' do
