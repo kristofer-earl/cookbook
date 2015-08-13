@@ -29,13 +29,18 @@ windows_zipfile 'c:/spiralworks' do
 end
 
 execute 'service-zabbix' do
+	guard_interpreter :powershell_script
 	command 'c:\spiralworks\zabbix\zabbix_agentd.exe --config c:\spiralworks\zabbix\zabbix_agentd.conf --install'
+	notifies :run, 'execute[service-zabbix]', :immediately
+        not_if 'Get-Service | Where Name -eq "Zabbix Agent"'
 end
 
 execute 'service-zabbix' do
 	command 'c:\spiralworks\zabbix\zabbix_agentd.exe --start'
+	action :nothing
 end
 
 execute 'open-firewall' do
-  command 'netsh advfirewall firewall add rule name="Zabbix Port" dir=in protocol=TCP localport=10050 action=allow'
+	command 'netsh advfirewall firewall add rule name="Zabbix Port" dir=in protocol=TCP localport=10050 action=allow'
+	not_if 'Get-NetFirewallRule | Where DisplayName -eq "Zabbix Port"'
 end
