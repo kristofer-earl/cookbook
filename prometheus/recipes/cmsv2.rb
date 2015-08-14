@@ -1,6 +1,14 @@
 include_recipe 'spiral::phpfpm'
 include_recipe 'prometheus::default'
 
+cookbook_file 'cms-deploy.pub' do
+  path  '/home/deploy/.ssh/authorized_keys.cms'
+  owner 'deploy'
+  group 'www-data'
+  mode  '0600'
+  action :create
+end
+
 bash 'insert_line_cmsv2' do
   user 'deploy'
   code <<-EOS
