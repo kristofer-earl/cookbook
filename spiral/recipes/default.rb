@@ -5,7 +5,7 @@ include_recipe 'spiral::newrelic'
 package 'git'
 package 'nfs-common'
 package 'iptables-persistent'
-pakacge 'awscli'
+package 'awscli'
 
 execute 'git_url_default_to_https' do
   command 'git config --global url."https://".insteadOf git://'
