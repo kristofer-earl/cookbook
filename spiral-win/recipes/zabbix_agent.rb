@@ -28,7 +28,7 @@ windows_zipfile 'c:/spiralworks' do
         not_if {::File.exists?('c:\spiralworks\zabbix\zabbix_agentd.conf')}
 end
 
-execute 'service-zabbix' do
+execute 'zabbix-service' do
 	guard_interpreter :powershell_script
 	command 'c:\spiralworks\zabbix\zabbix_agentd.exe --config c:\spiralworks\zabbix\zabbix_agentd.conf --install'
 	notifies :run, 'execute[service-zabbix]', :immediately
