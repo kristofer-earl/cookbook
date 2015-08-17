@@ -1,11 +1,9 @@
 upstream proxy_api {
 	server api1;
-	server api2;
 }
 
 upstream proxy_cms {
 	server cms1;
-	server cms2;
 }
 
 server {
@@ -73,6 +71,10 @@ server {
 	}
 
 	location ~ ^/launcher/.*$ {
+		rewrite ^ /index.php;
+	}
+
+	location ~ ^/sports/.*$ {
 		rewrite ^ /index.php;
 	}
 
