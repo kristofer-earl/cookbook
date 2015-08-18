@@ -31,16 +31,20 @@ end
 execute 'zabbix-service' do
 	guard_interpreter :powershell_script
 	command 'c:\spiralworks\zabbix\zabbix_agentd.exe --config c:\spiralworks\zabbix\zabbix_agentd.conf --install'
-	notifies :run, 'execute[service-zabbix]', :immediately
-        not_if 'Get-Service | Where Name -eq "Zabbix Agent"'
+	action :run
+    	only_if '(!(Get-Service | Where Name -eq "Zabbix Agent"))'
 end
 
 execute 'service-zabbix' do
+	guard_interpreter :powershell_script
 	command 'c:\spiralworks\zabbix\zabbix_agentd.exe --start'
-	action :nothing
+	action :run
+	not_if '(!(Get-Service -Name "Zabbix Agent" | Where Status -eq Started))'
 end
 
 execute 'open-firewall' do
+	guard_interpreter :powershell_script
 	command 'netsh advfirewall firewall add rule name="Zabbix Port" dir=in protocol=TCP localport=10050 action=allow'
-	not_if 'Get-NetFirewallRule | Where DisplayName -eq "Zabbix Port"'
+	only_if '(!(Get-NetFirewallRule | Where DisplayName -eq "Zabbix Port"))'
 end
+
