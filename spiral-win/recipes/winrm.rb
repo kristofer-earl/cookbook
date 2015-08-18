@@ -3,5 +3,7 @@ execute 'winrm-prep' do
 end
 
 execute 'open-firewall' do 
+  guard_interpreter :powershell_script
   command 'netsh advfirewall firewall add rule name="default WinRM" dir=in protocol=TCP localport=5985 action=allow'
+  only_if '(!(Get-NetFirewallRule | Where DisplayName -eq "default WinRM"))'
 end
