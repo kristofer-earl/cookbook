@@ -59,10 +59,10 @@ Write-Output "Web-Server Role Installed: OK"
 }
 
 #Define Website Specs (first Disable Default Website)
-If (Get-WebsiteState -Name "Default Web Site" | Where Value -eq "Started") {
+If (Get-WebsiteState -Name "Default Web Site" | Where Value -eq "Stopped") {
 Write-Output "Default Website is running, will stop"
-Stop-Website -Name "Default Web Site"
-Write-Output "Default Website is now Stopped" 
+Start-Website -Name "Default Web Site"
+Write-Output "Default Website is now started" 
 }
 
 $destination = "$sitepath\$deployfile"
