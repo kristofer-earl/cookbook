@@ -28,7 +28,7 @@ WindowsFeatures.each do |wf|
 end
 
 powershell_script "remove default iis files" do
-     code "Remove-Item 'C:\inetpub\wwwroot\*' -Force -Recurse	
+     code 'Remove-Item C:\inetpub\wwwroot\* -Force -Recurse'
      action :run
 end
 
