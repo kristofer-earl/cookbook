@@ -5,7 +5,6 @@ execute 'add_nginx_ppa' do
 end
 
 package 'nginx-full'
-package 'nginx-extras'
 
 cookbook_file '/etc/nginx/nginx.conf' do
   source 'nginx-server.conf'
