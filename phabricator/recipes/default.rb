@@ -55,6 +55,12 @@ template "/etc/php5/fpm/pool.d/www.conf" do
     action :create
 end
 
+template "#{phabricator_dir}/bin/firstadmin.php" do
+    source "firstadmin.erb"
+    mode 777
+    action :create
+end
+
 execute "restart_php5-fpm" do
     command 'sudo service php5-fpm restart'
 end
@@ -88,6 +94,16 @@ end
 
 execute "restart-nginx" do
     command "sudo service nginx restart"
+end
+
+execute "Add first Admin" do
+   cwd phabricator_dir
+   code "./bin/firstadmin.php"
+   action :run
+end
+
+file "#{phabricator_dir}/bin/firstadmin.php" do
+   action :delete
 end
 
 bash "Start Phabricator Daemon" do
