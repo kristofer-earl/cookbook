@@ -17,6 +17,7 @@ default['phabricator']['nginx']['service'] = 'nginx'
 default['phabricator']['config'] = {
     'environment.append-paths' => ['/usr/bin', '/usr/local/bin'],
     'phabricator.base-uri' => 'http://phabricator.mtstein.net',
+    'auth.password-auth-enabled'  => true,
 # mysql connection params
     'mysql.host' => 'localhost',
     'mysql.port' => 3306,
