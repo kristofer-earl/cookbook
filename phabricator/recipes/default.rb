@@ -96,7 +96,7 @@ execute "restart-nginx" do
     command "sudo service nginx restart"
 end
 
-execute "Add first Admin" do
+bash "Add first Admin" do
    cwd phabricator_dir
    code "./bin/firstadmin.php"
    action :run
