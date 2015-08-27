@@ -117,7 +117,7 @@ file "/usr/tags/firstuser.tag" do
 end
 
 execute "enable password auth" do
-   command "mysql -u root pabricator_auth < #{phabricator_dir}/initialdata.sql"
+   command "mysql -u root phabricator_auth < #{phabricator_dir}/initialdata.sql"
    notifies :create, 'file[/usr/tags/authpass.tag]', :immediately
    not_if do ::File.exists?('/usr/tags/authpass.tag') end
 end
