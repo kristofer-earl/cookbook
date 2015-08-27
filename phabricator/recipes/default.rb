@@ -61,8 +61,8 @@ template "#{phabricator_dir}/bin/firstadmin.php" do
     action :create
 end
 
-template "#{phabricator_dir}/firstdata.sql" do
-    source "firstdata.erb"
+template "#{phabricator_dir}/initialdata.sql" do
+    source "initialdata.erb"
     action :create
     mode 0777
 end
@@ -116,7 +116,7 @@ file "#{phabricator_dir}/bin/firstadmin.php" do
    action :delete
 end
 
-file "#{phabricator_dir}/firstdata.sql" do
+file "#{phabricator_dir}/initialdata.sql" do
    action :delete
 end
 
