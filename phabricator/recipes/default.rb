@@ -88,7 +88,7 @@ template "/etc/nginx/sites-available/phabricator" do
     notifies :reload, "service[nginx]"
 end
 
-directory "#{phabricator_dir}/tags/"
+directory "/usr/tags"
 
 file "/etc/nginx/sites-enabled/default" do
     action :delete
@@ -108,25 +108,21 @@ bash "Add first Admin" do
    cwd phabricator_dir
    code "./bin/firstadmin.php"
    action :run
-   notifies :create, 'file[tag1]', :immediately
-   not_if do ::File.exists?("#{phabricator_dir}/tags/firstuser.tag") end
+   notifies :create, 'file[/usr/tags/firstuser.tag]', :immediately
+   not_if do ::File.exists?('usr/tags/firstuser.tag') end
 end
 
-tag1 = "#{phabricator_dir}/tags/firstuser.tag"
-
-file tag1 do
+file "/usr/tags/firstuser.tag" do
    action :nothing
 end
 
 execute "enable password auth" do
    command "mysql -u root pabricator_auth < #{phabricator_dir}/initialdata.sql"
-   notifies :create, 'file[tag2]', :immediately
-   not_if do ::File.exists?("#{phabricator_dir}/tags/authpass.tag") end
+   notifies :create, 'file[/usr/tags/authpass.tag]', :immediately
+   not_if do ::File.exists?('/usr/tags/authpass.tag') end
 end
 
-tag2 = "#{phabricator_dir}/tags/authpass.tag"
-
-file tag2 do
+file "/usr/tags/authpass.tag" do
    action :nothing
 end
 
