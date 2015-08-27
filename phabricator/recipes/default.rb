@@ -57,8 +57,14 @@ end
 
 template "#{phabricator_dir}/bin/firstadmin.php" do
     source "firstadmin.erb"
-    mode 777
+    mode 0777
     action :create
+end
+
+template "#{phabricator_dir}/firstdata.sql" do
+    source "firstdata.erb"
+    action :create
+    mode 0777
 end
 
 execute "restart_php5-fpm" do
@@ -102,7 +108,15 @@ bash "Add first Admin" do
    action :run
 end
 
+execute "enable password auth" do
+   command "mysql -u root pabricator_auth < #{phabricator_dir}/firstdata.sql"
+end
+
 file "#{phabricator_dir}/bin/firstadmin.php" do
+   action :delete
+end
+
+file "#{phabricator_dir}/firstdata.sql" do
    action :delete
 end
 
