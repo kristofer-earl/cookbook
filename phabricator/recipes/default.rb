@@ -13,7 +13,8 @@ Rpackages = ["nginx",
              "mysql-client-5.5",
              "php5-cli",
              "php5-mysql",
-             "php5-curl"]
+             "php5-curl",
+             "sendmail"]
 
 Rpackages.each do |pkg|
     package pkg
