@@ -25,6 +25,7 @@ end
 
 install_user = node['phabricator']['user']
 domain_name = node['phabricator']['domain']
+cdn = node['phabricator']['alternate-domain']
 install_dir = node['phabricator']['install_dir']
 phabricator_dir = "#{install_dir}/phabricator"
 
@@ -43,6 +44,20 @@ bash "Upgrade Phabricator storage" do
     user install_user
     cwd phabricator_dir
     code "./bin/storage upgrade --force"
+    action :run
+end
+
+bash "Set CDN" do
+    user install_user
+    cwd phabricator_dir
+    code "./bin/config security.alternate-file-domain http://#{cdn}/"
+    action :run
+end
+
+bash "Enable Pygments" do
+    user install_user
+    cwd phabricator_dir
+    code "./bin/config pygments.enabled true"
     action :run
 end
 
