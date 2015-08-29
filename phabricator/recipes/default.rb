@@ -150,5 +150,5 @@ bash "Start Phabricator Daemon" do
     cwd phabricator_dir
     code "./bin/phd start"
     action :run
-    only_if ("./#{phabricator_dir}/bin/phd status | grep 'There are no running Phabricator daemons.'")
+    only_if "./#{phabricator_dir}/bin/phd status | grep 'There are no running Phabricator daemons.'"
 end
