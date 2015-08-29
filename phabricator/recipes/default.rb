@@ -16,7 +16,8 @@ Rpackages = ["nginx",
              "php5-curl",
              "php5-gd",
 	     "php5-apcu",
-             "sendmail"]
+             "sendmail",
+             "python-pygments"]
 
 Rpackages.each do |pkg|
     package pkg
@@ -96,6 +97,9 @@ template "/etc/nginx/sites-available/phabricator" do
 end
 
 directory "/usr/tags"
+directory "/var/repo" do
+    mode 0777
+end
 
 file "/etc/nginx/sites-enabled/default" do
     action :delete
@@ -146,4 +150,5 @@ bash "Start Phabricator Daemon" do
     cwd phabricator_dir
     code "./bin/phd start"
     action :run
+    only_if (./#{phabricator_dir}/bin/phd status | grep "There are no running Phabricator daemons.")
 end
