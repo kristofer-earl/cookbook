@@ -50,14 +50,14 @@ end
 bash "Set CDN" do
     user install_user
     cwd phabricator_dir
-    code "./bin/config security.alternate-file-domain http://#{cdn}/"
+    code "./bin/config set security.alternate-file-domain http://#{cdn}/"
     action :run
 end
 
 bash "Enable Pygments" do
     user install_user
     cwd phabricator_dir
-    code "./bin/config pygments.enabled true"
+    code "./bin/config set pygments.enabled true"
     action :run
 end
 
