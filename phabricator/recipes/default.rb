@@ -52,6 +52,10 @@ bash "Set Base URI" do
     action :run
 end
 
+template "/etc/php5/fpm/php.ini" do
+    source "php.ini.erb"
+end
+
 template "/etc/php5/fpm/pool.d/www.conf" do
     source "fpm.erb"
     mode 0755
