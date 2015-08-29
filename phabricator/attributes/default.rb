@@ -4,7 +4,7 @@ default['phabricator']['password'] = 'spiralworks'
 
 default['phabricator']['domain'] = 'phabricator.local'
 default['phabricator']['timezone'] = 'Asia/Manila'
-default['phabricator']['alternate-domain'] = "phabricator.local'
+default['phabricator']['alternate-domain'] = 'phabricator.local'
 
 # user to own the checked out files
 default['phabricator']['user'] = 'ubuntu'
