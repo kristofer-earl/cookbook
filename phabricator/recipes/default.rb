@@ -78,6 +78,12 @@ template "/etc/php5/fpm/pool.d/www.conf" do
     action :create
 end
 
+template "/etc/mysql/conf.d/my_phabricator.cnf" do
+    source "my_phabricator.cnf.erb"
+    mode 0755
+    action :create
+end
+
 template "#{phabricator_dir}/bin/firstadmin.php" do
     source "firstadmin.erb"
     mode 0777
