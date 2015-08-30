@@ -181,7 +181,7 @@ end
 bash "Set Storage Engine" do
     user install_user
     cwd phabricator_dir
-    code "./bin/config set storage.local-disk.path '/var/test/'"
+    code "./bin/config set storage.local-disk.path '/var/storage_engine'"
     action :run
 end
 
