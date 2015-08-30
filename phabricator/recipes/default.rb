@@ -47,6 +47,8 @@ bash "Upgrade Phabricator storage" do
     action :run
 end
 
+directory "/usr/tags"
+
 template "#{phabricator_dir}/initialdata.sql" do
     source "initialdata.erb"
     action :create
@@ -135,7 +137,6 @@ template "/etc/nginx/sites-available/phabricator" do
     notifies :reload, "service[nginx]"
 end
 
-directory "/usr/tags"
 directory "/var/repo" do
     mode 0777
 end
