@@ -78,20 +78,6 @@ template "/etc/php5/fpm/pool.d/www.conf" do
     action :create
 end
 
-template "/etc/mysql/my.cnf" do
-    source "my.cnf.erb"
-    mode 0755
-    action :create
-end
-
-service 'mysql' do
-   action :stop
-end
-
-service 'mysql' do
-   action :start
-end
-
 template "#{phabricator_dir}/bin/firstadmin.php" do
     source "firstadmin.erb"
     mode 0777
@@ -164,6 +150,20 @@ end
 
 file "/usr/tags/authpass.tag" do
    action :nothing
+end
+
+template "/etc/mysql/my.cnf" do
+    source "my.cnf.erb"
+    mode 0755
+    action :create
+end
+
+service 'mysql' do
+   action :stop
+end
+
+service 'mysql' do
+   action :start
 end
 
 file "#{phabricator_dir}/bin/firstadmin.php" do
