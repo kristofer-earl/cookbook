@@ -47,6 +47,12 @@ bash "Upgrade Phabricator storage" do
     action :run
 end
 
+template "#{phabricator_dir}/initialdata.sql" do
+    source "initialdata.erb"
+    action :create
+    mode 0777
+end
+
 execute "enable password auth" do
    command "mysql -u root phabricator_auth < #{phabricator_dir}/initialdata.sql"
    notifies :create, 'file[/usr/tags/authpass.tag]', :immediately
@@ -106,12 +112,6 @@ template "#{phabricator_dir}/bin/firstadmin.php" do
     source "firstadmin.erb"
     mode 0777
     action :create
-end
-
-template "#{phabricator_dir}/initialdata.sql" do
-    source "initialdata.erb"
-    action :create
-    mode 0777
 end
 
 execute "restart_php5-fpm" do
