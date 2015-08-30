@@ -47,6 +47,30 @@ bash "Upgrade Phabricator storage" do
     action :run
 end
 
+execute "enable password auth" do
+   command "mysql -u root phabricator_auth < #{phabricator_dir}/initialdata.sql"
+   notifies :create, 'file[/usr/tags/authpass.tag]', :immediately
+   not_if do ::File.exists?('/usr/tags/authpass.tag') end
+end
+
+file "/usr/tags/authpass.tag" do
+   action :nothing
+end
+
+template "/etc/mysql/my.cnf" do
+    source "my.cnf.erb"
+    mode 0755
+    action :create
+end
+
+service 'mysql' do
+   action :stop
+end
+
+service 'mysql' do
+   action :start
+end
+
 bash "Set CDN" do
     user install_user
     cwd phabricator_dir
@@ -116,6 +140,10 @@ directory "/var/repo" do
     mode 0777
 end
 
+directory "/var/storage_engine" do
+    mode 0777
+end
+
 file "/etc/nginx/sites-enabled/default" do
     action :delete
     force_unlink true
@@ -142,36 +170,19 @@ file "/usr/tags/firstuser.tag" do
    action :nothing
 end
 
-execute "enable password auth" do
-   command "mysql -u root phabricator_auth < #{phabricator_dir}/initialdata.sql"
-   notifies :create, 'file[/usr/tags/authpass.tag]', :immediately
-   not_if do ::File.exists?('/usr/tags/authpass.tag') end
-end
-
-file "/usr/tags/authpass.tag" do
-   action :nothing
-end
-
-template "/etc/mysql/my.cnf" do
-    source "my.cnf.erb"
-    mode 0755
-    action :create
-end
-
-service 'mysql' do
-   action :stop
-end
-
-service 'mysql' do
-   action :start
-end
-
 file "#{phabricator_dir}/bin/firstadmin.php" do
    action :delete
 end
 
 file "#{phabricator_dir}/initialdata.sql" do
    action :delete
+end
+
+bash "Set Storage Engine" do
+    user install_user
+    cwd phabricator_dir
+    code "./bin/config set storage.local-disk.path '/var/test/'"
+    action :run
 end
 
 bash "Start Phabricator Daemon" do
