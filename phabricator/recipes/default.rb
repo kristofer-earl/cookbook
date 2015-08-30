@@ -89,7 +89,7 @@ service 'mysql' do
 end
 
 service 'mysql' do
-   action :stop
+   action :start
 end
 
 template "#{phabricator_dir}/bin/firstadmin.php" do
