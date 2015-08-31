@@ -6,15 +6,23 @@ Chef cookbook to install Phabricator.
 Usage Steps (Vagrantfile):
 
 git clone git://github.com:MainSystemDev/Yggdrasil.git
+
 cd Yggdrasil/phabricator
+
 Vagrant up
 
+
 To access:
+
 add entry to hostfile
+
 127.0.0.1 phabricator.local
 
 go to: http://phrabricator.local:8080/
 
+
 login using:
+
 Username: Admin
+
 Password: changeme
