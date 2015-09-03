@@ -3,9 +3,9 @@ node.default[:mongodb] ||= {}
 
 # General
 default.graylog2[:major_version]             = '1.1'
-default.graylog2[:server][:version]          = '1.1.0-8'
-default.graylog2[:web][:version]             = '1.1.0-8'
-default.graylog2[:radio][:version]           = '1.1.0-8'
+default.graylog2[:server][:version]          = '1.1.6-1'
+default.graylog2[:web][:version]             = '1.1.6-1'
+default.graylog2[:radio][:version]           = '1.1.6-1'
 default.graylog2[:collector][:version]       = '0.3.0-SNAPSHOT-20150520202009'
 default.graylog2[:root_username]             = 'admin'
 default.graylog2[:root_email]                = nil
