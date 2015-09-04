@@ -7,7 +7,7 @@ end
 
 apt_package 'nginx-full' do
   version node['spiral']['nginx']['version'] 
-  options '--force' 
+  options '--force-yes' 
 end
 
 cookbook_file '/etc/nginx/nginx.conf' do
