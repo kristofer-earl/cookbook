@@ -8,6 +8,10 @@ package 'iptables-persistent'
 package 'awscli'
 package 'apt-transport-s3'
 
+execute 'apt-get update' do
+  command 'apt-get update'
+end
+
 execute 'git_url_default_to_https' do
   command 'git config --global url."https://".insteadOf git://'
   user 'deploy'
