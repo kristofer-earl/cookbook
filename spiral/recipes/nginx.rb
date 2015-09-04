@@ -1,8 +1,9 @@
 include_recipe 'spiral::default'
 
-execute 'add_nginx_repo' do
-  command 'echo "deb http://sw-ubuntu-deb.s3.amazonaws.com /" > /etc/apt/sources.list.d/nginx.list && apt-get update'
-  creates '/etc/apt/sources.list.d/nginx.list'
+cookbook_file '/etc/apt/sources.list.d/nginx.list' do
+  source 'nginx.list'
+  notifies :run, 'execute[apt-get update]', :immediately
+  action :create
 end
 
 apt_package 'nginx-full' do

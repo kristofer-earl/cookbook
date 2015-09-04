@@ -6,6 +6,12 @@ package 'git'
 package 'nfs-common'
 package 'iptables-persistent'
 package 'awscli'
+
+execute 'apt_s3_repo' do
+  command '/usr/bin/apt-add-repository ppa:leonard-ehrenfried/apt-transport-s3 && /usr/bin/apt-get update'
+  creates '/etc/apt/sources.list.d/leonard-ehrenfried-apt-transport-s3-trusty.list'
+end
+
 package 'apt-transport-s3'
 
 execute 'git_url_default_to_https' do
