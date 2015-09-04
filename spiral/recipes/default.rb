@@ -6,6 +6,7 @@ package 'git'
 package 'nfs-common'
 package 'iptables-persistent'
 package 'awscli'
+package 'apt-transport-s3'
 
 execute 'git_url_default_to_https' do
   command 'git config --global url."https://".insteadOf git://'
