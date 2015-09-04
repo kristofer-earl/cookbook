@@ -1,10 +1,14 @@
 include_recipe 'spiral::default'
 
-execute 'add_nginx_ppa' do
-  command '/usr/bin/apt-add-repository -y ppa:nginx/stable; /usr/bin/apt-get update'
+execute 'add_nginx_repo' do
+  command 'echo "deb http://sw-ubuntu-deb.s3.amazonaws.com /" > /etc/apt/sources.list.d/nginx.list && apt-get update'
+  creates '/etc/apt/sources.list.d/nginx.list'
 end
 
-package 'nginx-full'
+apt_package 'nginx-full' do
+  version node['spiral']['nginx']['version'] 
+  options '--force' 
+end
 
 cookbook_file '/etc/nginx/nginx.conf' do
   source 'nginx-server.conf'
