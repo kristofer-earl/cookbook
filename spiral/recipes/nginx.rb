@@ -17,6 +17,11 @@ cookbook_file '/etc/nginx/nginx.conf' do
   action :create
 end
 
+cookbook_file '/etc/nginx/pagespeed.conf' do
+  source 'pagespeed.conf'
+  action :create
+end
+
 cookbook_file 'default' do
   path   '/etc/nginx/sites-enabled/default'
   notifies :restart, 'service[nginx]'

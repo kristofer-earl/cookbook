@@ -16,9 +16,10 @@ server {
 	error_log /var/log/nginx/web_error.log;
 	<%- end %>
 
-	# Enable compression, this will help if you have for instance advagg‎ module
-	# by serving Gzip versions of the files.
-	gzip_static on;
+	<% if node[:prometheus][:pagespeed] == "true" %>
+	incldue /etc/nginx/pagespeed.conf;
+	<%- end %>
+
 	client_max_body_size 10m;
  
 	location = /favicon.ico {
