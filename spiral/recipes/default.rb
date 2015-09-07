@@ -15,6 +15,13 @@ remote_file '/usr/lib/apt/methods/s3' do
   mode   '755'
 end
 
+cookbook_file '/etc/apt/s3auth.conf' do
+  source 'apt-s3.conf'
+  owner  'root'
+  group  'root'
+  mode   '0600'
+end
+
 execute 'git_url_default_to_https' do
   command 'git config --global url."https://".insteadOf git://'
   user 'deploy'
