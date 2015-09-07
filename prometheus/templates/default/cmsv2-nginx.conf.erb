@@ -8,6 +8,10 @@ server {
 
 	server_name <%= node[:prometheus][:cmsv2][:fqdn] %> <%= node[:prometheus][:cmsv2][:vhost] %>;
 
+	<% if node[:prometheus][:pagespeed] == "true" %>
+	incldue /etc/nginx/pagespeed.conf;
+	<%- end %>
+
 	location / {
 		try_files $uri $uri/ /index.php?$query_string;
 	}
