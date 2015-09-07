@@ -3,9 +3,9 @@ node.default[:mongodb] ||= {}
 
 # General
 default.graylog2[:major_version]             = '1.1'
-default.graylog2[:server][:version]          = '1.1.0-8'
-default.graylog2[:web][:version]             = '1.1.0-8'
-default.graylog2[:radio][:version]           = '1.1.0-8'
+default.graylog2[:server][:version]          = '1.1.6-1'
+default.graylog2[:web][:version]             = '1.1.6-1'
+default.graylog2[:radio][:version]           = '1.1.6-1'
 default.graylog2[:collector][:version]       = '0.3.0-SNAPSHOT-20150520202009'
 default.graylog2[:root_username]             = 'admin'
 default.graylog2[:root_email]                = nil
@@ -204,7 +204,7 @@ default.graylog2[:server][:gc_warning_threshold] = nil
 default.graylog2[:radio][:java_opts]  = '-Djava.net.preferIPv4Stack=true -Xms1g -Xmx1g -XX:NewRatio=1 -XX:PermSize=128m -XX:MaxPermSize=256m -server -XX:+ResizeTLAB -XX:+UseConcMarkSweepGC -XX:+CMSConcurrentMTEnabled -XX:+CMSClassUnloadingEnabled -XX:+UseParNewGC -XX:-OmitStackTraceInFastThrow'
 default.graylog2[:radio][:args]       = ''
 default.graylog2[:radio][:wrapper]    = ''
-default.graylog2[:web][:java_opts]    = '-Djava.net.preferIPv4Stack=true'
+default.graylog2[:web][:java_opts]    = '-Xms512m -Xmx512m -Djava.net.preferIPv4Stack=true'
 default.graylog2[:web][:args]         = ''
 
 # Experimental

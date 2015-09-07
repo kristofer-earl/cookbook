@@ -1,11 +1,9 @@
 upstream proxy_api {
 	server api1;
-	server api2;
 }
 
 upstream proxy_cms {
 	server cms1;
-	server cms2;
 }
 
 server {
@@ -63,6 +61,10 @@ server {
 	ssl_ciphers ECDH+AESGCM:ECDH+AES256:ECDH+AES128:DH+3DES:!ADH:!AECDH:!MD5;
 	<%- end %>
 
+	<% if node[:prometheus][:pagespeed] == "true" %>
+	incldue /etc/nginx/pagespeed.conf;
+	<%- end %>
+
 	index index.php index.html index.htm;
 
 	# Make site accessible from http://localhost/
@@ -73,6 +75,14 @@ server {
 	}
 
 	location ~ ^/launcher/.*$ {
+		rewrite ^ /index.php;
+	}
+
+	location ~ ^/sports/.*$ {
+		rewrite ^ /index.php;
+	}
+
+	location ~ /pages/pt-integration-test.*$ {
 		rewrite ^ /index.php;
 	}
 

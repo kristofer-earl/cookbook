@@ -27,3 +27,12 @@ WindowsFeatures.each do |wf|
 
 end
 
+powershell_script "remove default iis files" do
+     code 'Remove-Item C:\inetpub\wwwroot\* -Force -Recurse'
+     action :run
+end
+
+template "C:\\inetpub\\wwwroot\\lb.html" do
+     source "lb.html.erb"
+     action :create_if_missing
+end

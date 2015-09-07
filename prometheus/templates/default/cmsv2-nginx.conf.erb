@@ -4,14 +4,28 @@ server {
 	access_log /var/log/nginx/cmsv2_access.log;
 	error_log /var/log/nginx/cmsv2_error.log;
 	add_header Access-Control-Allow-Origin *;
+	add_header Access-Control-Allow-Methods 'GET, POST, PUT, DELETE, OPTIONS';
 
 	server_name <%= node[:prometheus][:cmsv2][:fqdn] %> <%= node[:prometheus][:cmsv2][:vhost] %>;
+
+	<% if node[:prometheus][:pagespeed] == "true" %>
+	incldue /etc/nginx/pagespeed.conf;
+	<%- end %>
 
 	location / {
 		try_files $uri $uri/ /index.php?$query_string;
 	}
 
 	location ~ \.php$ {
+		proxy_buffer_size 128k;
+		proxy_buffers 4 256k;
+		proxy_busy_buffers_size 256k;
+
+		fastcgi_buffering on;
+		fastcgi_buffer_size 16k;
+		fastcgi_buffers 16 16k;
+		fastcgi_connect_timeout 600s;
+
 		fastcgi_split_path_info ^(.+\.php)(/.+)$;
 		include fastcgi_params;
 		fastcgi_param SCRIPT_FILENAME $request_filename;

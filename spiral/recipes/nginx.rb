@@ -1,15 +1,24 @@
 include_recipe 'spiral::default'
 
-execute 'add_nginx_ppa' do
-  command '/usr/bin/apt-add-repository -y ppa:nginx/stable; /usr/bin/apt-get update'
+cookbook_file '/etc/apt/sources.list.d/nginx.list' do
+  source 'nginx.list'
+  notifies :run, 'execute[apt-get update]', :immediately
+  action :create
 end
 
-package 'nginx-full'
-package 'nginx-extras'
+apt_package 'nginx-full' do
+  version node['spiral']['nginx']['version'] 
+  options '--force-yes' 
+end
 
 cookbook_file '/etc/nginx/nginx.conf' do
   source 'nginx-server.conf'
   notifies :restart, 'service[nginx]'
+  action :create
+end
+
+cookbook_file '/etc/nginx/pagespeed.conf' do
+  source 'pagespeed.conf'
   action :create
 end
 

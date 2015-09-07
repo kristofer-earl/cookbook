@@ -13,6 +13,7 @@ package 'php5-mysql'
 package 'php5-redis'
 package 'php5-memcached'
 package 'php5-gd'
+package 'php5-curl'
 
 directory '/srv/http' do
   owner  'deploy'
