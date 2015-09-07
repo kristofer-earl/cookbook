@@ -3,6 +3,7 @@ maintainer_email "matthias.marschall@gutefrage.net"
 license          "Apache 2.0"
 description      "Installs/Configures piwik"
 version          "0.2.1"
+name		 "piwik"
 
 recipe "piwik::default", "Installs and configures piwik"
 recipe "piwik::master", "This recipe installs piwik on one host and let's you configure it by hitting /index.php. It will run archive.sh hourly on this host"
@@ -10,7 +11,7 @@ recipe "piwik::slave", "This recipe installs a piwik instance which connects as 
 
 depends "percona"
 depends "runit"
-depends "nginx"
+depends "spiral"
 depends "iptables"
 depends "logrotate"
 

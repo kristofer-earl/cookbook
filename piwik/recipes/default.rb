@@ -18,9 +18,9 @@
 #
 
 include_recipe "percona::client"
+include_recipe "spiral::nginx"
 
-include_recipe "nginx::source"
-template "#{node[:nginx][:dir]}/sites-available/piwik" do
+template "/etc/nginx/sites-available/piwik" do
   source "nginx-site-piwik.erb"
   owner  "root"
   group  "root"
@@ -34,7 +34,7 @@ end
 
 bash "enable piwik site" do
   user     "root"
-  cwd      node[:nginx][:dir]
+  cwd      "/etc/nginx/sites-enabled"
   code     "nxensite piwik"
   not_if   "ls /etc/nginx/sites-enabled/piwik"
   notifies :restart, resources(:service => "nginx")
@@ -42,7 +42,7 @@ end
 
 include_recipe "logrotate"
 logrotate_app 'nginx' do
-  paths      File.join(node[:nginx][:log_dir], "*.log")
+  paths      "/var/log/nginx/*.log"
   rotate     35
   period     "daily"
   postrotate "test ! -f /var/run/nginx.pid || kill -USR1 `cat /var/run/nginx.pid`"
