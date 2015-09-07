@@ -18,7 +18,7 @@ cookbook_file '/etc/nginx/nginx.conf' do
 end
 
 cookbook_file '/etc/nginx/pagespeed.conf' do
-  source 'pagespeed.conf'
+  source 'nginx-pagespeed.conf'
   action :create
 end
 
