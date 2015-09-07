@@ -19,7 +19,6 @@ end
 
 cookbook_file '/etc/nginx/pagespeed.conf' do
   source 'pagespeed.conf'
-  notifies :run, 'execute[apt-get update]', :immediately
   action :create
 end
 
