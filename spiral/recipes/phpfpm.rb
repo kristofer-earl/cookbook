@@ -38,6 +38,12 @@ directory '/srv/http/adm/geoip' do
   action :create
 end
 
+execute 'get_geoip_lite_city_db' do
+  command 'wget -q -O - http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.xz | xz -dc > GeoIPCity.dat'
+  cwd     '/srv/http/adm/geoip'
+  creates '/srv/http/adm/geoip/GeoIPCity.dat'
+end
+
 cookbook_file '/etc/php5/mods-available/geoip.ini' do
   source 'php5-geoip.ini'
   owner  'root'
