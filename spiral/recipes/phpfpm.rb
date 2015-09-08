@@ -14,6 +14,8 @@ package 'php5-redis'
 package 'php5-memcached'
 package 'php5-gd'
 package 'php5-curl'
+package 'php5-geoip'
+package 'libgeoip-dev'
 
 directory '/srv/http' do
   owner  'deploy'
