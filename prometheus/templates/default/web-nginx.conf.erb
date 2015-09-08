@@ -20,7 +20,7 @@ server {
 	ssl_ciphers ECDH+AESGCM:ECDH+AES256:ECDH+AES128:DH+3DES:!ADH:!AECDH:!MD5;
 	<%- end %>	
 
-	server_name www.<%= node[:prometheus][:web][:fqdn] %>;
+	server_name www.*;
 	server_tokens   off;
 	more_set_headers 'Server: MagicBooBooLand';
 
