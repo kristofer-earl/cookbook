@@ -32,8 +32,8 @@ template "/etc/nginx/sites-available/piwik" do
   notifies :restart, resources(:service => "nginx")
 end
 
-link '/etc/nginx/sites-enabled/piwik.conf' do
-  to '/etc/nginx/sites-available/piwik.conf'
+link '/etc/nginx/sites-enabled/piwik' do
+  to '/etc/nginx/sites-available/piwik'
   notifies :restart, "service[nginx]"
 end
 
