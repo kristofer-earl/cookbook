@@ -10,7 +10,6 @@ recipe "piwik::master", "This recipe installs piwik on one host and let's you co
 recipe "piwik::slave", "This recipe installs a piwik instance which connects as additional tracking server to an existing piwik instance (DB)"
 
 depends "percona"
-depends "runit"
 depends "spiral"
 depends "iptables"
 depends "logrotate"

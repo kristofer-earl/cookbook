@@ -18,7 +18,7 @@
 #
 
 include_recipe "percona::client"
-include_recipe "spiral::nginx"
+include_recipe "spiral::phpfpm"
 
 template "/etc/nginx/sites-available/piwik" do
   source "nginx-site-piwik.erb"
@@ -48,14 +48,7 @@ end
 include_recipe "iptables"
 iptables_rule "iptables_http"
 
-%w(php5-cgi php5-cli php5 php5-gd php5-mysql).each {|pkg| package pkg }
-
-include_recipe "runit"
-runit_service "php-fastcgi" do
-  options :bind_path => node[:piwik][:php_fcgi_bind_path]
-  env "PHP_FCGI_CHILDREN" => node[:piwik][:php_fcgi_children], "PHP_FCGI_MAX_REQUESTS" => node[:piwik][:php_fcgi_max_requests]
-  notifies :restart, resources(:service => :nginx), :delayed
-end
+%w(php5-fpm php5-cli php5 php5-gd php5-mysql).each {|pkg| package pkg }
 
 template "/etc/php5/cgi/php.ini" do
   source "php.ini.erb"
@@ -65,7 +58,7 @@ template "/etc/php5/cgi/php.ini" do
   variables(
       :memory_limit => node[:piwik][:php_fcgi_memory_limit]
   )
-  notifies :restart, resources(:service => "php-fastcgi"), :delayed
+  notifies :restart, resources(:service => "php-fpm"), :delayed
 end
 
 piwik_version = node[:piwik][:version]
