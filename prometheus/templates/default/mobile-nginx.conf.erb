@@ -26,7 +26,7 @@ server {
 	<%- end %>
 
 	<% if node[:prometheus][:pagespeed] == "true" %>
-	incldue /etc/nginx/pagespeed.conf;
+	include /etc/nginx/pagespeed.conf;
 	<%- end %>
 
 	index index.php index.html index.htm;
