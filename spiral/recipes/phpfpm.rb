@@ -31,6 +31,21 @@ directory '/srv/http/adm' do
   action :create
 end
 
+directory '/srv/http/adm/geoip' do
+  owner  'www-data'
+  group  'www-data'
+  mode   '0755'
+  action :create
+end
+
+cookbook_file '/etc/php5/mods-available/geoip.ini' do
+  source 'php5-geoip.ini'
+  owner  'root'
+  group  'root'
+  mode   '0644'
+  action :create
+end
+
 directory '/srv/http/adm/phpfpm-cache-clear' do
   owner  'www-data'
   group  'www-data'
