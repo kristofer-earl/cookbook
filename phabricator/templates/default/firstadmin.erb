@@ -1,46 +1,42 @@
 #!/usr/bin/env php
 <?php
 
-$root = dirname(dirname(dirname(__FILE__)));
+$root = dirname(dirname(__FILE__));
 require_once $root.'/scripts/__init_script__.php';
 
-$username = '<%= node['phabricator']['username'] %>';
-$user = new PhabricatorUser();
-$user->setUsername($username);
-$user->setRealName($username);
-$is_new = true;
+$username = "admin";
 
-$email = $create_email = '<%= node['phabricator']['email'] %>';
-$changed_pass = $password = '<%= node['phabricator']['password'] %>';
-
-$is_system_agent = $user->getIsSystemAgent();
-$set_system_agent = true;
-
-$verify_email = null;
-$set_verified = false;
+  $user = new PhabricatorUser();
+  $user->setUsername($username);
+  $realname = "devops";
+  $is_new = true;
+  $user_realname = "Administrator";
+  $user->setRealName($realname);
+  $changed_pass = "changeme";
+  $create_email = "devops@spiralwks.com";
+  $set_admin = true;
+  $set_system_agent = false;
 
 $user->openTransaction();
 
   $editor = new PhabricatorUserEditor();
-
-  // TODO: This is wrong, but we have a chicken-and-egg problem when you use
-  // this script to create the first user.
   $editor->setActor($user);
 
   if ($is_new) {
     $email = id(new PhabricatorUserEmail())
       ->setAddress($create_email)
       ->setIsVerified(1);
-
+    $user->setIsApproved(1);
     $editor->createNewUser($user, $email);
   } else {
     if ($verify_email) {
+      $user->setIsEmailVerified(1);
       $verify_email->setIsVerified($set_verified ? 1 : 0);
     }
     $editor->updateUser($user, $verify_email);
   }
 
-  $editor->makeAdminUser($user, true);
+  $editor->makeAdminUser($user, $set_admin);
   $editor->makeSystemAgentUser($user, $set_system_agent);
 
   if ($changed_pass !== false) {
@@ -49,3 +45,4 @@ $user->openTransaction();
   }
 
 $user->saveTransaction();
+
