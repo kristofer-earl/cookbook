@@ -1,6 +1,5 @@
 server {
-  listen 80;
-  server_name <%= node[:ec2][:public_hostname] %>;
+  listen 80 default_server;
   server_tokens off;
 
   root <%= @piwik_install_path %>/piwik;
