@@ -25,11 +25,7 @@ template "/etc/nginx/sites-available/piwik" do
   owner  "root"
   group  "root"
   mode   "0644"
-  variables(
-      :php_fcgi_pass => node[:piwik][:php_fcgi_pass],
-      :piwik_install_path => node[:piwik][:install_path]
-  )
-  notifies :restart, resources(:service => "nginx")
+  notifies :restart, "service[nginx]")
 end
 
 link '/etc/nginx/sites-enabled/piwik' do
@@ -47,19 +43,6 @@ end
 
 include_recipe "iptables"
 iptables_rule "iptables_http"
-
-%w(php5-fpm php5-cli php5 php5-gd php5-mysql).each {|pkg| package pkg }
-
-template "/etc/php5/cgi/php.ini" do
-  source "php.ini.erb"
-  owner  "root"
-  group  "root"
-  mode   "0644"
-  variables(
-      :memory_limit => node[:piwik][:php_fcgi_memory_limit]
-  )
-  notifies :restart, resources(:service => "php5-fpm"), :delayed
-end
 
 piwik_version = node[:piwik][:version]
 
