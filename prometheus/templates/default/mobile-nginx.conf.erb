@@ -4,7 +4,7 @@ server {
 	server_tokens   off;
 	more_set_headers 'Server: MagicBooBooLand';
 
- 	root /srv/http/mobile/current;
+ 	root /srv/http/mobile/current/MobileApp/www;
 
 	<% if node[:spiral][:graylog][:enable] == true %>
 	access_log syslog:server=<%= node[:spiral][:graylog][:host] %>:<%= node[:spiral][:graylog][:nginx_acc][:port] %>,facility=daemon;
