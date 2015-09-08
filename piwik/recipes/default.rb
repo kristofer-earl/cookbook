@@ -58,7 +58,7 @@ template "/etc/php5/cgi/php.ini" do
   variables(
       :memory_limit => node[:piwik][:php_fcgi_memory_limit]
   )
-  notifies :restart, resources(:service => "php-fpm"), :delayed
+  notifies :restart, resources(:service => "php5-fpm"), :delayed
 end
 
 piwik_version = node[:piwik][:version]
