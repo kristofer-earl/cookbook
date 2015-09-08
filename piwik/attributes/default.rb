@@ -1,4 +1,4 @@
-set_unless[:piwik][:version] = "1.5.1"
+set_unless[:piwik][:version] = "2.14.3"
 set_unless[:piwik][:install_path] = "/var/www"
 
 set_unless[:piwik][:php_fcgi_memory_limit] = "128M"
