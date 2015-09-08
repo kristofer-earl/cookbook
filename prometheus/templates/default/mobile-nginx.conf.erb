@@ -32,7 +32,7 @@ server {
 	index index.php index.html index.htm;
 
 	# Make site accessible from http://localhost/
-	server_name *.<%= node[:prometheus][:mobile][:fqdn] %>;
+	server_name <%= node[:prometheus][:mobile][:fqdn] %> *.<%= node[:prometheus][:mobile][:fqdn] %>;
 
 	location / {
 		try_files $uri @rewrite;
