@@ -19,7 +19,7 @@ package 'php5-dev'
 
 execute 'pecl_install_couchbase' do
   command 'pecl install couchbase && echo "extension=couchbase.so" > /etc/php5/mods-available/couchbase.ini'
-  creates '/etc/php5/mods-available/coucbase.ini'
+  creates '/etc/php5/mods-available/couchbase.ini'
 end
 
 directory '/srv/http' do
