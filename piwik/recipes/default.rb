@@ -32,12 +32,9 @@ template "/etc/nginx/sites-available/piwik" do
   notifies :restart, resources(:service => "nginx")
 end
 
-bash "enable piwik site" do
-  user     "root"
-  cwd      "/etc/nginx/sites-enabled"
-  code     "nxensite piwik"
-  not_if   "ls /etc/nginx/sites-enabled/piwik"
-  notifies :restart, resources(:service => "nginx")
+link '/etc/nginx/sites-enabled/piwik.conf' do
+  to '/etc/nginx/sites-available/piwik.conf'
+  notifies :restart, "service[nginx]"
 end
 
 include_recipe "logrotate"
