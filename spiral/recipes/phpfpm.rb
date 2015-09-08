@@ -1,5 +1,6 @@
 include_recipe 'spiral::nginx'
 include_recipe 'spiral::users'
+include_recipe 'couchbase::cbinding'
 
 execute 'add_ondrej_php_ppa' do
   command '/usr/bin/apt-add-repository -y ppa:ondrej/php5-5.6; apt-get update'
