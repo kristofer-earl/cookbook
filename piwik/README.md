@@ -11,7 +11,6 @@ Cookbooks
 
 * mysql-client (to enable piwik to connect to it's MySQL server)
 * nginx (the web server)
-* iptables (for locking down the piwik machine)
 * logrotate (for rotating nginx log files)
 
 

@@ -2,7 +2,6 @@
   "dependencies": {
     "logrotate": ">= 0.0.0",
     "mysql": ">= 0.0.0",
-    "iptables": ">= 0.0.0",
     "nginx": ">= 0.0.0"
   },
   "name": "piwik",

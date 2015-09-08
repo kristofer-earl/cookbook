@@ -44,9 +44,6 @@ logrotate_app 'nginx' do
   postrotate "test ! -f /var/run/nginx.pid || kill -USR1 `cat /var/run/nginx.pid`"
 end
 
-include_recipe "iptables"
-iptables_rule "iptables_http"
-
 piwik_version = node[:piwik][:version]
 
 remote_file "#{Chef::Config[:file_cache_path]}/piwik-#{piwik_version}.tar.gz" do

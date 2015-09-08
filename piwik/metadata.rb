@@ -11,7 +11,6 @@ recipe "piwik::slave", "This recipe installs a piwik instance which connects as 
 
 depends "percona"
 depends "spiral"
-depends "iptables"
 depends "logrotate"
 
 attribute "piwik/version",
