@@ -25,6 +25,9 @@ template "/etc/nginx/sites-available/piwik" do
   owner  "root"
   group  "root"
   mode   "0644"
+  variables(
+      :piwik_install_path => node[:piwik][:install_path]
+  )
   notifies :restart, "service[nginx]"
 end
 
