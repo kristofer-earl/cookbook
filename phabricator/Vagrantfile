@@ -1,0 +1,29 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure(2) do |config|
+  config.vm.box = "ubuntu/trusty64"
+
+    config.vm.network "forwarded_port", guest: 80, host: 8080
+
+    config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'" 
+    config.vm.provision "shell", inline: <<-SHELL
+      sudo apt-get update
+      sudo apt-get install git -y
+    SHELL
+
+    config.vm.provision "chef_solo" do |chef|
+    chef.cookbooks_path = "../"
+    chef.add_recipe ("phabricator")
+    
+    chef.json = {
+    "phabricator" => {
+      "domain" => "phabricator.local:8080",
+      "alternate-domain" => "phabricator.local:8080",
+      "user" => "vagrant",
+      "install_dir" => "/home/vagrant"
+      }
+    }
+
+    end
+end
