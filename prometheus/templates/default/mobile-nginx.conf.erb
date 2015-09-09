@@ -35,16 +35,11 @@ server {
 	server_name <%= node[:prometheus][:mobile][:fqdn] %> *.<%= node[:prometheus][:mobile][:fqdn] %>;
 
 	location / {
-		try_files $uri @rewrite;
-	}
-
-	location @rewrite {
 		<% if node[:prometheus][:force_ssl] == "true" %>
 		if ( $scheme = 'http' ) {
 			rewrite ^(.*)$ https://$host$request_uri permanent;
 		}
 		<%- end %>
-		rewrite ^ /index.php;
 	}
 
 	location ~ ^/.*/api/v.*$ {
