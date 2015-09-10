@@ -1,5 +1,6 @@
 include_recipe 'spiral::nginx'
 include_recipe 'spiral::users'
+include_recipe 'couchbase::cbinding'
 
 execute 'add_ondrej_php_ppa' do
   command '/usr/bin/apt-add-repository -y ppa:ondrej/php5-5.6; apt-get update'
@@ -14,8 +15,14 @@ package 'php5-redis'
 package 'php5-memcached'
 package 'php5-gd'
 package 'php5-curl'
+package 'php5-dev'
 package 'php5-geoip'
 package 'libgeoip-dev'
+
+execute 'pecl_install_couchbase' do
+  command 'pecl install couchbase && echo "extension=couchbase.so" > /etc/php5/mods-available/couchbase.ini'
+  creates '/etc/php5/mods-available/couchbase.ini'
+end
 
 directory '/srv/http' do
   owner  'deploy'

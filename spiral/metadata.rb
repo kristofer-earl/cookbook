@@ -13,5 +13,6 @@ depends 'mongodb'
 depends 'elasticsearch'
 depends 'graylog2'
 depends 'nfs'
+depends 'couchbase'
 
 supports 'ubuntu' 

@@ -1,0 +1,70 @@
+server {
+	listen 80;
+
+	server_tokens   off;
+	more_set_headers 'Server: MagicBooBooLand';
+
+ 	root /srv/http/mobile/current/MobileApp/platforms/browser/www;
+
+	<% if node[:spiral][:graylog][:enable] == true %>
+	access_log syslog:server=<%= node[:spiral][:graylog][:host] %>:<%= node[:spiral][:graylog][:nginx_acc][:port] %>,facility=daemon;
+	error_log syslog:server=<%= node[:spiral][:graylog][:host] %>:<%= node[:spiral][:graylog][:nginx_err][:port] %>,facility=daemon;
+	<%- end %>
+	access_log /var/log/nginx/web_access.log;
+	error_log /var/log/nginx/web_error.log;
+
+	<% if node[:prometheus][:handle_ssl] == "true" %>
+	listen 443 ssl spdy;
+	ssl_certificate /etc/nginx/ssl/prometheus.crt;
+	ssl_certificate_key /etc/nginx/ssl/prometheus.key;
+	ssl_dhparam /etc/nginx/ssl/dhparam.pem;
+	ssl_session_cache shared:SSL:20m;
+	ssl_session_timeout 60m;
+	ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+	ssl_prefer_server_ciphers on;
+	ssl_ciphers ECDH+AESGCM:ECDH+AES256:ECDH+AES128:DH+3DES:!ADH:!AECDH:!MD5;
+	<%- end %>
+
+	<% if node[:prometheus][:pagespeed] == "true" %>
+	include /etc/nginx/pagespeed.conf;
+	<%- end %>
+
+	index index.php index.html index.htm;
+
+	# Make site accessible from http://localhost/
+	server_name <%= node[:prometheus][:mobile][:fqdn] %> *.<%= node[:prometheus][:mobile][:fqdn] %>;
+
+	location / {
+		<% if node[:prometheus][:force_ssl] == "true" %>
+		if ( $scheme = 'http' ) {
+			rewrite ^(.*)$ https://$host$request_uri permanent;
+		}
+		<%- end %>
+	}
+
+	location ~ ^/.*/api/v.*$ {
+		if ($request_method != GET) {
+			return 403;
+		}
+
+		proxy_pass http://proxy_cms;
+		proxy_redirect    default;
+	}
+
+	location ~* \.(js|css|png|jpg|jpeg|gif|ico|ttf|woff)$ {
+		expires max;
+		log_not_found off;
+	}
+
+	location ~ /\.ht {
+		deny all;
+	}
+
+	location /dE8hoCJoyutI0roNOnsaE3UmsKdA9Cet {
+		stub_status on;
+		access_log off;
+		allow 52.74.204.170/32;
+		allow 127.0.0.1/32;
+		deny all;
+	}
+}

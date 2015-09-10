@@ -1,8 +1,9 @@
 #
 # Cookbook Name:: couchbase
-# Recipe:: default
+# Attributes:: buckets
 #
-# Copyright 2012, getaroom
+# Author:: Enrico Stahn (<mail@enricostahn.com>)
+# Copyright (C) 2013, Zanui
 #
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the
@@ -23,3 +24,5 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
+
+default['couchbase']['buckets'] = {}
