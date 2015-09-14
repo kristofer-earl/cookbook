@@ -1,47 +1,32 @@
-# -*- mode: ruby -*-
-# vi: set ft=ruby :
-require 'bundler/setup'
-
-namespace :style do
-  require 'rubocop/rake_task'
-  desc 'Run rubocop for Ruby style checks'
-  Rubocop::RakeTask.new(:ruby)
-
-  require 'foodcritic'
-  desc 'Run foodcritic for Chef style checks'
-  FoodCritic::Rake::LintTask.new(:chef)
-end
-
-namespace :doc do
-  require 'inch'
-  require 'inch/rake'
-  desc 'Run inch for documentation coverage'
-  Inch::Rake::Suggest.new do |doc|
-    doc.args = %w{libraries providers recipes resources}.map { |p| "#{p}/**/*.rb" }
-  end
-end
-
-desc 'Run all style checks'
-task style: ['style:chef', 'style:ruby']
-
+require 'foodcritic'
 require 'rspec/core/rake_task'
-desc 'Run ChefSpec unit tests'
-RSpec::Core::RakeTask.new(:unit) do |t|
-  t.rspec_opts = "--color --format progress"
+require 'rubocop/rake_task'
+
+desc 'Run RuboCop style and lint checks'
+RuboCop::RakeTask.new(:rubocop)
+
+desc 'Run Foodcritic lint checks'
+FoodCritic::Rake::LintTask.new(:foodcritic) do |t|
+  t.options = {
+    :fail_tags => ['any']
+  }
 end
 
-require 'kitchen'
-desc 'Run Test Kitchen integration tests'
-task :integration do
-  Kitchen.logger = Kitchen.default_file_logger
-  Kitchen::Config.new.instances.each do |instance|
-    instances.test(:always)
-  end
-end
+desc 'Run ChefSpec examples'
+RSpec::Core::RakeTask.new(:spec)
 
-namespace :travis do
-  desc "run on Travis"
-  task ci: ['unit', 'style:ruby']
-end
+desc 'Run all tests'
+task :test => [:rubocop, :foodcritic, :spec]
+task :default => :test
+task :lint => :foodcritic
 
-require 'emeril/rake'
+begin
+  require 'kitchen/rake_tasks'
+  Kitchen::RakeTasks.new
+
+  desc 'Alias for kitchen:all'
+  task :integration => 'kitchen:all'
+  task :test_all => [:test, :integration]
+rescue LoadError
+  puts '>>>>> Kitchen gem not loaded, omitting tasks' unless ENV['CI']
+end

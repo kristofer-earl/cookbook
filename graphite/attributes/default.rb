@@ -2,58 +2,26 @@
 # Cookbook Name:: graphite
 # Attributes:: default
 #
+# Copyright (C) 2014, Chef Software, Inc <legal@getchef.com>
+#
 
-default['graphite']['version'] = '0.9.12'
-default['graphite']['twisted_version'] = '13.1'
-default['graphite']['django_version'] = '1.5.5'
-default['graphite']['password'] = 'gr@ph1t3'
-default['graphite']['user'] = 'graphite'
-default['graphite']['group'] = 'graphite'
-default['graphite']['base_dir'] = '/opt/graphite'
-default['graphite']['doc_root'] = '/opt/graphite/webapp'
-default['graphite']['storage_dir'] = '/opt/graphite/storage'
-default['graphite']['install_type'] = 'package'
-default['graphite']['package_names'] = {
-  'whisper' => {
-    'package' => 'whisper',
-    'source' => 'https://github.com/graphite-project/whisper/zipball/master'
-  },
-  'carbon' => {
-    'package' => 'carbon',
-    'source' => 'https://github.com/graphite-project/graphite-web/zipball/master'
-  },
-  'graphite_web' => {
-    'package' => 'graphite-web',
-    'source' => 'https://github.com/graphite-project/graphite-web/zipball/master'
-  }
-}
+default['graphite']['carbon_cache']['enable'] = true
 
-default['graphite']['graph_templates'] = [
-  {
-    'name' => 'default',
-    'background' => 'black',
-    'foreground' => 'white',
-    'majorLine' => 'white',
-    'minorLine' => 'grey',
-    'lineColors' => 'blue,green,red,purple,brown,yellow,aqua,grey,magenta,pink,gold,rose',
-    'fontName' => 'Sans',
-    'fontSize' => '10',
-    'fontBold' => 'False',
-    'fontItalic' => 'False'
-  }
-]
+default['graphite']['carbon']['data_dir'] = '/var/lib/graphite/whisper/'
+default['graphite']['carbon']['user'] = '_graphite'
+default['graphite']['carbon']['host'] = '0.0.0.0'
+default['graphite']['carbon']['port'] = '2003'
 
-default['graphite']['system_packages'] =
-  case node['platform_family']
-  when 'debian'
-    %w{python-cairo-dev python-rrdtool}
-  when 'rhel'
-    case node['platform']
-    when 'amazon'
-      %w{pycairo-devel python-rrdtool bitmap}
-    else
-      %w{pycairo-devel python-rrdtool bitmap bitmap-fonts}
-    end
-  else
-    []
-  end
+default['graphite']['web']['secret_key'] = '0aed5c39507562f4519c2d47515e8221'
+default['graphite']['web']['time_zone'] = 'America/Los_Angeles'
+default['graphite']['web']['server'] = 'uwsgi'
+# This does not update after initial setup
+default['graphite']['web']['seed_password'] = 'changeme'
+
+# These defaults are over riddent in the _nginx recipe
+default['graphite']['uwsgi']['listen_ip']   = '0.0.0.0'
+default['graphite']['uwsgi']['listen_port'] = 8080
+
+default['graphite']['nginx']['disable_default_vhost'] = false
+# The template will use the host's FQDN unless this attribute is set
+default['graphite']['nginx']['hostname'] = nil
