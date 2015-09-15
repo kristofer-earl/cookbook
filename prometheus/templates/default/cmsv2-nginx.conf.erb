@@ -34,6 +34,14 @@ server {
 		fastcgi_index index.php;
 	}
 
+	location ~ ^/sites/default/files/.*$ {
+		if ($request_method != GET) {
+			return 403;
+		}
+
+		root /srv/http/cms/shared/;
+	}
+
 	location ~ /\. {
 		deny all;
 	}
