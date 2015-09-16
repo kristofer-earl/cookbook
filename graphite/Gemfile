@@ -1,25 +1,12 @@
-# -*- mode: ruby -*-
-# vi: set ft=ruby :
 source 'https://rubygems.org'
 
 gem 'rake'
-gem 'librarian-chef'
-gem 'emeril', :group => :release
+gem 'berkshelf', '~> 3.1.4'
+gem 'chefspec', '~> 4.0.1'
+gem 'foodcritic', '~> 4.0.0'
+gem 'rubocop', '~> 0.24.1'
 
-group :development do
-  gem 'guard-rspec'
-
-end
-
-group :style do
-  gem 'inch'
-  gem 'rubocop', '~> 0.19.0'
-  gem 'foodcritic', '~> 3.0'
-end
-
-group :test do
-  gem 'test-kitchen'
+group :integration do
+  gem 'test-kitchen', '~> 1.2.1'
   gem 'kitchen-vagrant'
-  gem 'kitchen-docker'
-  gem 'chefspec', '~> 3.3.0'
 end

@@ -33,3 +33,7 @@ end
 node['nodejs']['packages'].each do |node_pkg|
   package node_pkg
 end
+
+link '/bin/node' do
+  to '/usr/bin/nodejs'
+end

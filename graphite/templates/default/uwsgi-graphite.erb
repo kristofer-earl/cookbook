@@ -1,0 +1,13 @@
+# uwsgi vhost definition for graphite web app
+
+##################################
+# Rendered by Chef, do not edit! #
+##################################
+
+[uwsgi]
+plugins-dir = /usr/lib/uwsgi/plugins
+plugins = python
+uid = _graphite
+gid = _graphite
+wsgi-file = /usr/share/graphite-web/graphite.wsgi
+http-socket = <%= node['graphite']['uwsgi']['listen_ip'] %>:<%= node['graphite']['uwsgi']['listen_port'] %>
