@@ -42,6 +42,13 @@ server {
 		root /srv/http/cms/shared/;
 	}
 
+        location ~ ^/uploaded/*$ {
+
+                root /srv/http/cmsv2/shared/public/uploaded;
+
+        }
+
+
 	location ~ /\. {
 		deny all;
 	}
