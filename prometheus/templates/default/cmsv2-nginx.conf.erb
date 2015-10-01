@@ -43,9 +43,6 @@ server {
 	}
 
         location ~ ^/uploaded/*$ {
-                if ($request_method != GET) {
-                        return 403;
-                }
 
                 root /srv/http/cmsv2/shared/public/uploaded;
 
