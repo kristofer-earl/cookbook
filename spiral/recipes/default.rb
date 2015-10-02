@@ -1,6 +1,6 @@
 include_recipe 'nfs::client4'
 include_recipe 'spiral::users'
-#include_recipe 'spiral::newrelic'
+include_recipe 'apt::default'
 
 package 'git'
 package 'nfs-common'
