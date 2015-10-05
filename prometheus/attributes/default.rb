@@ -24,3 +24,6 @@ default["prometheus"]["handle_ssl"] = "false"
 default["prometheus"]["force_ssl"] = "false"
 default["prometheus"]["enable_cors"] = "false"
 default["prometheus"]["pagespeed"] = "false"
+
+# debug /development mode options
+default["prometheus"]["debug"] = "false"
