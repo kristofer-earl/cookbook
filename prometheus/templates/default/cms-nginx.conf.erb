@@ -20,8 +20,6 @@ server {
 	incldue /etc/nginx/pagespeed.conf;
 	<%- end %>
 
-	client_max_body_size 10m;
- 
 	location = /favicon.ico {
 		log_not_found off;
 		access_log off;
