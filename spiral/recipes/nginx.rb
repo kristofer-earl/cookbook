@@ -11,7 +11,7 @@ apt_package 'nginx-full' do
   options '--force-yes' 
 end
 
-cookbook_file '/etc/nginx/nginx.conf' do
+template '/etc/nginx/nginx.conf' do
   source 'nginx-server.conf.erb'
   notifies :restart, 'service[nginx]'
   action :create

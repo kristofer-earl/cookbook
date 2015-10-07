@@ -52,7 +52,7 @@ execute 'get_geoip_lite_city_db' do
 end
 
 cookbook_file '/etc/php5/mods-available/geoip.ini' do
-  source 'php5-geoip.ini.erb'
+  source 'php5-geoip.ini'
   owner  'root'
   group  'root'
   mode   '0644'
@@ -104,11 +104,11 @@ bash "debconf_newrelic" do
   EOS
 end
 
-cookbook_file '/etc/php5/fpm/php.ini' do
+template '/etc/php5/fpm/php.ini' do
   owner 'root'
   group 'root'
   mode  '0644'
-  source 'php-fpm.ini'
+  source 'php-fpm.ini.erb'
   action :create
   notifies :restart, 'service[php5-fpm]'
 end
