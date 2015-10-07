@@ -69,7 +69,7 @@ execute 'install_gulp' do
 end 
 
 execute 'install_grunt' do
-  command 'npm install -g grunt_cli'
+  command 'npm install -g grunt-cli'
   creates '/usr/local/bin/grunt'
 end
 
