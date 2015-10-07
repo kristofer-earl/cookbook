@@ -12,7 +12,7 @@ apt_package 'nginx-full' do
 end
 
 cookbook_file '/etc/nginx/nginx.conf' do
-  source 'nginx-server.conf'
+  source 'nginx-server.conf.erb'
   notifies :restart, 'service[nginx]'
   action :create
 end
