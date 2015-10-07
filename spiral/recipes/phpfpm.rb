@@ -109,7 +109,7 @@ template '/etc/php5/fpm/php.ini' do
   group 'root'
   mode  '0644'
   source 'php-fpm.ini.erb'
-  backup :true
+  backup 3
   action :create
   notifies :restart, 'service[php5-fpm]'
 end

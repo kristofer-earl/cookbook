@@ -14,7 +14,7 @@ end
 template '/etc/nginx/nginx.conf' do
   source 'nginx-server.conf.erb'
   notifies :restart, 'service[nginx]'
-  backup :true
+  backup 3
   action :create
 end
 
