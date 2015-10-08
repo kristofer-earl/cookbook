@@ -13,13 +13,24 @@ server {
 	<%- end %>
 
 	location / {
+		location ~ ^/uploaded/.*php$ { return 403; }
+		location ~ /\. { return 403; }
+
+		location ~ ^/sites/default/files/.*$ {
+			if ($request_method != GET) {
+				return 403;
+			}
+
+			root /srv/http/cms/shared/;
+		}
+
 		try_files $uri $uri/ /index.php?$query_string;
 	}
 
 	location ~ \.php$ {
-                <% if node[:prometheus][:enable_cors] == "true" %>
-                include /etc/nginx/cors.conf;
-                <%- end %>
+		<% if node[:prometheus][:enable_cors] == "true" %>
+		include /etc/nginx/cors.conf;
+		<%- end %>
 
 		proxy_buffer_size 128k;
 		proxy_buffers 4 256k;
@@ -36,24 +47,5 @@ server {
 		fastcgi_intercept_errors on;
 		fastcgi_pass unix:/var/run/php5-fpm.sock;
 		fastcgi_index index.php;
-	}
-
-	location ~ ^/sites/default/files/.*$ {
-		if ($request_method != GET) {
-			return 403;
-		}
-
-		root /srv/http/cms/shared/;
-	}
-
-        location ~ ^/uploaded/*$ {
-
-                root /srv/http/cmsv2/shared/public/uploaded;
-
-        }
-
-
-	location ~ /\. {
-		deny all;
 	}
 }
