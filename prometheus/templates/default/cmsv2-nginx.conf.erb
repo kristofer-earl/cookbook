@@ -14,7 +14,7 @@ server {
 
 	location / {
 		location ~ ^/uploaded/.*php$ { return 403; }
-	        location ~ /\. { return 403; }
+		location ~ /\. { return 403; }
 
 		location ~ ^/sites/default/files/.*$ {
 			if ($request_method != GET) {
