@@ -1,6 +1,6 @@
 module Couchbase
   class MaxMemoryQuotaCalculator
-    MAX_MEMORY_PERCENT = 0.8
+    MAX_MEMORY_PERCENT = 0.6
     RESERVE_BYTES = 1024 * 1024 * 1024 # 1 gigabyte
 
     attr_reader :total_in_bytes
