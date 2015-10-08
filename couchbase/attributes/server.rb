@@ -1,4 +1,4 @@
-#
+
 # Cookbook Name:: couchbase
 # Attributes:: server
 #
@@ -20,7 +20,7 @@
 #
 
 default['couchbase']['server']['edition'] = "community"
-default['couchbase']['server']['version'] = "3.0.0"
+default['couchbase']['server']['version'] = "4.0.0"
 
 case node['platform']
 when "debian"
@@ -42,7 +42,7 @@ when "ubuntu"
   if node['couchbase']['server']['version'] < "3.0.0"
     default['couchbase']['server']['package_file'] = "couchbase-server-#{node['couchbase']['server']['edition']}_#{node['couchbase']['server']['version']}_#{package_machine}.deb"
   else
-    default['couchbase']['server']['package_file'] = "couchbase-server-#{node['couchbase']['server']['edition']}_#{node['couchbase']['server']['version']}-ubuntu12.04_#{package_machine}.deb"
+    default['couchbase']['server']['package_file'] = "couchbase-server-#{node['couchbase']['server']['edition']}_#{node['couchbase']['server']['version']}-ubuntu14.04_#{package_machine}.deb"
   end
 when "windows"
   if node['kernel']['machine'] != 'x86_64'
