@@ -1,9 +1,7 @@
 include_recipe 'spiral::default'
 
 # Install nfs
-package ['nfs-kernel-server']  do
-  action :install
-end
+package 'nfs-kernel-server'
 
 # Make directory
 directory '/srv/http' do
