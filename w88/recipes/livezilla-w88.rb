@@ -29,6 +29,52 @@ directory '/srv/http/livezilla-6-id' do
   action :create
 end
 
+%w{en jp id}.each do |dir|
+  directory '/var/log/nginx/#{dir}' do
+    owner 'www-data'
+    group 'www-data'
+    mode  '0755'
+    action :create
+  end
+end
+
+%w{access-en.log error-en.log}.each do |file|
+  file '/var/log/nginx/en/#{file}' do
+    owner 'www-data'
+    group 'adm'
+    mode '0640'
+    action :create_if_missing
+  end
+end
+
+file '/var/log/nginx/jp/access-jp.log' do
+  owner 'www-data'
+  group 'adm'
+  mode '0640'
+  action :create_if_missing
+end
+
+file '/var/log/nginx/jp/error-jp.log' do
+  owner 'www-data'
+  group 'adm'
+  mode '0640'
+  action :create_if_missing
+end
+
+file '/var/log/nginx/id/access-id.log' do
+  owner 'www-data'
+  group 'adm'
+  mode '0640'
+  action :create_if_missing
+end
+
+file '/var/log/nginx/id/error-id.log' do
+  owner 'www-data'
+  group 'adm'
+  mode '0640'
+  action :create_if_missing
+end
+
 cookbook_file '/etc/nginx/sites-available/livezilla-en.conf' do
   source   'lz-w88-en.conf'
   owner    'root'
