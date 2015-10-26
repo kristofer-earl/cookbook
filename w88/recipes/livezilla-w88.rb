@@ -8,6 +8,13 @@ directory '/srv/http' do
   action :create
 end
 
+mount '/srv/http' do
+  device 'lz-w88-nfs1.localdomain:/srv/http'
+  fstype 'nfs'
+  options 'rw'
+  action [:mount, :enable]
+end
+
 %w{livezilla-6-en livezilla-6-jp livezilla-6-id}.each do |dir|
   directory "/srv/http/#{dir}" do
     owner 'www-data'
@@ -81,14 +88,9 @@ cookbook_file '/etc/nginx/sites-available/livezilla-id.conf' do
 end
 
 %w{livezilla-en.conf livezilla-jp.conf livezilla-id.conf}.each do |nginx.conf|
-link "/etc/nginx/sites-enabled/#{nginx.conf}" do
-  to "/etc/nginx/sites-available/#{nginx.conf}"
-  notifies :restart, "service[nginx]"
+  link "/etc/nginx/sites-enabled/#{nginx.conf}" do
+    to "/etc/nginx/sites-available/#{nginx.conf}"
+    notifies :restart, "service[nginx]"
+  end
 end
 
-mount '/srv/http' do
-  device 'lz-w88-nfs1.localdomain:/srv/http'
-  fstype 'nfs'
-  options 'rw'
-  action [:mount, :enable]
-end
