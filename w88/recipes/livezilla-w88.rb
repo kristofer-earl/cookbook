@@ -15,15 +15,6 @@ mount '/srv/http' do
   action [:mount, :enable]
 end
 
-%w{livezilla-6-en livezilla-6-jp livezilla-6-id}.each do |dir|
-  directory "/srv/http/#{dir}" do
-    owner 'www-data'
-    group 'www-data'
-    mode  '0755'
-    action :create
-  end
-end
-
 %w{en jp id}.each do |dir|
   directory "/var/log/nginx/#{dir}" do
     owner 'www-data'
@@ -87,9 +78,9 @@ cookbook_file '/etc/nginx/sites-available/livezilla-id.conf' do
   notifies :restart, "service[nginx]"
 end
 
-%w{livezilla-en.conf livezilla-jp.conf livezilla-id.conf}.each do |nginx.conf|
-  link "/etc/nginx/sites-enabled/#{nginx.conf}" do
-    to "/etc/nginx/sites-available/#{nginx.conf}"
+%w{livezilla-en.conf livezilla-jp.conf livezilla-id.conf}.each do |conf|
+  link "/etc/nginx/sites-enabled/#{conf}" do
+    to "/etc/nginx/sites-available/#{conf}"
     notifies :restart, "service[nginx]"
   end
 end
