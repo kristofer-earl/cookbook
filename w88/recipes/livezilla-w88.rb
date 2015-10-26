@@ -11,21 +11,21 @@ end
 directory '/srv/http/livezilla-6-en' do
   owner 'www-data'
   group 'www-data'
-  mode  '0774'
+  mode  '0755'
   action :create
 end
 
 directory '/srv/http/livezilla-6-jp' do
   owner 'www-data'
   group 'www-data'
-  mode  '0774'
+  mode  '0755'
   action :create
 end
 
 directory '/srv/http/livezilla-6-id' do
   owner 'www-data'
   group 'www-data'
-  mode  '0774'
+  mode  '0755'
   action :create
 end
 
@@ -69,4 +69,11 @@ end
 link '/etc/nginx/sites-enabled/livezilla-id.conf' do
   to '/etc/nginx/sites-available/livezilla-id.conf'
   notifies :restart, "service[nginx]"
+end
+
+mount '/srv/http' do
+  device 'lz-w88-nfs1.localdomain:/srv/http'
+  fstype 'nfs'
+  options 'rw'
+  action [:mount, :enable]
 end
