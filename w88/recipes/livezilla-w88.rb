@@ -8,11 +8,13 @@ directory '/srv/http' do
   action :create
 end
 
-directory '/srv/http/livezilla-6-en' do
-  owner 'www-data'
-  group 'www-data'
-  mode  '0755'
-  action :create
+%w{livezilla-6-en livezilla-6-jp livezilla-6-id}.each do |dir|
+  directory "/srv/http/#{dir}" do
+    owner 'www-data'
+    group 'www-data'
+    mode  '0755'
+    action :create
+  end
 end
 
 directory '/srv/http/livezilla-6-jp' do
@@ -30,7 +32,7 @@ directory '/srv/http/livezilla-6-id' do
 end
 
 %w{en jp id}.each do |dir|
-  directory '/var/log/nginx/#{dir}' do
+  directory "/var/log/nginx/#{dir}" do
     owner 'www-data'
     group 'www-data'
     mode  '0755'
@@ -39,7 +41,7 @@ end
 end
 
 %w{access-en.log error-en.log}.each do |file|
-  file '/var/log/nginx/en/#{file}' do
+  file "/var/log/nginx/en/#{file}" do
     owner 'www-data'
     group 'adm'
     mode '0640'
