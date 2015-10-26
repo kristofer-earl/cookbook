@@ -8,7 +8,21 @@ directory '/srv/http' do
   action :create
 end
 
-directory '/srv/http/livezilla' do
+directory '/srv/http/livezilla-6-en' do
+  owner 'www-data'
+  group 'www-data'
+  mode  '0774'
+  action :create
+end
+
+directory '/srv/http/livezilla-6-jp' do
+  owner 'www-data'
+  group 'www-data'
+  mode  '0774'
+  action :create
+end
+
+directory '/srv/http/livezilla-6-id' do
   owner 'www-data'
   group 'www-data'
   mode  '0774'
