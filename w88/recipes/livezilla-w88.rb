@@ -17,20 +17,6 @@ end
   end
 end
 
-directory '/srv/http/livezilla-6-jp' do
-  owner 'www-data'
-  group 'www-data'
-  mode  '0755'
-  action :create
-end
-
-directory '/srv/http/livezilla-6-id' do
-  owner 'www-data'
-  group 'www-data'
-  mode  '0755'
-  action :create
-end
-
 %w{en jp id}.each do |dir|
   directory "/var/log/nginx/#{dir}" do
     owner 'www-data'
@@ -49,32 +35,22 @@ end
   end
 end
 
-file '/var/log/nginx/jp/access-jp.log' do
-  owner 'www-data'
-  group 'adm'
-  mode '0640'
-  action :create_if_missing
+%w{access-jp.log error-jp.log}.each do |file|
+  file "/var/log/nginx/jp/#{file}" do
+    owner 'www-data'
+    group 'adm'
+    mode '0640'
+    action :create_if_missing
+  end
 end
 
-file '/var/log/nginx/jp/error-jp.log' do
-  owner 'www-data'
-  group 'adm'
-  mode '0640'
-  action :create_if_missing
-end
-
-file '/var/log/nginx/id/access-id.log' do
-  owner 'www-data'
-  group 'adm'
-  mode '0640'
-  action :create_if_missing
-end
-
-file '/var/log/nginx/id/error-id.log' do
-  owner 'www-data'
-  group 'adm'
-  mode '0640'
-  action :create_if_missing
+%w{access-id.log error-id.log}.each do |file|
+  file '/var/log/nginx/id/#{file}' do
+    owner 'www-data'
+    group 'adm'
+    mode '0640'
+    action :create_if_missing
+  end
 end
 
 cookbook_file '/etc/nginx/sites-available/livezilla-en.conf' do
@@ -104,18 +80,9 @@ cookbook_file '/etc/nginx/sites-available/livezilla-id.conf' do
   notifies :restart, "service[nginx]"
 end
 
-link '/etc/nginx/sites-enabled/livezilla-en.conf' do
-  to '/etc/nginx/sites-available/livezilla-en.conf'
-  notifies :restart, "service[nginx]"
-end
-
-link '/etc/nginx/sites-enabled/livezilla-jp.conf' do
-  to '/etc/nginx/sites-available/livezilla-jp.conf'
-  notifies :restart, "service[nginx]"
-end
-
-link '/etc/nginx/sites-enabled/livezilla-id.conf' do
-  to '/etc/nginx/sites-available/livezilla-id.conf'
+%w{livezilla-en.conf livezilla-jp.conf livezilla-id.conf}.each do |nginx.conf|
+link "/etc/nginx/sites-enabled/#{nginx.conf}" do
+  to "/etc/nginx/sites-available/#{nginx.conf}"
   notifies :restart, "service[nginx]"
 end
 
