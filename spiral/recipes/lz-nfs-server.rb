@@ -13,13 +13,11 @@ end
 
 # Configure nfs
 nfs_export '/srv/http' do
-  network '172.31.1.65'
+  network '0.0.0.0/0'
   writeable true 
   sync false 
   options ['no_root_squash', 'no_subtree_check']
 end
-
-# Mount 
 
 # Start/auto nfs 
 service 'nfs-kernel-server' do
